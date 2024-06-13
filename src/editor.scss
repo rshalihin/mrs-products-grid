@@ -1,0 +1,31 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.mrs-block-mrs-products-grid {
+	border: 1px dotted #f00;
+	.mrs-products-grid-wrapper {
+		.mrs-products-grid-content {
+			display: flex;
+			flex-wrap: wrap;
+			.mrs-product-col {
+				@for $i from 1 through 6 {
+					&.has-#{$i}-col {
+						width: calc( 100% / #{$i} - 20px);
+						margin: 10px;
+					}
+				}
+			}
+		}
+	}
+}
+.mrs-block-mrs-products-grid {
+	.mrs-products-grid-wrapper {
+		margin-left: -10px;
+		margin-right: -10px;
+	}
+}
+
+

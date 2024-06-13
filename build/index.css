@@ -1,0 +1,68 @@
+/*!**************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/components/tabControl/editor.scss ***!
+  \**************************************************************************************************************************************************************************************************************************************************************/
+.mrs-products-tab-panel .components-tab-panel__tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #9B438B;
+}
+.mrs-products-tab-panel .components-tab-panel__tabs .components-tab-panel__tabs-item {
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  border: 1px solid #fff;
+}
+.mrs-products-tab-panel .components-tab-panel__tabs .components-tab-panel__tabs-item.active-tab {
+  background-color: #ffffff;
+  color: #9B438B;
+  border: none;
+  border-top: 2px solid #9B438B;
+}
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/editor.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.mrs-block-mrs-products-grid {
+  border: 1px dotted #f00;
+}
+.mrs-block-mrs-products-grid .mrs-products-grid-wrapper .mrs-products-grid-content {
+  display: flex;
+  flex-wrap: wrap;
+}
+.mrs-block-mrs-products-grid .mrs-products-grid-wrapper .mrs-products-grid-content .mrs-product-col.has-1-col {
+  width: calc(100% / 1 - 20px);
+  margin: 10px;
+}
+.mrs-block-mrs-products-grid .mrs-products-grid-wrapper .mrs-products-grid-content .mrs-product-col.has-2-col {
+  width: calc(100% / 2 - 20px);
+  margin: 10px;
+}
+.mrs-block-mrs-products-grid .mrs-products-grid-wrapper .mrs-products-grid-content .mrs-product-col.has-3-col {
+  width: calc(100% / 3 - 20px);
+  margin: 10px;
+}
+.mrs-block-mrs-products-grid .mrs-products-grid-wrapper .mrs-products-grid-content .mrs-product-col.has-4-col {
+  width: calc(100% / 4 - 20px);
+  margin: 10px;
+}
+.mrs-block-mrs-products-grid .mrs-products-grid-wrapper .mrs-products-grid-content .mrs-product-col.has-5-col {
+  width: calc(100% / 5 - 20px);
+  margin: 10px;
+}
+.mrs-block-mrs-products-grid .mrs-products-grid-wrapper .mrs-products-grid-content .mrs-product-col.has-6-col {
+  width: calc(100% / 6 - 20px);
+  margin: 10px;
+}
+
+.mrs-block-mrs-products-grid .mrs-products-grid-wrapper {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+/*# sourceMappingURL=index.css.map*/

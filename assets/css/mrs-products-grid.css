@@ -1,0 +1,16 @@
+.mrs-block-mrs-products-grid {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+}
+
+.mrs-products-grid-content {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: auto auto auto;
+}
+
+.mrs-product-img img {
+    width: 100%;
+}

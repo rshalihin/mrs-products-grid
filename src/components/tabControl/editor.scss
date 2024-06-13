@@ -1,0 +1,21 @@
+.mrs-products-tab-panel {
+    .components-tab-panel__tabs {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #9B438B;
+        .components-tab-panel__tabs-item {
+            flex-grow: 1;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            border: 1px solid #fff;
+             &.active-tab {
+                background-color: #ffffff;
+                color: #9B438B;
+                border: none;
+                border-top: 2px solid #9B438B;
+             }
+        }
+    }
+}

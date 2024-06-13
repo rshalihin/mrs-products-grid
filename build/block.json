@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "mrs-block/mrs-products-grid",
+  "version": "0.1.0",
+  "title": "MRS Products Grid",
+  "category": "text",
+  "icon": "cart",
+  "description": "A simple Gutenberg form widget.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "uniqueID": {
+      "type": "string",
+      "default": ""
+    },
+    "frontendCss": {
+      "type": "string",
+      "default": ""
+    },
+    "postsPerPage": {
+      "type": "number",
+      "default": 100
+    },
+    "orderBy": {
+      "type": "string",
+      "default": "title"
+    },
+    "order": {
+      "type": "string",
+      "default": "desc"
+    },
+    "productsColumn": {
+      "type": "number",
+      "default": 3
+    }
+  },
+  "textdomain": "mrs-products-grid",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}
