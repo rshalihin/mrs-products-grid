@@ -54,7 +54,7 @@ function mrs_block_products_grid_rendering( $attributes ) {
 	ob_start();
 
 	?>
-	<style><?php echo  substr($attributes['frontendCss'], 1, (strlen($attributes['frontendCss']) - 2) ) ; ?></style>
+	<style><?php echo substr( $attributes['frontendCss'], 1, ( strlen( $attributes['frontendCss'] ) - 2 ) ); ?></style>
 	<div class="mrs-block-mrs-products-grid mrs-product-<?php echo esc_attr( $attributes['uniqueID'] ); ?>">
 		<div class="mrs-products-grid-wrapper">
 			<div class="mrs-products-grid-content">
@@ -64,10 +64,6 @@ function mrs_block_products_grid_rendering( $attributes ) {
 		while ( $mrs_products_grid_query->have_posts() ) {
 			$mrs_products_grid_query->the_post();
 			global $product;
-			// echo '<pre>';
-			// var_dump($product);
-			// echo '</pre>';
-			// wp_die();
 
 			$post_thumbnail_id = $product->get_image_id();
 			if ( $post_thumbnail_id ) {
@@ -90,7 +86,7 @@ function mrs_block_products_grid_rendering( $attributes ) {
 						<div class="mrs-product-content">
 							<div class="mrs-product-title"><?php echo wp_kses_post( get_the_title() ); ?></div>
 							<div class="mrs-product-price"><?php echo wp_kses_post( $mrs_product_price ); ?></div>
-							<div class="mrs-product-buy-btn">
+							<div class="mrs-product-add-to-cart">
 								<?php
 								$add_to_cart = do_shortcode( '[add_to_cart id="' . get_the_ID() . '" show_price="false" style="" class="mrs-product-buy-btn-cart"]' );
 								echo wp_kses_post( $add_to_cart );
@@ -136,5 +132,48 @@ function mrs_products_grid_script_enqueue() {
 	wp_enqueue_style( 'mrs-products-grid-style-enqueue', plugin_dir_url( __FILE__ ) . 'assets/css/mrs-products-grid.css', array(), '0.1.0', 'all' );
 }
 
-
 add_action( 'wp_enqueue_scripts', 'mrs_products_grid_script_enqueue' );
+
+function mrs_products_grid_product_data() {
+	$args          = array(
+		'post_type'      => 'product',
+		'posts_per_page' => -1,
+		'post_status'    => 'publish',
+	);
+	$products      = get_posts( $args );
+	$products_data = array();
+
+	foreach ( $products as $product ) {
+		$product_id  = $product->ID;
+		$product_obj = wc_get_product( $product_id );
+		// echo '<pre>';
+		// var_dump($product_obj);
+		// echo '</pre>';
+		// wp_die();
+
+		$product_data[] = array(
+			'id'    => $product_id,
+			// 'title' => $product->post_title,
+			// 'link'  => get_permalink( $product_id ),
+			'price' => $product_obj->get_price_html(),
+			// 'image' => wp_get_attachment_image_src( get_post_thumbnail_id( $product_id ) ),
+			'rating' => $product_obj->get_average_rating(),
+			'onSale' => $product_obj->is_on_sale() ? true : false,
+		);
+	}
+	return $product_data;
+}
+
+
+function mrs_products_grid_script_enqueue_localize() {
+
+	wp_enqueue_script( 'mrs-products-grid', plugin_dir_url( __FILE__ ) . 'assets/js/mrs-products-grid.js', array(), filemtime( plugin_dir_path( __FILE__ ) . 'build/index.js' ), true );
+	wp_localize_script(
+		'mrs-products-grid',
+		'mrsProductsGrid',
+		array(
+			'products' => mrs_products_grid_product_data(),
+		)
+	);
+}
+add_action( 'enqueue_block_editor_assets', 'mrs_products_grid_script_enqueue_localize' );

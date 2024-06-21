@@ -1,11 +1,11 @@
 import { __ } from '@wordpress/i18n';
-import { PanelBody, RangeControl, SelectControl } from '@wordpress/components';
+import { PanelBody, RangeControl, SelectControl, __experimentalDivider as Divider } from '@wordpress/components';
 
 const GeneralTab = ({attributes, setAttributes}) => {
     const { postsPerPage, orderBy, order, productsColumn } = attributes;
     return(
         <>
-        <PanelBody title={__('Layout Settings', 'mrs-products-grid')} initialOpen={true}>
+        <PanelBody title={__('Layout Settings', 'mrs-products-grid')} initialOpen={true} className={'mrs-product-grid-panel-body'}>
             <RangeControl
                 label={__('Column(s)', 'mrs-products-grid')}
                 value={productsColumn}
@@ -19,6 +19,8 @@ const GeneralTab = ({attributes, setAttributes}) => {
                 value={postsPerPage}
                 onChange={(newValue) => setAttributes({postsPerPage: newValue})}
             />
+            </PanelBody>
+            <PanelBody title={__('Layout Settings', 'mrs-products-grid')} initialOpen={true} className={'mrs-product-grid-panel-body'}>
             <SelectControl
                 label={__('Order By', 'mrs-products-grid')}
                 help={__('Set a order by option.', 'mrs-products-grid')}

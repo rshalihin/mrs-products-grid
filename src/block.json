@@ -36,6 +36,50 @@
 		"productsColumn": {
 			"type": "number",
 			"default": 3
+		},
+		"mrsProductImageBorder": {
+			"type": "object",
+			"default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px"}
+		},
+		"productTitleColor": {
+			"type": "string",
+			"default": "#111111"
+		},
+		"productTitleSize": {
+			"type": "number",
+			"default": 22
+		},
+		"showProductRatingStar": {
+			"type": "boolean",
+			"default": true
+		},
+		"productRatingStarSize": {
+			"type": "number",
+			"default": 16
+		},
+		"productRatingStarColor": {
+			"type": "string",
+			"default": "#111111"
+		},
+		"productPriceSize": {
+			"type": "number",
+			"default": 18
+		},
+		"productPriceColor": {
+			"type": "string",
+			"default": "#111111"
+		},
+		"addToCartBGColor": {
+			"type": "string",
+			"default": "#111111"
+		},
+		"addToCartTextColor": {
+			"type": "string",
+			"default": "#fff"
+		},
+		"addToCartFontSize": {
+			"type": "number",
+			"default": 18
 		}
 	},
 	"textdomain": "mrs-products-grid",

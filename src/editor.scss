@@ -17,6 +17,46 @@
 						margin: 10px;
 					}
 				}
+				.mrs-product {
+					.mrs-product-img-wrapper{
+						position: relative;
+
+						.mrs-product-img {
+							img {
+								width: 100%;
+								height: auto;
+							}
+						}
+						.mrs-product-img-overlay {
+							position: absolute;
+							top: 5px;
+							right: 10px;
+							background: #fff;
+							padding: 5px 10px;
+							border: 1px solid;
+							border-radius: 5px;
+							font-size: 14px;
+						}
+					}
+					.mrs-product-content-wrapper{
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+						.mrs-product-title {
+							h4 {
+								margin: 10px;
+								font-size: 20px;
+								font-weight: 700;
+							}
+						}
+						.mrs-product-price {
+							span {
+								font-size: 14px;
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -29,3 +69,15 @@
 }
 
 
+.components-tab-panel__tab-content {
+	.mrs-product-grid-panel-body {
+		.components-panel__body-title {
+			background-color: #9b438b17;
+		}
+		&.is-opened {
+			.components-panel__body-title {
+				margin-bottom: 24px;
+			}
+		}
+	}
+}
