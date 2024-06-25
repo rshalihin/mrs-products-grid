@@ -1,0 +1,22 @@
+.mrs-product-grid-panel-body {
+    .mrs-products-toggle {
+            margin-bottom: 24px;
+        .components-flex {
+            flex-direction: row-reverse;
+        }
+        .components-toggle-control__label{
+            margin-bottom: 0px;
+        }
+        .components-form-toggle.is-checked .components-form-toggle__track{
+            background: #9b438b;
+        }
+        .components-form-toggle.is-checked .components-form-toggle__thumb{
+            background: #fff;
+        }
+        .components-form-toggle .components-form-toggle__thumb{
+            background: #757575;
+            border-color: #757575;
+
+        }
+    }
+}

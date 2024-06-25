@@ -1,8 +1,9 @@
 import { __ } from '@wordpress/i18n';
 import { PanelBody, RangeControl, SelectControl, __experimentalDivider as Divider } from '@wordpress/components';
+import MRSToggle from "./components/mrsToggle/MRSToggle";
 
 const GeneralTab = ({attributes, setAttributes}) => {
-    const { postsPerPage, orderBy, order, productsColumn } = attributes;
+    const { postsPerPage, orderBy, order, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart } = attributes;
     return(
         <>
         <PanelBody title={__('Layout Settings', 'mrs-products-grid')} initialOpen={true} className={'mrs-product-grid-panel-body'}>
@@ -19,8 +20,8 @@ const GeneralTab = ({attributes, setAttributes}) => {
                 value={postsPerPage}
                 onChange={(newValue) => setAttributes({postsPerPage: newValue})}
             />
-            </PanelBody>
-            <PanelBody title={__('Layout Settings', 'mrs-products-grid')} initialOpen={true} className={'mrs-product-grid-panel-body'}>
+        </PanelBody>
+        <PanelBody title={__('Filter Settings', 'mrs-products-grid')} initialOpen={true} className={'mrs-product-grid-panel-body'}>
             <SelectControl
                 label={__('Order By', 'mrs-products-grid')}
                 help={__('Set a order by option.', 'mrs-products-grid')}
@@ -43,7 +44,34 @@ const GeneralTab = ({attributes, setAttributes}) => {
                 value={order}
                 onChange={(newValue)=> setAttributes({order: newValue})}
             />
-        </PanelBody>		
+        </PanelBody>
+        <PanelBody title={__('Template Settings', 'mrs-products-grid')} initialOpen={true} className={'mrs-product-grid-panel-body'}>
+            <MRSToggle
+                label={__('Show Products Name', 'mrs-products-grid')}
+                attributes={productTitleShow}
+                attributesKey={'productTitleShow'}
+                setAttributes={setAttributes}
+            />
+            <MRSToggle
+                label={__('Show Products Price', 'mrs-products-grid')}
+                attributes={productPriceShow}
+                attributesKey={'productPriceShow'}
+                setAttributes={setAttributes}
+            />
+            <MRSToggle
+                label={__('Show Products Rating', 'mrs-products-grid')}
+                attributes={showProductRatingStar}
+                attributesKey={'showProductRatingStar'}
+                setAttributes={setAttributes}
+            />
+            <MRSToggle
+                label={__('Show Add To Cart', 'mrs-products-grid')}
+                attributes={showAddToCart}
+                attributesKey={'showAddToCart'}
+                setAttributes={setAttributes}
+            />
+        </PanelBody>
+
         </>
     );
 }

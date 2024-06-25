@@ -8,8 +8,9 @@ import Inspector from './Inspector';
 import './editor.scss';
 
 export default function Edit({ attributes, setAttributes, clientId }) {
-	const { postsPerPage, orderBy, order, uniqueID, frontendCss, productsColumn } = attributes;
+	const { postsPerPage, orderBy, order, uniqueID, frontendCss, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart } = attributes;
 	const [ firstTLoad, setFirstTLoad ] = useState(true);
+	const [ loading, setLoading ] = useState(false);
 	// console.log(mrsProductsGrid.products);
 
 	const selectProduct = useSelect((select)=> {
@@ -99,6 +100,14 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	useEffect( () => {
 		setAttributes({ frontendCss: JSON.stringify(dynamicCss(attributes)) });
 	}, [attributes]);
+
+	useEffect( () => {
+		if ( selectProduct === null ) {
+			setLoading(true)
+		} else {
+			setLoading(false)
+		}
+	}, [selectProduct])
 	
 	return (
 	<>
@@ -107,10 +116,11 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 			setAttributes={setAttributes}
 		/>
 		
-		{/* <style>{dynamicCss(attributes)}</style>		 */}
+		<style>{dynamicCss(attributes)}</style>
 		<div { ...useBlockProps({
 			className: `mrs-block-mrs-products-grid mrs-product-${uniqueID}`
 		}) }>
+			{ loading && <p>Loading Products...</p>}
 			<div className="mrs-products-grid-wrapper">
 				<div className="mrs-products-grid-content">
 					{selectProduct && selectProduct.length > 0 && (							
@@ -120,7 +130,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 									<div className='mrs-product'>
 										<div className='mrs-product-img-wrapper'>
 											<div className='mrs-product-img'>
-												<img src={item._embedded['wp:featuredmedia'][0]?.source_url} alt='' />
+												<a><img src={item._embedded['wp:featuredmedia'][0]?.source_url} alt='' /></a>
 											</div>											
 											{mrsProductsGrid?.products?.map( (v, i) =>{
 											if( parseInt(v.id) === parseInt(item.id) && v.onSale === true ){
@@ -133,9 +143,13 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 											})}
 										</div>
 										<div className='mrs-product-content-wrapper'>
+
+											{productTitleShow && 
 											<div className='mrs-product-title'>
 												<h4>{item?.title?.rendered}</h4>
 											</div>
+											}
+											{ showProductRatingStar && 
 											<div className='mrs-product-ratting'>
 											{mrsProductsGrid?.products?.map( (v,i) =>{
 												if( parseInt(v.id) === parseInt(item.id)){
@@ -145,6 +159,9 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 												}
 												})}
 											</div>
+											}
+											
+											{ productPriceShow && 
 											<div className='mrs-product-price'>
 												{mrsProductsGrid?.products?.map( ( v, i) =>{
 													if( parseInt(v.id) === parseInt(item.id)){
@@ -156,11 +173,22 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 													}
 												})}
 											</div>
+											}
+
+											{ showAddToCart && 
 											<div className='mrs-product-add-to-cart'>
-												<p className='product woocommerce add_to_cart_inline mrs-product-buy-btn-cart'>
-													<a data-quantity="1" className='wp-block-button__link wp-element-button add_to_cart_button wc-block-components-product-button__button mrs-product-add-to-cart-button' aria-label={`Add to cart: “${item?.title?.raw}”`} aria-describedby rel='nofollow'>Add to cart</a>
-												</p>
+												{mrsProductsGrid?.products?.map( ( v, i) =>{
+													if( parseInt(v.id) === parseInt(item.id)){
+													return (
+														<p className='product woocommerce add_to_cart_inline mrs-product-buy-btn-cart' key={i}>
+															<a data-quantity="1" className='wp-block-button__link wp-element-button add_to_cart_button wc-block-components-product-button__button' aria-label={`Add to cart: “${item?.title?.raw}”`} aria-describedby rel='nofollow'>
+															{v.groupProduct ? 'View Products' : 'Add To Cart'}
+															</a>
+														</p>
+													);
+													}})}
 											</div>
+											}
 										</div>
 									</div>
 								</div>

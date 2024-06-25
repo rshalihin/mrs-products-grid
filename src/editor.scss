@@ -5,54 +5,17 @@
  */
 
 .mrs-block-mrs-products-grid {
-	border: 1px dotted #f00;
-	.mrs-products-grid-wrapper {
-		.mrs-products-grid-content {
-			display: flex;
-			flex-wrap: wrap;
-			.mrs-product-col {
-				@for $i from 1 through 6 {
-					&.has-#{$i}-col {
-						width: calc( 100% / #{$i} - 20px);
-						margin: 10px;
-					}
-				}
-				.mrs-product {
-					.mrs-product-img-wrapper{
-						position: relative;
-
-						.mrs-product-img {
-							img {
-								width: 100%;
-								height: auto;
-							}
-						}
-						.mrs-product-img-overlay {
-							position: absolute;
-							top: 5px;
-							right: 10px;
-							background: #fff;
-							padding: 5px 10px;
-							border: 1px solid;
-							border-radius: 5px;
-							font-size: 14px;
-						}
-					}
-					.mrs-product-content-wrapper{
-						display: flex;
-						flex-direction: column;
-						justify-content: center;
-						align-items: center;
-						.mrs-product-title {
-							h4 {
-								margin: 10px;
-								font-size: 20px;
-								font-weight: 700;
-							}
-						}
-						.mrs-product-price {
-							span {
-								font-size: 14px;
+		.mrs-products-grid-wrapper {
+			.mrs-products-grid-content {
+				.mrs-product-col {
+					.mrs-product {
+						.mrs-product-content-wrapper{
+							.mrs-product-add-to-cart {
+								.mrs-product-buy-btn-cart {
+									.mrs-product-add-to-cart-button {
+										cursor: default;
+									}
+								}
 							}
 						}
 					}
@@ -60,13 +23,6 @@
 			}
 		}
 	}
-}
-.mrs-block-mrs-products-grid {
-	.mrs-products-grid-wrapper {
-		margin-left: -10px;
-		margin-right: -10px;
-	}
-}
 
 
 .components-tab-panel__tab-content {
@@ -79,5 +35,28 @@
 				margin-bottom: 24px;
 			}
 		}
+		.components-grid .components-tools-panel {
+			margin-bottom: 24px;
+		}
+		.mrs-products-btn-group {
+			display: flex;
+			.mrs-products-btn {
+				flex-grow: 1;
+				justify-content: center;
+				background: #ffffff;
+				&.is-active {
+					background: #9b438b;
+					color: #ffffff;
+				}
+			}
+		}
 	}
 }
+
+// ribon
+// 	transform: rotate(39deg);
+//     padding: 0 50px;
+//     background: #ffa;
+//     right: -36px;
+//     top: 16px;
+//     border: none;

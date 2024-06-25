@@ -37,9 +37,17 @@
 			"type": "number",
 			"default": 3
 		},
-		"mrsProductImageBorder": {
+		"mrsProductImageBorderRadiusSet": {
+			"type": "boolean",
+			"default": false
+		},
+		"mrsProductImageBorderRadius": {
 			"type": "object",
 			"default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px"}
+		},
+		"productTitleShow": {
+			"type": "boolean",
+			"default": true
 		},
 		"productTitleColor": {
 			"type": "string",
@@ -61,6 +69,14 @@
 			"type": "string",
 			"default": "#111111"
 		},
+		"productRatingEmptyStarColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"productPriceShow": {
+			"type": "boolean",
+			"default": true
+		},
 		"productPriceSize": {
 			"type": "number",
 			"default": 18
@@ -68,6 +84,10 @@
 		"productPriceColor": {
 			"type": "string",
 			"default": "#111111"
+		},
+		"showAddToCart": {
+			"type": "boolean",
+			"default": true
 		},
 		"addToCartBGColor": {
 			"type": "string",
@@ -79,7 +99,11 @@
 		},
 		"addToCartFontSize": {
 			"type": "number",
-			"default": 18
+			"default": 16
+		},
+		"addToCartWidth": {
+			"type": "string",
+			"default": "75%"
 		}
 	},
 	"textdomain": "mrs-products-grid",

@@ -56,6 +56,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/mrsToggle/MRSToggle */ "./src/components/mrsToggle/MRSToggle.js");
+
 
 
 
@@ -67,7 +69,11 @@ const GeneralTab = ({
     postsPerPage,
     orderBy,
     order,
-    productsColumn
+    productsColumn,
+    productTitleShow,
+    productPriceShow,
+    showProductRatingStar,
+    showAddToCart
   } = attributes;
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Layout Settings', 'mrs-products-grid'),
@@ -89,7 +95,7 @@ const GeneralTab = ({
       postsPerPage: newValue
     })
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Layout Settings', 'mrs-products-grid'),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Filter Settings', 'mrs-products-grid'),
     initialOpen: true,
     className: 'mrs-product-grid-panel-body'
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
@@ -126,6 +132,30 @@ const GeneralTab = ({
     onChange: newValue => setAttributes({
       order: newValue
     })
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Template Settings', 'mrs-products-grid'),
+    initialOpen: true,
+    className: 'mrs-product-grid-panel-body'
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Show Products Name', 'mrs-products-grid'),
+    attributes: productTitleShow,
+    attributesKey: 'productTitleShow',
+    setAttributes: setAttributes
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Show Products Price', 'mrs-products-grid'),
+    attributes: productPriceShow,
+    attributesKey: 'productPriceShow',
+    setAttributes: setAttributes
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Show Products Rating', 'mrs-products-grid'),
+    attributes: showProductRatingStar,
+    attributesKey: 'showProductRatingStar',
+    setAttributes: setAttributes
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Show Add To Cart', 'mrs-products-grid'),
+    attributes: showAddToCart,
+    attributesKey: 'showAddToCart',
+    setAttributes: setAttributes
   })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GeneralTab);
@@ -190,6 +220,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/mrsToggle/MRSToggle */ "./src/components/mrsToggle/MRSToggle.js");
+
 
 
 
@@ -199,29 +231,61 @@ const StyleTab = ({
   setAttributes
 }) => {
   const {
-    mrsProductImageBorder,
+    mrsProductImageBorderRadiusSet,
+    mrsProductImageBorderRadius,
+    productTitleShow,
     productTitleSize,
-    productTitleColor
+    productTitleColor,
+    productPriceShow,
+    productPriceSize,
+    productPriceColor,
+    showProductRatingStar,
+    productRatingStarSize,
+    productRatingStarColor,
+    productRatingEmptyStarColor,
+    showAddToCart,
+    addToCartFontSize,
+    addToCartTextColor,
+    addToCartBGColor,
+    addToCartWidth
   } = attributes;
+  const pxCheck = newObj => {
+    for (let side in newObj) {
+      if (newObj[side] === undefined) {
+        newObj[side] = '0px';
+      }
+      let unitCheck = newObj[side].slice(newObj[side].length - 2);
+      if ('px' !== unitCheck) {
+        newObj[side] = newObj[side] + 'px';
+      }
+    }
+  };
   const onChangeProductImage = newValue => {
+    pxCheck(newValue);
     setAttributes({
-      mrsProductImageBorder: newValue
+      mrsProductImageBorderRadius: newValue
     });
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image Settings', 'mrs-products-grid'),
     initialOpen: true,
     className: 'mrs-product-grid-panel-body'
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalBoxControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image border', 'mrs-products-grid'),
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Set Image Border Radius'),
+    attributes: mrsProductImageBorderRadiusSet,
+    attributesKey: 'mrsProductImageBorderRadiusSet',
+    setAttributes: setAttributes
+  }), mrsProductImageBorderRadiusSet && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalBoxControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image border Radius', 'mrs-products-grid'),
     onChange: onChangeProductImage,
-    values: mrsProductImageBorder,
+    values: mrsProductImageBorderRadius,
     units: [{
       value: 'px',
       label: 'px'
     }]
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+  })), productTitleShow && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product Name Settings', 'mrs-products-grid'),
+    initialOpen: false,
     className: 'mrs-product-grid-panel-body'
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product Name Font Size', 'mrs-products-grid'),
@@ -239,9 +303,141 @@ const StyleTab = ({
         productTitleColor: newValue
       })
     }]
-  })));
+  })), productPriceShow && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product Price', 'mrs-products-grid'),
+    initialOpen: false,
+    className: 'mrs-product-grid-panel-body'
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product Price Font Size', 'mrs-products-grid'),
+    value: productPriceSize,
+    onChange: newValue => setAttributes({
+      productPriceSize: newValue
+    }),
+    min: 10,
+    max: 100
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    colorSettings: [{
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product Price Color', 'mrs-product-grid'),
+      value: productPriceColor,
+      onChange: newValue => setAttributes({
+        productPriceColor: newValue
+      })
+    }]
+  })), showProductRatingStar && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product Rating', 'mrs-products-grid'),
+    initialOpen: false,
+    className: 'mrs-product-grid-panel-body'
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product Rating Star Size', 'mrs-products-grid'),
+    value: productRatingStarSize,
+    onChange: newValue => setAttributes({
+      productRatingStarSize: newValue
+    }),
+    min: 10,
+    max: 100
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    colorSettings: [{
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Fill Rating Star Color', 'mrs-product-grid'),
+      value: productRatingStarColor,
+      onChange: newValue => setAttributes({
+        productRatingStarColor: newValue
+      })
+    }, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Empty Rating Star Color', 'mrs-product-grid'),
+      value: productRatingEmptyStarColor,
+      onChange: newValue => setAttributes({
+        productRatingEmptyStarColor: newValue
+      })
+    }]
+  })), showAddToCart && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add To Cart', 'mrs-products-grid'),
+    initialOpen: false,
+    className: 'mrs-product-grid-panel-body'
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add To Cart Font Size', 'mrs-products-grid'),
+    value: addToCartFontSize,
+    onChange: newValue => setAttributes({
+      addToCartFontSize: newValue
+    }),
+    min: 10,
+    max: 100
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    colorSettings: [{
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Text Color', 'mrs-products-grid'),
+      value: addToCartTextColor,
+      onChange: newValue => setAttributes({
+        addToCartTextColor: newValue
+      })
+    }, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Background Color', 'mrs-products-grid'),
+      value: addToCartBGColor,
+      onChange: newValue => setAttributes({
+        addToCartBGColor: newValue
+      })
+    }]
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add To Cart Button Width', 'mrs-products-grid')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ButtonGroup, {
+    className: 'mrs-products-btn-group'
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${addToCartWidth === '25%' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      addToCartWidth: '25%'
+    })
+  }, "25%"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${addToCartWidth === '50%' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      addToCartWidth: '50%'
+    })
+  }, "50%"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${addToCartWidth === '75%' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      addToCartWidth: '75%'
+    })
+  }, "75%"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${addToCartWidth === '100%' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      addToCartWidth: '100%'
+    })
+  }, "100%"))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StyleTab);
+
+/***/ }),
+
+/***/ "./src/components/mrsToggle/MRSToggle.js":
+/*!***********************************************!*\
+  !*** ./src/components/mrsToggle/MRSToggle.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _MRSToggle_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MRSToggle.scss */ "./src/components/mrsToggle/MRSToggle.scss");
+
+
+
+const MRSToggle = ({
+  label,
+  attributes,
+  setAttributes,
+  attributesKey
+}) => {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mrs-products-toggle"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
+    label: label,
+    checked: attributes,
+    onChange: () => setAttributes({
+      [attributesKey]: !attributes
+    })
+  }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MRSToggle);
 
 /***/ }),
 
@@ -361,7 +557,17 @@ __webpack_require__.r(__webpack_exports__);
 const dynamicCss = attributes => {
   const {
     uniqueID,
-    productsColumn
+    productTitleSize,
+    productTitleColor,
+    productPriceSize,
+    productPriceColor,
+    productRatingStarSize,
+    productRatingStarColor,
+    addToCartFontSize,
+    addToCartBGColor,
+    addToCartTextColor,
+    mrsProductImageBorderRadius,
+    addToCartWidth
   } = attributes;
   let desktopCss = {
     [`.mrs-block-mrs-products-grid .mrs-product-${uniqueID}`]: {
@@ -373,8 +579,103 @@ const dynamicCss = attributes => {
       'flex-wrap': 'wrap'
     },
     [`.mrs-product-${uniqueID} .mrs-products-grid-content .mrs-product-col`]: {
-      // 'width': `calc(100% / ${productsColumn})`,
       'box-sizing': 'border-box'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-col.has-1-col`]: {
+      'width': '100%'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-col.has-2-col`]: {
+      'width': 'calc(100% / 2 - 20px)',
+      'margin': '10px'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-col.has-3-col`]: {
+      'width': 'calc(100% / 3 - 20px)',
+      'margin': '10px'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-col.has-4-col`]: {
+      'width': 'calc(100% / 4 - 20px)',
+      'margin': '10px'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-col.has-5-col`]: {
+      'width': 'calc(100% / 5 - 20px)',
+      'margin': '10px'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-col.has-6-col`]: {
+      'width': 'calc(100% / 6 - 20px)',
+      'margin': '10px'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product .mrs-product-img-wrapper`]: {
+      'position': 'relative'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-img-wrapper .mrs-product-img img`]: {
+      'width': '100%',
+      'height': 'auto'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-img-wrapper .mrs-product-img-overlay`]: {
+      'position': 'absolute',
+      'top': '5px',
+      'right': '10px',
+      'background': '#fff',
+      'padding': '5px 10px',
+      'border': '1px solid',
+      'border-radius': '5px',
+      'font-size': '14px'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product .mrs-product-content-wrapper`]: {
+      'display': 'flex',
+      'flex-direction': 'column',
+      'justify-content': 'center',
+      'align-items': 'center'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-title h4`]: {
+      'margin': '10px',
+      'font-size': productTitleSize + 'px',
+      'font-weight': '700',
+      'color': productTitleColor
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-price`]: {
+      'font-size': productPriceSize + 'px',
+      'color': productPriceColor
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-content-wrapper`]: {
+      'margin-left': '-10px',
+      'margin-right': '-10px'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-ratting .dashicons.dashicons-star-filled, .dashicons.dashicons-star-empty`]: {
+      'width': productRatingStarSize + 'px',
+      'font-size': productRatingStarSize + 'px',
+      'color': productRatingStarColor,
+      'font-weight': '700'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-add-to-cart .mrs-product-buy-btn-cart .wp-element-button`]: {
+      'font-size': addToCartFontSize + 'px',
+      'color': addToCartTextColor,
+      'background': addToCartBGColor
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-img-wrapper .mrs-product-img`]: {
+      'border-radius': `${mrsProductImageBorderRadius.top ? mrsProductImageBorderRadius.top : 0} ${mrsProductImageBorderRadius.right ? mrsProductImageBorderRadius.right : 0} ${mrsProductImageBorderRadius.bottom ? mrsProductImageBorderRadius.bottom : 0} ${mrsProductImageBorderRadius.left ? mrsProductImageBorderRadius.left : 0}`
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-img-wrapper .mrs-product-img img`]: {
+      'border-radius': 'inherit',
+      'width': '100%',
+      'border-radius': `${mrsProductImageBorderRadius.top ? mrsProductImageBorderRadius.top : 0} ${mrsProductImageBorderRadius.right ? mrsProductImageBorderRadius.right : 0} ${mrsProductImageBorderRadius.bottom ? mrsProductImageBorderRadius.bottom : 0} ${mrsProductImageBorderRadius.left ? mrsProductImageBorderRadius.left : 0}`
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-add-to-cart`]: {
+      'width': '100%',
+      'display': 'flex',
+      'align-items': 'center',
+      'justify-content': 'center'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-add-to-cart .mrs-product-buy-btn-cart`]: {
+      'width': '100%',
+      'display': 'flex',
+      'justify-content': 'center'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-buy-btn-cart .mrs-product-add-to-cart-button`]: {
+      'width': addToCartWidth
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-price ins`]: {
+      'text-decoration': 'none'
     }
   };
   desktopCss = (0,_controls_controls__WEBPACK_IMPORTED_MODULE_0__["default"])(desktopCss);
@@ -430,9 +731,14 @@ function Edit({
     order,
     uniqueID,
     frontendCss,
-    productsColumn
+    productsColumn,
+    productTitleShow,
+    productPriceShow,
+    showProductRatingStar,
+    showAddToCart
   } = attributes;
   const [firstTLoad, setFirstTLoad] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(true);
+  const [loading, setLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
   // console.log(mrsProductsGrid.products);
 
   const selectProduct = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
@@ -537,14 +843,21 @@ function Edit({
       frontendCss: JSON.stringify((0,_dynamicCss__WEBPACK_IMPORTED_MODULE_6__["default"])(attributes))
     });
   }, [attributes]);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
+    if (selectProduct === null) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [selectProduct]);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_Inspector__WEBPACK_IMPORTED_MODULE_7__["default"], {
     attributes: attributes,
     setAttributes: setAttributes
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("style", null, (0,_dynamicCss__WEBPACK_IMPORTED_MODULE_6__["default"])(attributes)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)({
       className: `mrs-block-mrs-products-grid mrs-product-${uniqueID}`
     })
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, loading && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Loading Products..."), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mrs-products-grid-wrapper"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mrs-products-grid-content"
@@ -558,10 +871,10 @@ function Edit({
       className: "mrs-product-img-wrapper"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "mrs-product-img"
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
       src: item._embedded['wp:featuredmedia'][0]?.source_url,
       alt: ""
-    })), mrsProductsGrid?.products?.map((v, i) => {
+    }))), mrsProductsGrid?.products?.map((v, i) => {
       if (parseInt(v.id) === parseInt(item.id) && v.onSale === true) {
         return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
           key: i,
@@ -570,9 +883,9 @@ function Edit({
       }
     })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "mrs-product-content-wrapper"
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, productTitleShow && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "mrs-product-title"
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, item?.title?.rendered)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, item?.title?.rendered)), showProductRatingStar && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "mrs-product-ratting"
     }, mrsProductsGrid?.products?.map((v, i) => {
       if (parseInt(v.id) === parseInt(item.id)) {
@@ -580,7 +893,7 @@ function Edit({
           key: i
         }, starRating(v.rating));
       }
-    })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    })), productPriceShow && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "mrs-product-price"
     }, mrsProductsGrid?.products?.map((v, i) => {
       if (parseInt(v.id) === parseInt(item.id)) {
@@ -588,17 +901,22 @@ function Edit({
           key: i
         }, v.price ? v.price : 'Out of Stock');
       }
-    })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    })), showAddToCart && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "mrs-product-add-to-cart"
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
-      className: "product woocommerce add_to_cart_inline mrs-product-buy-btn-cart"
-    }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-      "data-quantity": "1",
-      className: "wp-block-button__link wp-element-button add_to_cart_button wc-block-components-product-button__button mrs-product-add-to-cart-button",
-      "aria-label": `Add to cart: “${item?.title?.raw}”`,
-      "aria-describedby": true,
-      rel: "nofollow"
-    }, "Add to cart"))))));
+    }, mrsProductsGrid?.products?.map((v, i) => {
+      if (parseInt(v.id) === parseInt(item.id)) {
+        return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+          className: "product woocommerce add_to_cart_inline mrs-product-buy-btn-cart",
+          key: i
+        }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+          "data-quantity": "1",
+          className: "wp-block-button__link wp-element-button add_to_cart_button wc-block-components-product-button__button",
+          "aria-label": `Add to cart: “${item?.title?.raw}”`,
+          "aria-describedby": true,
+          rel: "nofollow"
+        }, v.groupProduct ? 'View Products' : 'Add To Cart'));
+      }
+    })))));
   })))));
 }
 
@@ -642,6 +960,18 @@ __webpack_require__.r(__webpack_exports__);
 function save() {
   return null;
 }
+
+/***/ }),
+
+/***/ "./src/components/mrsToggle/MRSToggle.scss":
+/*!*************************************************!*\
+  !*** ./src/components/mrsToggle/MRSToggle.scss ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
 
 /***/ }),
 
@@ -757,7 +1087,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"mrs-block/mrs-products-grid","version":"0.1.0","title":"MRS Products Grid","category":"text","icon":"cart","description":"A simple Gutenberg form widget.","example":{},"supports":{"html":false,"align":["wide","full"]},"attributes":{"uniqueID":{"type":"string","default":""},"frontendCss":{"type":"string","default":""},"postsPerPage":{"type":"number","default":100},"orderBy":{"type":"string","default":"title"},"order":{"type":"string","default":"desc"},"productsColumn":{"type":"number","default":3},"mrsProductImageBorder":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"productTitleColor":{"type":"string","default":"#111111"},"productTitleSize":{"type":"number","default":22},"showProductRatingStar":{"type":"boolean","default":true},"productRatingStarSize":{"type":"number","default":16},"productRatingStarColor":{"type":"string","default":"#111111"},"productPriceSize":{"type":"number","default":18},"productPriceColor":{"type":"string","default":"#111111"},"addToCartBGColor":{"type":"string","default":"#111111"},"addToCartTextColor":{"type":"string","default":"#fff"},"addToCartFontSize":{"type":"number","default":18}},"textdomain":"mrs-products-grid","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"mrs-block/mrs-products-grid","version":"0.1.0","title":"MRS Products Grid","category":"text","icon":"cart","description":"A simple Gutenberg form widget.","example":{},"supports":{"html":false,"align":["wide","full"]},"attributes":{"uniqueID":{"type":"string","default":""},"frontendCss":{"type":"string","default":""},"postsPerPage":{"type":"number","default":100},"orderBy":{"type":"string","default":"title"},"order":{"type":"string","default":"desc"},"productsColumn":{"type":"number","default":3},"mrsProductImageBorderRadiusSet":{"type":"boolean","default":false},"mrsProductImageBorderRadius":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"productTitleShow":{"type":"boolean","default":true},"productTitleColor":{"type":"string","default":"#111111"},"productTitleSize":{"type":"number","default":22},"showProductRatingStar":{"type":"boolean","default":true},"productRatingStarSize":{"type":"number","default":16},"productRatingStarColor":{"type":"string","default":"#111111"},"productRatingEmptyStarColor":{"type":"string","default":"#ffffff"},"productPriceShow":{"type":"boolean","default":true},"productPriceSize":{"type":"number","default":18},"productPriceColor":{"type":"string","default":"#111111"},"showAddToCart":{"type":"boolean","default":true},"addToCartBGColor":{"type":"string","default":"#111111"},"addToCartTextColor":{"type":"string","default":"#fff"},"addToCartFontSize":{"type":"number","default":16},"addToCartWidth":{"type":"string","default":"75%"}},"textdomain":"mrs-products-grid","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
 
 /***/ })
 
