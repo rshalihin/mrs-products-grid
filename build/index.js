@@ -73,7 +73,13 @@ const GeneralTab = ({
     productTitleShow,
     productPriceShow,
     showProductRatingStar,
-    showAddToCart
+    showAddToCart,
+    saleBadgeShow,
+    saleBadgeAlign,
+    saleBadgeText,
+    customAddToCartText,
+    addToCartText,
+    addToCartTextGroup
   } = attributes;
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Layout Settings', 'mrs-products-grid'),
@@ -96,7 +102,7 @@ const GeneralTab = ({
     })
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Filter Settings', 'mrs-products-grid'),
-    initialOpen: true,
+    initialOpen: false,
     className: 'mrs-product-grid-panel-body'
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Order By', 'mrs-products-grid'),
@@ -134,7 +140,7 @@ const GeneralTab = ({
     })
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Template Settings', 'mrs-products-grid'),
-    initialOpen: true,
+    initialOpen: false,
     className: 'mrs-product-grid-panel-body'
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_3__["default"], {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Show Products Name', 'mrs-products-grid'),
@@ -152,11 +158,61 @@ const GeneralTab = ({
     attributesKey: 'showProductRatingStar',
     setAttributes: setAttributes
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sale Badge', 'mrs-products-grid'),
+    attributes: saleBadgeShow,
+    attributesKey: 'saleBadgeShow',
+    setAttributes: setAttributes
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_3__["default"], {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Show Add To Cart', 'mrs-products-grid'),
     attributes: showAddToCart,
     attributesKey: 'showAddToCart',
     setAttributes: setAttributes
-  })));
+  })), saleBadgeShow && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sale Badge', 'mrs-products-grid'),
+    initialOpen: false,
+    className: 'mrs-product-grid-panel-body'
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    className: "mrs-product-grid-btn-label"
+  }, "Alignment"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ButtonGroup, {
+    className: 'mrs-products-btn-group'
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${saleBadgeAlign === 'Left' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      saleBadgeAlign: 'Left'
+    })
+  }, "Left"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${saleBadgeAlign === 'Right' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      saleBadgeAlign: 'Right'
+    })
+  }, "Right")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sale Text', 'mrs-products-grid'),
+    value: saleBadgeText,
+    onChange: newValue => setAttributes({
+      saleBadgeText: newValue
+    })
+  })), showAddToCart && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Cart Text', 'mrs-products-grid'),
+    initialOpen: false,
+    className: 'mrs-product-grid-panel-body'
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Use custom cart button text', 'mrs-products-grid'),
+    attributes: customAddToCartText,
+    attributesKey: 'customAddToCartText',
+    setAttributes: setAttributes
+  }), customAddToCartText && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Simple Product', 'mrs-products-grid'),
+    value: addToCartText,
+    onChange: newValue => setAttributes({
+      addToCartText: newValue
+    })
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Group Product', 'mrs-products-grid'),
+    value: addToCartTextGroup,
+    onChange: newValue => setAttributes({
+      addToCartTextGroup: newValue
+    })
+  }))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GeneralTab);
 
@@ -226,6 +282,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const StyleTab = ({
   attributes,
   setAttributes
@@ -247,7 +304,18 @@ const StyleTab = ({
     addToCartFontSize,
     addToCartTextColor,
     addToCartBGColor,
-    addToCartWidth
+    addToCartWidth,
+    productContentAlign,
+    productsBGColor,
+    productsContentPadding,
+    productSpacing,
+    saleBadgeBorderStyle,
+    saleBadgeShow,
+    saleBadgeTextColor,
+    saleBadgeBGColor,
+    saleBadgeBorderColor,
+    saleBadgeBorderWidth,
+    saleBadgeBorderRadius
   } = attributes;
   const pxCheck = newObj => {
     for (let side in newObj) {
@@ -259,16 +327,74 @@ const StyleTab = ({
         newObj[side] = newObj[side] + 'px';
       }
     }
+    return newObj;
   };
   const onChangeProductImage = newValue => {
-    pxCheck(newValue);
+    let checkValue = pxCheck(newValue);
     setAttributes({
-      mrsProductImageBorderRadius: newValue
+      mrsProductImageBorderRadius: checkValue
+    });
+  };
+  const productsContentPaddingHandle = newValues => {
+    let checkValue = pxCheck(newValues);
+    setAttributes({
+      productsContentPadding: checkValue
+    });
+  };
+  const saleBadgeBorderWidthOnChangeHandle = newValues => {
+    let checkValues = pxCheck(newValues);
+    setAttributes({
+      saleBadgeBorderWidth: checkValues
+    });
+  };
+  const saleBadgeBorderRadiusOnChangeHandle = newValues => {
+    let checkValues = pxCheck(newValues);
+    setAttributes({
+      saleBadgeBorderRadius: checkValues
     });
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image Settings', 'mrs-products-grid'),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Products', 'mrs-products-grid'),
     initialOpen: true,
+    className: 'mrs-product-grid-panel-body'
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Content Alignment', 'mrs-products-grid')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ButtonGroup, {
+    className: 'mrs-products-btn-group'
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${productContentAlign === 'Left' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      productContentAlign: 'Left'
+    })
+  }, "Left"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${productContentAlign === 'Center' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      productContentAlign: 'Center'
+    })
+  }, "Center"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${productContentAlign === 'Right' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      productContentAlign: 'Right'
+    })
+  }, "Right")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    colorSettings: [{
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Content Background Color', 'mrs-products-grid'),
+      value: productsBGColor,
+      onChange: newValue => setAttributes({
+        productsBGColor: newValue
+      })
+    }]
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalBoxControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Padding', 'mrs-products-grid'),
+    values: productsContentPadding,
+    onChange: productsContentPaddingHandle
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Spacing', 'mrs-products-grid'),
+    value: productSpacing,
+    onChange: newValue => setAttributes({
+      productSpacing: newValue
+    })
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image Settings', 'mrs-products-grid'),
+    initialOpen: false,
     className: 'mrs-product-grid-panel-body'
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_4__["default"], {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Set Image Border Radius'),
@@ -397,7 +523,83 @@ const StyleTab = ({
     onClick: () => setAttributes({
       addToCartWidth: '100%'
     })
-  }, "100%"))));
+  }, "100%"))), saleBadgeShow && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sale Badge Style', 'mrs-products-grid'),
+    initialOpen: false,
+    className: 'mrs-product-grid-panel-body'
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    colorSettings: [{
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sale Text Color', 'mrs-products-grid'),
+      value: saleBadgeTextColor,
+      onChange: newValue => setAttributes({
+        saleBadgeTextColor: newValue
+      })
+    }, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sale Text Background Color', 'mrs-products-grid'),
+      value: saleBadgeBGColor,
+      onChange: newValue => setAttributes({
+        saleBadgeBGColor: newValue
+      })
+    }]
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Border', 'mrs-products-grid'),
+    value: saleBadgeBorderStyle,
+    options: [{
+      label: 'None',
+      value: 'none'
+    }, {
+      label: 'Solid',
+      value: 'solid'
+    }, {
+      label: 'Dashed',
+      value: 'dashed'
+    }, {
+      label: 'Dotted',
+      value: 'dotted'
+    }, {
+      label: 'Double',
+      value: 'Double'
+    }, {
+      label: 'Groove',
+      value: 'Groove'
+    }, {
+      label: 'Inset',
+      value: 'inset'
+    }, {
+      label: 'Outset',
+      value: 'outset'
+    }, {
+      label: 'Ridge',
+      value: 'ridge'
+    }],
+    onChange: newValue => setAttributes({
+      saleBadgeBorderStyle: newValue
+    })
+  }), saleBadgeBorderStyle !== 'none' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    colorSettings: [{
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Border Color', 'mrs-products-grid'),
+      value: saleBadgeBorderColor,
+      onChange: newValue => setAttributes({
+        saleBadgeBorderColor: newValue
+      })
+    }]
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalBoxControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Border Width', 'mrs-products-grid'),
+    values: saleBadgeBorderWidth,
+    onChange: saleBadgeBorderWidthOnChangeHandle,
+    units: [{
+      label: 'px',
+      value: 'px'
+    }]
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalBoxControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Border Radius', 'mrs-products-grid'),
+    values: saleBadgeBorderRadius,
+    onChange: saleBadgeBorderRadiusOnChangeHandle,
+    units: [{
+      label: 'px',
+      value: 'px'
+    }]
+  })) : ''));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StyleTab);
 
@@ -567,7 +769,15 @@ const dynamicCss = attributes => {
     addToCartBGColor,
     addToCartTextColor,
     mrsProductImageBorderRadius,
-    addToCartWidth
+    addToCartWidth,
+    saleBadgeAlign,
+    productSpacing,
+    saleBadgeBorderWidth,
+    saleBadgeBorderStyle,
+    saleBadgeBorderColor,
+    saleBadgeBorderRadius,
+    saleBadgeTextColor,
+    saleBadgeBGColor
   } = attributes;
   let desktopCss = {
     [`.mrs-block-mrs-products-grid .mrs-product-${uniqueID}`]: {
@@ -585,24 +795,24 @@ const dynamicCss = attributes => {
       'width': '100%'
     },
     [`.mrs-product-${uniqueID} .mrs-product-col.has-2-col`]: {
-      'width': 'calc(100% / 2 - 20px)',
-      'margin': '10px'
+      'width': `calc(100% / 2 - ${productSpacing * 2}px)`,
+      'margin': '5px ' + productSpacing + 'px'
     },
     [`.mrs-product-${uniqueID} .mrs-product-col.has-3-col`]: {
-      'width': 'calc(100% / 3 - 20px)',
-      'margin': '10px'
+      'width': `calc(100% / 3 - ${productSpacing * 2}px)`,
+      'margin': '5px ' + productSpacing + 'px'
     },
     [`.mrs-product-${uniqueID} .mrs-product-col.has-4-col`]: {
-      'width': 'calc(100% / 4 - 20px)',
-      'margin': '10px'
+      'width': `calc(100% / 4 - ${productSpacing * 2}px)`,
+      'margin': '5px ' + productSpacing + 'px'
     },
     [`.mrs-product-${uniqueID} .mrs-product-col.has-5-col`]: {
-      'width': 'calc(100% / 5 - 20px)',
-      'margin': '10px'
+      'width': `calc(100% / 5 - ${productSpacing * 2}px)`,
+      'margin': '5px ' + productSpacing + 'px'
     },
     [`.mrs-product-${uniqueID} .mrs-product-col.has-6-col`]: {
-      'width': 'calc(100% / 6 - 20px)',
-      'margin': '10px'
+      'width': `calc(100% / 6 - ${productSpacing * 2}px)`,
+      'margin': '5px ' + productSpacing + 'px'
     },
     [`.mrs-product-${uniqueID} .mrs-product .mrs-product-img-wrapper`]: {
       'position': 'relative'
@@ -614,11 +824,19 @@ const dynamicCss = attributes => {
     [`.mrs-product-${uniqueID} .mrs-product-img-wrapper .mrs-product-img-overlay`]: {
       'position': 'absolute',
       'top': '5px',
-      'right': '10px',
-      'background': '#fff',
+      'right': `${saleBadgeAlign === 'Right' ? '0px' : 'auto'}`,
+      'left': `${saleBadgeAlign === 'Left' ? '0px' : 'auto'}`,
+      'color': saleBadgeTextColor,
+      'background': saleBadgeBGColor,
       'padding': '5px 10px',
-      'border': '1px solid',
-      'border-radius': '5px',
+      'border-top': `${saleBadgeBorderWidth?.top} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+      'border-right': `${saleBadgeBorderWidth?.right} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+      'border-bottom': `${saleBadgeBorderWidth?.bottom} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+      'border-left': `${saleBadgeBorderWidth?.left} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+      'border-top-left-radius': saleBadgeBorderRadius.top,
+      'border-top-right-radius': saleBadgeBorderRadius.right,
+      'border-bottom-right-radius': saleBadgeBorderRadius.bottom,
+      'border-bottom-left-radius': saleBadgeBorderRadius.left,
       'font-size': '14px'
     },
     [`.mrs-product-${uniqueID} .mrs-product .mrs-product-content-wrapper`]: {
@@ -637,9 +855,9 @@ const dynamicCss = attributes => {
       'font-size': productPriceSize + 'px',
       'color': productPriceColor
     },
-    [`.mrs-product-${uniqueID} .mrs-product-content-wrapper`]: {
-      'margin-left': '-10px',
-      'margin-right': '-10px'
+    [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper .mrs-products-grid-content`]: {
+      'margin-left': '-' + productSpacing + 'px',
+      'margin-right': '-' + productSpacing + 'px'
     },
     [`.mrs-product-${uniqueID} .mrs-product-ratting .dashicons.dashicons-star-filled, .dashicons.dashicons-star-empty`]: {
       'width': productRatingStarSize + 'px',
@@ -735,7 +953,12 @@ function Edit({
     productTitleShow,
     productPriceShow,
     showProductRatingStar,
-    showAddToCart
+    showAddToCart,
+    saleBadgeShow,
+    saleBadgeText,
+    customAddToCartText,
+    addToCartText,
+    addToCartTextGroup
   } = attributes;
   const [firstTLoad, setFirstTLoad] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(true);
   const [loading, setLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
@@ -751,80 +974,18 @@ function Edit({
   }, [postsPerPage, orderBy, order]);
   const starRating = ratingCount => {
     let rating = parseInt(ratingCount);
-    switch (rating) {
-      case 1:
-        return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-filled'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-empty'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-empty'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-empty'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-empty'
-        }));
-      case 2:
-        return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-filled'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-filled'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-empty'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-empty'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-empty'
-        }));
-      case 3:
-        return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-filled'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-filled'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-filled'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-empty'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-empty'
-        }));
-      case 4:
-        return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-filled'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-filled'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-filled'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-filled'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-empty'
-        }));
-      case 5:
-        return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-filled'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-filled'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-filled'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-filled'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-filled'
-        }));
-      default:
-        return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-empty'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-empty'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-empty'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-empty'
-        }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
-          icon: 'star-empty'
-        }));
+    let starRatings = [];
+    for (let i = 0; i < rating; i++) {
+      starRatings.push((0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
+        icon: 'star-filled'
+      }));
     }
+    for (let i = rating; i < 5; i++) {
+      starRatings.push((0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
+        icon: 'star-empty'
+      }));
+    }
+    return starRatings;
   };
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
     if (uniqueID && !firstTLoad) {
@@ -877,9 +1038,10 @@ function Edit({
     }))), mrsProductsGrid?.products?.map((v, i) => {
       if (parseInt(v.id) === parseInt(item.id) && v.onSale === true) {
         return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-          key: i,
+          key: i
+        }, saleBadgeShow && saleBadgeText && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
           className: "mrs-product-img-overlay"
-        }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Sale"));
+        }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, saleBadgeText)));
       }
     })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "mrs-product-content-wrapper"
@@ -891,7 +1053,11 @@ function Edit({
       if (parseInt(v.id) === parseInt(item.id)) {
         return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
           key: i
-        }, starRating(v.rating));
+        }, starRating(v.rating).map((v, i) => {
+          return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+            key: i
+          }, v);
+        }));
       }
     })), productPriceShow && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "mrs-product-price"
@@ -914,7 +1080,7 @@ function Edit({
           "aria-label": `Add to cart: “${item?.title?.raw}”`,
           "aria-describedby": true,
           rel: "nofollow"
-        }, v.groupProduct ? 'View Products' : 'Add To Cart'));
+        }, customAddToCartText ? v.groupProduct ? addToCartTextGroup : addToCartText : v.groupProduct ? 'View Products' : 'Add To Cart'));
       }
     })))));
   })))));
@@ -1087,7 +1253,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"mrs-block/mrs-products-grid","version":"0.1.0","title":"MRS Products Grid","category":"text","icon":"cart","description":"A simple Gutenberg form widget.","example":{},"supports":{"html":false,"align":["wide","full"]},"attributes":{"uniqueID":{"type":"string","default":""},"frontendCss":{"type":"string","default":""},"postsPerPage":{"type":"number","default":100},"orderBy":{"type":"string","default":"title"},"order":{"type":"string","default":"desc"},"productsColumn":{"type":"number","default":3},"mrsProductImageBorderRadiusSet":{"type":"boolean","default":false},"mrsProductImageBorderRadius":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"productTitleShow":{"type":"boolean","default":true},"productTitleColor":{"type":"string","default":"#111111"},"productTitleSize":{"type":"number","default":22},"showProductRatingStar":{"type":"boolean","default":true},"productRatingStarSize":{"type":"number","default":16},"productRatingStarColor":{"type":"string","default":"#111111"},"productRatingEmptyStarColor":{"type":"string","default":"#ffffff"},"productPriceShow":{"type":"boolean","default":true},"productPriceSize":{"type":"number","default":18},"productPriceColor":{"type":"string","default":"#111111"},"showAddToCart":{"type":"boolean","default":true},"addToCartBGColor":{"type":"string","default":"#111111"},"addToCartTextColor":{"type":"string","default":"#fff"},"addToCartFontSize":{"type":"number","default":16},"addToCartWidth":{"type":"string","default":"75%"}},"textdomain":"mrs-products-grid","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"mrs-block/mrs-products-grid","version":"0.1.0","title":"MRS Products Grid","category":"text","icon":"cart","description":"A simple Gutenberg form widget.","example":{},"supports":{"html":false,"align":["wide","full"]},"attributes":{"uniqueID":{"type":"string","default":""},"frontendCss":{"type":"string","default":""},"postsPerPage":{"type":"number","default":100},"orderBy":{"type":"string","default":"title"},"order":{"type":"string","default":"desc"},"productsColumn":{"type":"number","default":3},"mrsProductImageBorderRadiusSet":{"type":"boolean","default":false},"mrsProductImageBorderRadius":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"productTitleShow":{"type":"boolean","default":true},"productTitleColor":{"type":"string","default":"#111111"},"productTitleSize":{"type":"number","default":22},"showProductRatingStar":{"type":"boolean","default":true},"productRatingStarSize":{"type":"number","default":16},"productRatingStarColor":{"type":"string","default":"#111111"},"productRatingEmptyStarColor":{"type":"string","default":"#ffffff"},"productPriceShow":{"type":"boolean","default":true},"productPriceSize":{"type":"number","default":18},"productPriceColor":{"type":"string","default":"#111111"},"showAddToCart":{"type":"boolean","default":true},"customAddToCartText":{"type":"boolean","default":false},"addToCartText":{"type":"string","default":"Add To Cart"},"addToCartTextGroup":{"type":"string","default":"View Products"},"addToCartBGColor":{"type":"string","default":"#111111"},"addToCartTextColor":{"type":"string","default":"#fff"},"addToCartFontSize":{"type":"number","default":16},"addToCartWidth":{"type":"string","default":"75%"},"saleBadgeShow":{"type":"boolean","default":true},"saleBadgeAlign":{"type":"string","default":"Left"},"saleBadgeText":{"type":"string","default":"Sale"},"saleBadgeBGColor":{"type":"string","default":"#ffffff"},"saleBadgeTextColor":{"type":"string","default":"#111111"},"saleBadgeBorderStyle":{"type":"string","default":"none"},"saleBadgeBorderColor":{"type":"string","default":"#111111"},"saleBadgeBorderWidth":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"saleBadgeBorderRadius":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"productContentAlign":{"type":"string","default":"Center"},"productsBGColor":{"type":"string","default":"#ffffff"},"productsContentPadding":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"productSpacing":{"type":"number","default":10}},"textdomain":"mrs-products-grid","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
 
 /***/ })
 

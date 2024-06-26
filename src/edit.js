@@ -8,7 +8,7 @@ import Inspector from './Inspector';
 import './editor.scss';
 
 export default function Edit({ attributes, setAttributes, clientId }) {
-	const { postsPerPage, orderBy, order, uniqueID, frontendCss, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart } = attributes;
+	const { postsPerPage, orderBy, order, uniqueID, frontendCss, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup } = attributes;
 	const [ firstTLoad, setFirstTLoad ] = useState(true);
 	const [ loading, setLoading ] = useState(false);
 	// console.log(mrsProductsGrid.products);
@@ -19,70 +19,16 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 
 	const starRating = (ratingCount) => {
 		let rating = parseInt(ratingCount);
-		switch (rating) {
-			case 1:
-				return(
-					<>
-					<Icon icon={'star-filled'} />
-					<Icon icon={'star-empty'} />
-					<Icon icon={'star-empty'} />
-					<Icon icon={'star-empty'} />
-					<Icon icon={'star-empty'} />
-					</>
-				);
-				
-			case 2:
-				return(
-					<>
-					<Icon icon={'star-filled'} />
-					<Icon icon={'star-filled'} />
-					<Icon icon={'star-empty'} />
-					<Icon icon={'star-empty'} />
-					<Icon icon={'star-empty'} />
-					</>
-				);
-			
-				case 3:
-					return(
-						<>
-						<Icon icon={'star-filled'} />
-						<Icon icon={'star-filled'} />
-						<Icon icon={'star-filled'} />
-						<Icon icon={'star-empty'} />
-						<Icon icon={'star-empty'} />
-						</>
-					);
-				case 4:
-					return(
-						<>
-						<Icon icon={'star-filled'} />
-						<Icon icon={'star-filled'} />
-						<Icon icon={'star-filled'} />
-						<Icon icon={'star-filled'} />
-						<Icon icon={'star-empty'} />
-						</>
-					);
-				case 5:
-					return(
-						<>
-						<Icon icon={'star-filled'} />
-						<Icon icon={'star-filled'} />
-						<Icon icon={'star-filled'} />
-						<Icon icon={'star-filled'} />
-						<Icon icon={'star-filled'} />
-						</>
-					)
-			default:
-				return(
-					<>
-					<Icon icon={'star-empty'} />
-					<Icon icon={'star-empty'} />
-					<Icon icon={'star-empty'} />
-					<Icon icon={'star-empty'} />
-					<Icon icon={'star-empty'} />
-					</>
-				);
+		let starRatings = [];
+
+		for ( let i = 0; i < rating; i++) {
+			starRatings.push( <Icon icon={'star-filled'} /> );
 		}
+		for ( let i = rating; i < 5; i++ ) {
+			starRatings.push( <Icon icon={'star-empty'} /> );
+		}
+		return starRatings;
+
 	}
 
 	useEffect(() => {
@@ -135,8 +81,10 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 											{mrsProductsGrid?.products?.map( (v, i) =>{
 											if( parseInt(v.id) === parseInt(item.id) && v.onSale === true ){
 												return (
-													<div key={i} className='mrs-product-img-overlay'>
-														<span>Sale</span>
+													<div key={i}>
+														{ saleBadgeShow && saleBadgeText && <div className='mrs-product-img-overlay'>
+															<span>{saleBadgeText}</span>
+														</div>}
 													</div>
 												);
 											}
@@ -154,7 +102,12 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 											{mrsProductsGrid?.products?.map( (v,i) =>{
 												if( parseInt(v.id) === parseInt(item.id)){
 													return (
-														<div key={i}>{ starRating(v.rating) }</div>
+														<div key={i}>
+															{ starRating(v.rating).map( (v, i) => {
+														return (
+														<span key={i}>{v}</span>
+													)})}
+													</div>
 													);
 												}
 												})}
@@ -182,7 +135,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 													return (
 														<p className='product woocommerce add_to_cart_inline mrs-product-buy-btn-cart' key={i}>
 															<a data-quantity="1" className='wp-block-button__link wp-element-button add_to_cart_button wc-block-components-product-button__button' aria-label={`Add to cart: “${item?.title?.raw}”`} aria-describedby rel='nofollow'>
-															{v.groupProduct ? 'View Products' : 'Add To Cart'}
+															{  customAddToCartText ?  v.groupProduct ? addToCartTextGroup : addToCartText : v.groupProduct ? 'View Products' : 'Add To Cart'}
 															</a>
 														</p>
 													);

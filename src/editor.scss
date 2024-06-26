@@ -38,6 +38,10 @@
 		.components-grid .components-tools-panel {
 			margin-bottom: 24px;
 		}
+		.mrs-product-grid-btn-label {
+			display: block;
+			margin-bottom: 10px;
+		}
 		.mrs-products-btn-group {
 			display: flex;
 			.mrs-products-btn {
@@ -47,6 +51,18 @@
 				&.is-active {
 					background: #9b438b;
 					color: #ffffff;
+				}
+			}
+		}
+		.block-editor-panel-color-gradient-settings {
+			border: none;
+			margin: 0;
+			padding: 0;
+			.components-flex {
+				&.components-h-stack{
+					display: flex;
+					flex-direction: row-reverse;
+					justify-content: space-between;
 				}
 			}
 		}

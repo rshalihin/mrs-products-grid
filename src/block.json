@@ -89,6 +89,18 @@
 			"type": "boolean",
 			"default": true
 		},
+		"customAddToCartText": {
+			"type": "boolean",
+			"default": false
+		},
+		"addToCartText": {
+			"type": "string",
+			"default": "Add To Cart"
+		},
+		"addToCartTextGroup": {
+			"type": "string",
+			"default": "View Products"
+		},
 		"addToCartBGColor": {
 			"type": "string",
 			"default": "#111111"
@@ -104,6 +116,58 @@
 		"addToCartWidth": {
 			"type": "string",
 			"default": "75%"
+		},
+		"saleBadgeShow": {
+			"type": "boolean",
+			"default": true
+		},
+		"saleBadgeAlign": {
+			"type": "string",
+			"default": "Left"
+		},
+		"saleBadgeText": {
+			"type": "string",
+			"default": "Sale"
+		},
+		"saleBadgeBGColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"saleBadgeTextColor": {
+			"type": "string",
+			"default": "#111111"
+		},
+		"saleBadgeBorderStyle": {
+			"type": "string",
+			"default": "none"
+		},
+		"saleBadgeBorderColor": {
+			"type": "string",
+			"default": "#111111"
+		},
+		"saleBadgeBorderWidth": {
+			"type": "object",
+			"default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" }
+		},
+		"saleBadgeBorderRadius": {
+			"type": "object",
+			"default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" }
+		},
+		"productContentAlign": {
+			"type": "string",
+			"default": "Center"
+		},
+		"productsBGColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"productsContentPadding": {
+			"type": "object",
+			"default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" }
+		},
+		"productSpacing": {
+			"type": "number",
+			"default": 10
 		}
 	},
 	"textdomain": "mrs-products-grid",

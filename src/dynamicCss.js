@@ -1,7 +1,8 @@
 import cssString from './controls/controls';
 
 const dynamicCss = (attributes) => {
-    const { uniqueID, productTitleSize, productTitleColor, productPriceSize, productPriceColor, productRatingStarSize, productRatingStarColor, addToCartFontSize, addToCartBGColor, addToCartTextColor, mrsProductImageBorderRadius, addToCartWidth } = attributes;
+    const { uniqueID, productTitleSize, productTitleColor, productPriceSize, productPriceColor, productRatingStarSize, productRatingStarColor, addToCartFontSize, addToCartBGColor, addToCartTextColor, mrsProductImageBorderRadius, addToCartWidth, saleBadgeAlign, productSpacing, saleBadgeBorderWidth, saleBadgeBorderStyle, saleBadgeBorderColor, saleBadgeBorderRadius, saleBadgeTextColor, saleBadgeBGColor } = attributes;
+
     let desktopCss = {
         [`.mrs-block-mrs-products-grid .mrs-product-${uniqueID}`] : {
             'display' : 'block',
@@ -18,24 +19,24 @@ const dynamicCss = (attributes) => {
             'width': '100%',
         },
         [`.mrs-product-${uniqueID} .mrs-product-col.has-2-col`] : {
-            'width': 'calc(100% / 2 - 20px)',
-            'margin': '10px',
+            'width': `calc(100% / 2 - ${productSpacing * 2 }px)`,
+            'margin': '5px ' + productSpacing + 'px',
         },
         [`.mrs-product-${uniqueID} .mrs-product-col.has-3-col`] : {
-            'width': 'calc(100% / 3 - 20px)',
-            'margin': '10px',
+            'width': `calc(100% / 3 - ${productSpacing * 2 }px)`,
+            'margin': '5px ' + productSpacing + 'px',
         },
         [`.mrs-product-${uniqueID} .mrs-product-col.has-4-col`] : {
-            'width': 'calc(100% / 4 - 20px)',
-            'margin': '10px',
+            'width': `calc(100% / 4 - ${productSpacing * 2 }px)`,
+            'margin': '5px ' + productSpacing + 'px',
         },
         [`.mrs-product-${uniqueID} .mrs-product-col.has-5-col`] : {
-            'width': 'calc(100% / 5 - 20px)',
-            'margin': '10px',
+            'width': `calc(100% / 5 - ${productSpacing * 2 }px)`,
+            'margin': '5px ' + productSpacing + 'px',
         },
         [`.mrs-product-${uniqueID} .mrs-product-col.has-6-col`] : {
-            'width': 'calc(100% / 6 - 20px)',
-            'margin': '10px',
+            'width': `calc(100% / 6 - ${productSpacing * 2 }px)`,
+            'margin': '5px ' + productSpacing + 'px',
         },
         [`.mrs-product-${uniqueID} .mrs-product .mrs-product-img-wrapper`] : {
             'position': 'relative',
@@ -47,11 +48,19 @@ const dynamicCss = (attributes) => {
         [`.mrs-product-${uniqueID} .mrs-product-img-wrapper .mrs-product-img-overlay`] : {
             'position': 'absolute',
             'top': '5px',
-            'right': '10px',
-            'background': '#fff',
+            'right': `${saleBadgeAlign === 'Right' ? '0px' : 'auto'}`,
+            'left': `${saleBadgeAlign === 'Left' ? '0px' : 'auto'}`,
+            'color': saleBadgeTextColor,
+            'background': saleBadgeBGColor,
             'padding': '5px 10px',
-            'border': '1px solid',
-            'border-radius': '5px',
+            'border-top': `${saleBadgeBorderWidth?.top} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+            'border-right': `${saleBadgeBorderWidth?.right} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+            'border-bottom': `${saleBadgeBorderWidth?.bottom} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+            'border-left': `${saleBadgeBorderWidth?.left} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+            'border-top-left-radius': saleBadgeBorderRadius.top,
+            'border-top-right-radius': saleBadgeBorderRadius.right,
+            'border-bottom-right-radius': saleBadgeBorderRadius.bottom,
+            'border-bottom-left-radius': saleBadgeBorderRadius.left,
             'font-size': '14px',
         },
         [`.mrs-product-${uniqueID} .mrs-product .mrs-product-content-wrapper`] : {
@@ -70,9 +79,9 @@ const dynamicCss = (attributes) => {
             'font-size': productPriceSize + 'px',
             'color': productPriceColor
         },
-        [`.mrs-product-${uniqueID} .mrs-product-content-wrapper`] : {
-            'margin-left': '-10px',
-		    'margin-right': '-10px',
+        [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper .mrs-products-grid-content`] : {
+            'margin-left': '-' + productSpacing + 'px',
+		    'margin-right': '-' + productSpacing +'px',
         },
         [`.mrs-product-${uniqueID} .mrs-product-ratting .dashicons.dashicons-star-filled, .dashicons.dashicons-star-empty`] : {
             'width': productRatingStarSize + 'px',

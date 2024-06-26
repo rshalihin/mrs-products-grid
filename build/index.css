@@ -63,6 +63,10 @@
 .components-tab-panel__tab-content .mrs-product-grid-panel-body .components-grid .components-tools-panel {
   margin-bottom: 24px;
 }
+.components-tab-panel__tab-content .mrs-product-grid-panel-body .mrs-product-grid-btn-label {
+  display: block;
+  margin-bottom: 10px;
+}
 .components-tab-panel__tab-content .mrs-product-grid-panel-body .mrs-products-btn-group {
   display: flex;
 }
@@ -74,6 +78,16 @@
 .components-tab-panel__tab-content .mrs-product-grid-panel-body .mrs-products-btn-group .mrs-products-btn.is-active {
   background: #9b438b;
   color: #ffffff;
+}
+.components-tab-panel__tab-content .mrs-product-grid-panel-body .block-editor-panel-color-gradient-settings {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+.components-tab-panel__tab-content .mrs-product-grid-panel-body .block-editor-panel-color-gradient-settings .components-flex.components-h-stack {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
 }
 
 /*# sourceMappingURL=index.css.map*/

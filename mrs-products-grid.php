@@ -77,7 +77,7 @@ function mrs_block_products_grid_rendering( $attributes ) {
 			$mrs_product_price  = $product->get_price_html() ? $product->get_price_html() : 'Out of stock';
 			$is_on_sale_product = $product->is_on_sale() ? true : false;
 			$mrs_ratings        = $product->get_average_rating();
-			$mrs_avg_rating      = "";
+			$mrs_avg_rating     = '';
 
 			for ( $i = 0; $i < intval( $mrs_ratings ); $i++ ) {
 				$mrs_avg_rating .= '<span class="dashicons dashicons-star-filled"></span>';
@@ -95,9 +95,11 @@ function mrs_block_products_grid_rendering( $attributes ) {
 								<img src="<?php echo esc_url( $mrs_product_image_url ); ?>" alt="" />
 							</a>
 						</div>
-						<?php if ( $is_on_sale_product ) { ?> 
-						<div class="mrs-product-img-overlay">
-							<span>Sale</span>
+						<?php if ( $is_on_sale_product ) { ?>
+						<div>
+							<div class="mrs-product-img-overlay">
+								<span><?php echo wp_kses_post( $attributes['saleBadgeText'] ); ?></span>
+							</div>
 						</div>
 						<?php } ?>
 					</div>
@@ -112,6 +114,7 @@ function mrs_block_products_grid_rendering( $attributes ) {
 							<div class="mrs-product-add-to-cart">
 								<?php
 								$add_to_cart = do_shortcode( '[add_to_cart id="' . get_the_ID() . '" show_price="false" style="" class="mrs-product-buy-btn-cart"]' );
+
 								echo wp_kses_post( $add_to_cart );
 								?>
 						</div>
@@ -176,11 +179,6 @@ function mrs_products_grid_product_data() {
 		$product_obj   = wc_get_product( $product_id );
 		$group_product = $product_obj->get_children() ? true : false;
 
-		// echo '<pre>';
-		// var_dump( $new_product );
-		// echo '</pre>';
-		// wp_die();
-
 		$product_data[] = array(
 			'id'           => $product_id,
 			// 'title' => $product->post_title,
@@ -192,6 +190,7 @@ function mrs_products_grid_product_data() {
 			'groupProduct' => $group_product,
 		);
 	}
+
 	return $product_data;
 }
 
@@ -238,7 +237,6 @@ if ( ! is_admin() ) {
 	add_action( 'wp_enqueue_scripts', 'mrs_products_grid_single_page_dynamic_css' );
 }
 
-// add_action( 'wp_enqueue_scripts', 'mrs_products_grid_single_page_dynamic_css' );
 
 /**
  * Add Dynamic CSS in frontend.
@@ -253,7 +251,5 @@ function mrs_products_grid_single_page_dynamic_css() {
 		$mrs_attr = substr( $attributes['frontendCss'], 1, ( strlen( $attributes['frontendCss'] ) - 2 ) );
 
 		$mrs_bool = wp_add_inline_style( 'mrs-products-grid-style-enqueue', $mrs_attr );
-
 	}
-
 }
