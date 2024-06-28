@@ -1,3 +1,24 @@
+import { useSelect, select } from '@wordpress/data';
+
+// Device type fn
+export const useDeviceType = () => {
+    const canvas = document.getElementsByClassName( 'edit-site-visual-editor__editor-canvas' );
+    const { deviceType } = useSelect(
+        select => {
+            if ( canvas.length > 0 ) {
+                return {
+                    deviceType: select( 'core/editor' ).getDeviceType() || 'Desktop',
+                }
+            } else {
+                return {
+                    deviceType: select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType() || 'Desktop',
+                }
+            }
+        }, [])
+    return deviceType || '';
+}
+
+
 const cssString = (css) => {
     let results = '';
     for ( let selector in css ) {
@@ -11,5 +32,7 @@ const cssString = (css) => {
     }
     return results;
 }
+
+
 
 export default cssString;

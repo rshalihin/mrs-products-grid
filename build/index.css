@@ -21,6 +21,201 @@
   border-color: #757575;
 }
 /*!**************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/components/responsive/editor.scss ***!
+  \**************************************************************************************************************************************************************************************************************************************************************/
+.mrs-products-grid-responsive {
+  margin-left: 10px;
+}
+/*!***********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/components/spacing/editor.scss ***!
+  \***********************************************************************************************************************************************************************************************************************************************************/
+.components-panel__body .mrs-components-mb {
+  margin-bottom: 24px;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-left {
+  display: flex;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-left .mrs-component-title {
+  text-transform: uppercase;
+  color: #757575;
+  font-weight: 700;
+  font-size: 11px;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-left .mrs-products-grid-responsive {
+  margin-left: 10px;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-left .mrs-products-grid-responsive .mrs-products-units {
+  position: relative;
+  color: #8C8F94;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-left .mrs-products-grid-responsive .mrs-products-units span {
+  display: inline-block;
+  font-size: 10px;
+  padding: 0px;
+  width: 23px;
+  height: 20px;
+  border: 1px solid #8C8F94;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-left .mrs-products-grid-responsive .mrs-products-units span svg {
+  fill: #9b438b;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-left .mrs-products-grid-responsive .mrs-products-units .mrs-products-units-btn {
+  box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.15);
+  position: absolute;
+  z-index: 999;
+  margin-top: 2px;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-left .mrs-products-grid-responsive .mrs-products-units .mrs-products-units-btn .components-button {
+  padding: 0;
+  width: 23px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  font-size: 10px;
+  border: none;
+  color: #8C8F94;
+  border-radius: 0;
+  box-shadow: none;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-left .mrs-products-grid-responsive .mrs-products-units .mrs-products-units-btn .components-button.active {
+  background-color: #9b438b;
+  color: #fff;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-left .mrs-products-grid-responsive .mrs-products-units:hover .mrs-products-units-btn {
+  opacity: 1;
+  visibility: visible;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right {
+  display: flex;
+  margin-top: -10px;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-header-control-reset {
+  height: 18px;
+  padding: 0;
+  margin-right: 10px;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-header-control-reset.active {
+  color: #9b438b;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-header-control-reset:focus:not(:disabled) {
+  outline: none;
+  box-shadow: none;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-units {
+  position: relative;
+  color: #8C8F94;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-units .mrs-units-btn {
+  box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.15);
+  position: absolute;
+  z-index: 999;
+  margin-top: 2px;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-units:hover .mrs-units-btn {
+  opacity: 1;
+  visibility: visible;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-units:hover span {
+  border-color: #9b438b;
+  color: #9b438b;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-units:hover span svg {
+  fill: #9b438b;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-units span {
+  display: inline-block;
+  font-size: 10px;
+  padding: 0px;
+  width: 23px;
+  height: 20px;
+  border: 1px solid #8C8F94;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-units span svg {
+  fill: #8C8F94;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-units button {
+  padding: 0;
+  width: 23px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  font-size: 10px;
+  border: none;
+  color: #8C8F94;
+  border-radius: 0;
+  box-shadow: none;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-units button:focus:not(:disabled) {
+  outline: none;
+  box-shadow: none;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-units button.active {
+  background-color: #9b438b;
+  color: #fff;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-2 {
+  display: flex;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-2 label {
+  font-size: 11px;
+  display: inline-block;
+  color: #8C8F94;
+  margin-top: 4px;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-2 input {
+  width: 100%;
+  padding: 0;
+  text-align: center;
+  border-radius: 0;
+  border-right: 0;
+  border-color: #DDD;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-2 input:focus:not(:disabled) {
+  outline: none;
+  box-shadow: none;
+  border-color: #DDD;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-2 .mrs-spacing-left input {
+  border-right: 1px solid #ddd;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-2 .mrs-spacing-all button {
+  border: 1px solid #ddd;
+  height: 30px;
+  width: 40px;
+  padding: 0;
+  justify-content: center;
+}
+.components-panel__body .mrs-component-spacing .mrs-spacing-part-2 .mrs-spacing-all button.active {
+  background-color: #9b438b;
+}
+/*!**************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/components/tabControl/editor.scss ***!
   \**************************************************************************************************************************************************************************************************************************************************************/
 .mrs-products-tab-panel .components-tab-panel__tabs {

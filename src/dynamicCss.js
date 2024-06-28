@@ -1,12 +1,18 @@
 import cssString from './controls/controls';
 
 const dynamicCss = (attributes) => {
-    const { uniqueID, productTitleSize, productTitleColor, productPriceSize, productPriceColor, productRatingStarSize, productRatingStarColor, addToCartFontSize, addToCartBGColor, addToCartTextColor, mrsProductImageBorderRadius, addToCartWidth, saleBadgeAlign, productSpacing, saleBadgeBorderWidth, saleBadgeBorderStyle, saleBadgeBorderColor, saleBadgeBorderRadius, saleBadgeTextColor, saleBadgeBGColor } = attributes;
+    const { uniqueID, productTitleSize, productTitleColor, productPriceSize, productPriceColor, productRatingStarSize, productRatingStarColor, addToCartFontSize, addToCartBGColor, addToCartTextColor, mrsProductImageBorderRadius, addToCartWidth, saleBadgeAlign, productSpacing, saleBadgeBorderWidth, saleBadgeBorderStyle, saleBadgeBorderColor, saleBadgeBorderRadius, saleBadgeTextColor, saleBadgeBGColor, productsGridMargin } = attributes;
+
+    
+    
 
     let desktopCss = {
         [`.mrs-block-mrs-products-grid .mrs-product-${uniqueID}`] : {
             'display' : 'block',
             'box-sizing' : 'border-box'
+        },
+        [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper`] : {
+            'margin': ''
         },
         [`.mrs-product-${uniqueID} .mrs-products-grid-content`] : {
             'display' : 'flex',

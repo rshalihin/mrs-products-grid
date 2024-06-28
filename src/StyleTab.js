@@ -3,6 +3,7 @@ import { PanelBody, RangeControl, __experimentalDivider as Divider, __experiment
 import { PanelColorSettings } from '@wordpress/block-editor';
 import MRSToggle from './components/mrsToggle/MRSToggle';
 import { SelectControl } from '@wordpress/components';
+import Responsive from './components/responsive/Responsive';
 
 const StyleTab = ({attributes, setAttributes}) => {
     const { mrsProductImageBorderRadiusSet, mrsProductImageBorderRadius, productTitleShow, productTitleSize, productTitleColor, productPriceShow, productPriceSize, productPriceColor, showProductRatingStar, productRatingStarSize, productRatingStarColor, productRatingEmptyStarColor, showAddToCart, addToCartFontSize, addToCartTextColor, addToCartBGColor, addToCartWidth, productContentAlign, productsBGColor, productsContentPadding, productSpacing, saleBadgeBorderStyle, saleBadgeShow, saleBadgeTextColor, saleBadgeBGColor, saleBadgeBorderColor, saleBadgeBorderWidth, saleBadgeBorderRadius } = attributes;
@@ -245,7 +246,6 @@ const StyleTab = ({attributes, setAttributes}) => {
                 units={[{ label: 'px', value: 'px'}]}
             />
             </> : ''}
-           
         </PanelBody>
         }
         </>

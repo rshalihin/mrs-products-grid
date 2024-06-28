@@ -1,0 +1,196 @@
+.components-panel__body {
+    .mrs-components-mb {
+        margin-bottom: 24px;
+    }
+    .mrs-component-spacing {
+        .mrs-spacing-part-1{
+            .mrs-header-control{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .mrs-header-control-left{
+                    display: flex;
+                    .mrs-component-title {
+                        text-transform: uppercase;
+                        color: #757575;
+                        font-weight: 700;
+                        font-size: 11px;
+                        margin-bottom: 8px;
+                        display: inline-block;
+                    }
+                    .mrs-products-grid-responsive {
+                        margin-left: 10px;
+                        .mrs-products-units {
+                            position: relative;
+                            color: #8C8F94;
+                            span {
+                                display: inline-block;
+                                font-size: 10px;
+                                padding: 0px;
+                                width: 23px;
+                                height: 20px;
+                                border: 1px solid #8C8F94;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                border-radius: 2px;
+                                cursor: pointer;
+                                text-transform: capitalize;
+
+                                svg {
+                                    fill:#9b438b;
+                                }
+                            }
+                            .mrs-products-units-btn {
+                                box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.15);
+                                position: absolute;
+                                z-index: 999;
+                                margin-top: 2px;
+                                opacity: 0;
+                                visibility: hidden;
+                                transition: 0.3s;
+                                .components-button {
+                                    padding: 0;
+                                    width: 23px;
+                                    height: 20px;
+                                    display: flex;
+                                    justify-content: center;
+                                    background-color: #fff;
+                                    font-size: 10px;
+                                    border: none;
+                                    color: #8C8F94;
+                                    border-radius: 0;
+                                    box-shadow: none;
+                                    &.active {
+                                        background-color: #9b438b;
+                                        color: #fff;
+                                    }                                
+                                }
+                            }
+                            &:hover .mrs-products-units-btn {
+                                opacity: 1;
+                                visibility: visible;
+                            }
+                        }
+                    }
+                }
+                .mrs-header-control-right {
+                    display: flex;
+                    margin-top: -10px;
+                    .mrs-header-control-reset {
+                        height: 18px;
+                        padding: 0;
+                        margin-right: 10px;
+                        &.active{
+                            color: #9b438b;
+                        }
+                        &:focus:not(:disabled){
+                            outline: none;
+                            box-shadow: none;
+                        }
+                    }
+                    .mrs-units {
+                        position: relative;
+                        color: #8C8F94;
+                        .mrs-units-btn {
+                            box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.15);
+                            position: absolute;
+                            z-index: 999;
+                            margin-top: 2px;
+                            opacity: 0;
+                            visibility: hidden;
+                            transition: .3s;
+                        }
+                        &:hover .mrs-units-btn{
+                            opacity: 1;
+                            visibility: visible;
+                        }
+                        &:hover{
+                            span{
+                                border-color: #9b438b;
+                                color: #9b438b;
+                                svg {
+                                    fill: #9b438b;
+                                }
+                            }
+                        }
+                        span{
+                            display: inline-block;
+                            font-size: 10px;
+                            padding: 0px;
+                            width: 23px;
+                            height: 20px;
+                            border: 1px solid #8C8F94;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 2px;
+                            cursor: pointer;
+                            text-transform: capitalize;
+                            svg {
+                                fill: #8C8F94;
+                            }
+                        }
+                        button {
+                            padding: 0;
+                            width: 23px;
+                            height: 20px;
+                            display: flex;
+                            justify-content: center;
+                            background-color: #fff;
+                            font-size: 10px;
+                            border: none;
+                            color: #8C8F94;
+                            border-radius: 0;
+                            box-shadow: none;
+                            &:focus:not(:disabled){
+                                outline: none;
+                                box-shadow: none;
+                            }
+                            &.active{
+                                background-color: #9b438b;
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .mrs-spacing-part-2{
+            display: flex;
+            label{
+              font-size: 11px;
+              display: inline-block;
+              color: #8C8F94;
+              margin-top: 4px;  
+            }
+            input {
+                width: 100%;
+                padding: 0;
+                text-align: center;
+                border-radius: 0;
+                border-right: 0;
+                border-color: #DDD;
+                &:focus:not(:disabled){
+                    outline: none;
+                    box-shadow: none;
+                    border-color: #DDD;
+                }
+            }
+            .mrs-spacing-left input {
+                border-right: 1px solid #ddd;
+            }
+            .mrs-spacing-all button {
+                border: 1px solid #ddd;
+                height: 30px;
+                width: 40px;
+                padding: 0;
+                justify-content: center;
+                
+                &.active {
+                    background-color: #9b438b;
+                }
+            }
+        }
+    }
+}

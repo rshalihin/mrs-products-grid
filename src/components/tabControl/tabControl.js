@@ -22,7 +22,7 @@ const TabControl = ({ attributes, setAttributes, GeneralTab = '', StyleTab='', A
 
     if(AdvanceTab) {
         Tabs.push({
-            name: 'Advance',
+            name: 'advance',
             title: <span className='mrs-products-tab-panel-title'>Advance</span>,
             className: 'mrs-products-advance-tab'
         })
