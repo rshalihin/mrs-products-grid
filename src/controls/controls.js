@@ -33,6 +33,22 @@ const cssString = (css) => {
     return results;
 }
 
+export const cssDataCheck = ( value, unit = '' ) => {
+    let data = '';
+    if ( 'object' === typeof value ) {
+        for(let single in value ) {
+            if( value[single].length > 0 ) {
+                data += ` ${value[single]}${unit}`;
+            }
+        }
+    } else {
+        if ( value && value.toString().length > 0 ) {
+            data += ` ${value}${unit}`;
+        }
+    }
+    return data;
+}
+
 
 
 export default cssString;

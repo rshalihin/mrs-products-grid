@@ -8,14 +8,37 @@ import Inspector from './Inspector';
 import './editor.scss';
 
 export default function Edit({ attributes, setAttributes, clientId }) {
-	const { postsPerPage, orderBy, order, uniqueID, frontendCss, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup } = attributes;
+	const { postsPerPage, orderBy, order, uniqueID, frontendCss, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup, hideOutOfStock } = attributes;
 	const [ firstTLoad, setFirstTLoad ] = useState(true);
 	const [ loading, setLoading ] = useState(false);
+	const [mrsPro, setMrsPro] = useState([]);
+
 	// console.log(mrsProductsGrid.products);
 
 	const selectProduct = useSelect((select)=> {
 		return select('core').getEntityRecords('postType', 'product', {per_page: postsPerPage, _embed: true, orderby: orderBy, order });
 	}, [postsPerPage, orderBy, order]);
+
+
+	useEffect(() => {
+		if ( selectProduct ) {
+			const copyProduct = selectProduct;
+			copyProduct?.map((item) =>{
+				mrsProductsGrid?.products?.map( (v) =>{
+					if( parseInt(v.id) === parseInt(item.id) ){
+						item.stock = v.price ? 'instock' : 'out of stock';
+					}
+				})
+			})
+			if ( hideOutOfStock ) {
+				const filterPro = copyProduct?.filter( v => v.stock === 'instock' );
+				setMrsPro(filterPro);
+			} else {
+				setMrsPro(copyProduct);
+			}
+		}
+	},[selectProduct, hideOutOfStock])
+	
 
 	const starRating = (ratingCount) => {
 		let rating = parseInt(ratingCount);
@@ -69,8 +92,8 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 			{ loading && <p>Loading Products...</p>}
 			<div className="mrs-products-grid-wrapper">
 				<div className="mrs-products-grid-content">
-					{selectProduct && selectProduct.length > 0 && (							
-						selectProduct.map((item, i) => {
+					{mrsPro && mrsPro.length > 0 && (							
+						mrsPro.map((item, i) => {
 							return(
 								<div className={`mrs-product-col has-${productsColumn}-col`} key={i}>
 									<div className='mrs-product'>

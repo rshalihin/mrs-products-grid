@@ -42,8 +42,22 @@ function mrs_block_products_grid_rendering( $attributes ) {
 		$args['posts_per_page'] = 100;
 	}
 
+	if ( ! empty( $attributes['hideOutOfStock'] ) ) {
+		$args['meta_query'] = array(
+			array(
+				'key'   => '_stock_status',
+				'value' => 'instock',
+				)
+			);
+	}
+
 	if ( isset( $attributes['orderBy'] ) ) {
-		$args['order_by'] = $attributes['orderBy'];
+		if ( $attributes['orderBy'] === 'rating' ) {
+			$args['orderby']  = 'meta_value_num';
+			$args['meta_key'] = '_wc_average_rating';
+		} else {
+			$args['orderby'] = $attributes['orderBy'];
+		}
 	}
 	if ( isset( $attributes['order'] ) ) {
 		$args['order'] = $attributes['order'];
@@ -181,10 +195,7 @@ function mrs_products_grid_product_data() {
 
 		$product_data[] = array(
 			'id'           => $product_id,
-			// 'title' => $product->post_title,
-			// 'link'  => get_permalink( $product_id ),
 			'price'        => $product_obj->get_price_html(),
-			// 'image' => wp_get_attachment_image_src( get_post_thumbnail_id( $product_id ) ),
 			'rating'       => $product_obj->get_average_rating(),
 			'onSale'       => $product_obj->is_on_sale() ? true : false,
 			'groupProduct' => $group_product,

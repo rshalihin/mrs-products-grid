@@ -230,6 +230,80 @@
 				},
 				"allChange": false
 			}
+		},
+		"hideOutOfStock": {
+			"type": "boolean",
+			"default": false
+		},
+		"productsBorderStyle": {
+			"type": "string",
+			"default": "none"
+		},
+		"productsBorderColor": {
+			"type": "string",
+			"default": "#ffffff00"
+		},
+		"productsBorderWidth": {
+			"type": "object",
+			"default": {
+				"device": {
+					"Desktop": {
+						"top": "0",
+						"right": "0",
+						"bottom": "0",
+						"left": "0"
+					},
+					"Tablet": {
+						"top": "0",
+						"right": "0",
+						"bottom": "0",
+						"left": "0"
+					},
+					"Mobile": {
+						"top": "0",
+						"right": "0",
+						"bottom": "0",
+						"left": "0"
+					}
+				},
+				"unit": {
+					"Desktop": "px",
+					"Tablet": "px",
+					"Mobile": "px"
+				},
+				"allChange": true
+			}
+		},
+		"productsBorderRadius": {
+			"type": "object",
+			"default": {
+				"device": {
+					"Desktop": {
+						"top": "0",
+						"right": "0",
+						"bottom": "0",
+						"left": "0"
+					},
+					"Tablet": {
+						"top": "0",
+						"right": "0",
+						"bottom": "0",
+						"left": "0"
+					},
+					"Mobile": {
+						"top": "0",
+						"right": "0",
+						"bottom": "0",
+						"left": "0"
+					}
+				},
+				"unit": {
+					"Desktop": "px",
+					"Tablet": "px",
+					"Mobile": "px"
+				},
+				"allChange": true
+			}
 		}
 	},
 	"textdomain": "mrs-products-grid",

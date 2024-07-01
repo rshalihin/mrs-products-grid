@@ -3,7 +3,7 @@ import { PanelBody, RangeControl, SelectControl, __experimentalDivider as Divide
 import MRSToggle from "./components/mrsToggle/MRSToggle";
 
 const GeneralTab = ({attributes, setAttributes}) => {
-    const { postsPerPage, orderBy, order, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeAlign, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup } = attributes;
+    const { postsPerPage, orderBy, order, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeAlign, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup,hideOutOfStock } = attributes;
     return(
         <>
         <PanelBody title={__('Layout Settings', 'mrs-products-grid')} initialOpen={true} className={'mrs-product-grid-panel-body'}>
@@ -20,6 +20,12 @@ const GeneralTab = ({attributes, setAttributes}) => {
                 value={postsPerPage}
                 onChange={(newValue) => setAttributes({postsPerPage: newValue})}
             />
+            <MRSToggle
+                label={__('Hide Out Of Stock Product', 'mrs-products-grid')}
+                attributes={hideOutOfStock}
+                attributesKey={'hideOutOfStock'}
+                setAttributes={setAttributes}
+            />
         </PanelBody>
         <PanelBody title={__('Filter Settings', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
             <SelectControl
@@ -29,6 +35,7 @@ const GeneralTab = ({attributes, setAttributes}) => {
                     { label: __('ID', 'mrs-products-grid'), value: 'id'},
                     { label: __('Date', 'mrs-products-grid'), value: 'date'},
                     { label: __('Title', 'mrs-products-grid'), value: 'title'},
+                    { label: __('Rating', 'mrs-products-grid'), value: 'rating'},
                     { label: __('Modified', 'mrs-products-grid'), value: 'modified'}
                 ]}
                 value={orderBy}

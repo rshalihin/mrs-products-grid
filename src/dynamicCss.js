@@ -1,10 +1,16 @@
 import cssString from './controls/controls';
+import { cssDataCheck } from './controls/controls';
 
-const dynamicCss = (attributes) => {
-    const { uniqueID, productTitleSize, productTitleColor, productPriceSize, productPriceColor, productRatingStarSize, productRatingStarColor, addToCartFontSize, addToCartBGColor, addToCartTextColor, mrsProductImageBorderRadius, addToCartWidth, saleBadgeAlign, productSpacing, saleBadgeBorderWidth, saleBadgeBorderStyle, saleBadgeBorderColor, saleBadgeBorderRadius, saleBadgeTextColor, saleBadgeBGColor, productsGridMargin } = attributes;
+const dynamicCss = (attributes, deviceType = 'Desktop') => {
+    const { uniqueID, productTitleSize, productTitleColor, productPriceSize, productPriceColor, productRatingStarSize, productRatingStarColor, addToCartFontSize, addToCartBGColor, addToCartTextColor, mrsProductImageBorderRadius, addToCartWidth, saleBadgeAlign, productSpacing, saleBadgeBorderWidth, saleBadgeBorderStyle, saleBadgeBorderColor, saleBadgeBorderRadius, saleBadgeTextColor, saleBadgeBGColor, productsGridMargin, productsGridPadding } = attributes;
 
-    
-    
+    const unit = (attributes, deviceType) => {
+        if( 'object' !== typeof attributes.unit ) {
+            return attributes.unit;
+        } else {
+            return attributes.unit[deviceType];
+        }
+    }
 
     let desktopCss = {
         [`.mrs-block-mrs-products-grid .mrs-product-${uniqueID}`] : {
@@ -12,7 +18,8 @@ const dynamicCss = (attributes) => {
             'box-sizing' : 'border-box'
         },
         [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper`] : {
-            'margin': ''
+            'margin': cssDataCheck(productsGridMargin.device.Desktop, unit(productsGridMargin, 'Desktop')),
+            'padding': cssDataCheck(productsGridPadding.device.Desktop, unit(productsGridPadding, 'Desktop')),
         },
         [`.mrs-product-${uniqueID} .mrs-products-grid-content`] : {
             'display' : 'flex',
