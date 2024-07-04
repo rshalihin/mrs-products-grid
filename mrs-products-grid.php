@@ -19,6 +19,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+// Makes sure the plugin is defined before trying to use it.
+if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+    require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+}
+
+// Determines whether the plugin is active for the entire network. If not call error notice.
+if ( ! is_plugin_active_for_network( 'woocommerce/woocommerce.php' ) && ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
+	add_action( 'admin_notices', 'error_admin_notice' );
+}
+
 /**
  * Shortcode
  *
@@ -27,9 +37,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function mrs_block_products_grid_rendering( $attributes ) {
 
-	if ( ! is_plugin_active_for_network( 'woocommerce/woocommerce.php' ) && ! in_array( 'woocommerce/woocommerce.php', apply_Filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
-		return '<div class="error"><p>You must install and activate the <a target="_blank" href="https://wordpress.org/plugins/woocommerce/"><strong>Woocommerce</strong></a> plugins to make the <strong>MRS Products Gird</strong> plugin work</p></div>';
+	$is_custom_btn = $attributes['customAddToCartText'];
+	if ( $is_custom_btn ) {
+		add_filter( 'woocommerce_product_add_to_cart_text', 'mrs_products_grid_custom_text', 10, 1 );
 	}
+
+	$addToCartText      = $attributes['addToCartText'];
+	$addToCartTextGroup = $attributes['addToCartTextGroup'];
+	$addToCartTextVariable = $attributes['addToCartTextVariable'];
+	$addToCartTextExternal = $attributes['addToCartTextExternal'];
+	$addToCartTextDefault = $attributes['addToCartTextDefault'];
+
+	global $sample_cart_text;
+	$sample_cart_text = [ $addToCartText, $addToCartTextGroup, $addToCartTextVariable, $addToCartTextExternal, $addToCartTextDefault ];
 
 	$args = array(
 		'post_type'   => 'product',
@@ -47,27 +67,28 @@ function mrs_block_products_grid_rendering( $attributes ) {
 			array(
 				'key'   => '_stock_status',
 				'value' => 'instock',
-				)
-			);
+			),
+		);
 	}
 
 	if ( isset( $attributes['orderBy'] ) ) {
 		if ( $attributes['orderBy'] === 'rating' ) {
 			$args['orderby']  = 'meta_value_num';
 			$args['meta_key'] = '_wc_average_rating';
+
+		} elseif ( $attributes['orderBy'] === 'id' ) {
+			$args['orderby'] = 'ID';
+
 		} else {
 			$args['orderby'] = $attributes['orderBy'];
 		}
 	}
 	if ( isset( $attributes['order'] ) ) {
-		$args['order'] = $attributes['order'];
+		$args['order'] = strtoupper( $attributes['order'] );
 	}
 
 	$mrs_products_grid_query = new \WP_Query( $args );
 
-	// $data_attr  = $attributes['productTitleShow'];
-	// var_dump( $data_attr );
-	// wp_die();
 
 	ob_start();
 
@@ -109,32 +130,50 @@ function mrs_block_products_grid_rendering( $attributes ) {
 								<img src="<?php echo esc_url( $mrs_product_image_url ); ?>" alt="" />
 							</a>
 						</div>
+						<?php if ( $attributes['saleBadgeShow'] ) : ?>
 						<?php if ( $is_on_sale_product ) { ?>
 						<div>
-							<div class="mrs-product-img-overlay">
+							<div class="mrs-product-img-overlay <?php echo esc_attr( $attributes['mrsProductSaleBadgeStyle'] ); ?>">
 								<span><?php echo wp_kses_post( $attributes['saleBadgeText'] ); ?></span>
 							</div>
 						</div>
 						<?php } ?>
+						<?php endif; ?>
 					</div>
 					<div class="mrs-product-content-wrapper">
+						<?php if ( $attributes['productTitleShow']) : ?>
 							<div class="mrs-product-title">
 								<h4><?php echo wp_kses_post( get_the_title() ); ?></h4>
 							</div>
-							<div class='mrs-product-ratting'>
-								<div><?php echo wp_kses_post( $mrs_avg_rating ); ?></div>
-							</div>
+							<?php endif; ?>
+							<?php if ( $attributes['showProductRatingStar'] ) : ?>
+								<?php if ( $attributes['hideProductEmptyRatingStar'] === true && $mrs_ratings === '0' ) {
+									?>
+									<span></span>
+									<?php
+								} else {
+									?>
+									<div class='mrs-product-ratting'>
+										<div><?php echo wp_kses_post( $mrs_avg_rating ); ?></div>
+									</div>
+									<?php
+								} ?>
+							<?php endif; ?>
+							<?php if ( $attributes['productPriceShow'] ) : ?>
 							<div class="mrs-product-price"><?php echo wp_kses_post( $mrs_product_price ); ?></div>
+							<?php endif; ?>
+							<?php if ( $attributes['showAddToCart'] ) : ?>
 							<div class="mrs-product-add-to-cart">
 								<?php
 								$add_to_cart = do_shortcode( '[add_to_cart id="' . get_the_ID() . '" show_price="false" style="" class="mrs-product-buy-btn-cart"]' );
 
 								echo wp_kses_post( $add_to_cart );
 								?>
+							</div>
+							<?php endif; ?>
 						</div>
 					</div>
 				</div>
-			</div>
 
 			<?php
 		}
@@ -145,8 +184,57 @@ function mrs_block_products_grid_rendering( $attributes ) {
 	</div>
 </div>
 	<?php
+
+	if ( $is_custom_btn ) {
+		remove_filter( 'woocommerce_product_add_to_cart_text', 'mrs_products_grid_custom_text', 10, 1 );
+	}
 	wp_reset_postdata();
 	return ob_get_clean();
+}
+
+/**
+ * WooCommerce not installed error message
+ */
+function error_admin_notice() {
+$link    = esc_url(
+	add_query_arg(
+		array(
+			'tab'       => 'plugin-information',
+			'plugin'    => 'woocommerce',
+			'TB_iframe' => 'true',
+			'width'     => '772',
+			'height'    => '446',
+		),
+		admin_url( 'plugin-install.php' )
+	)
+);
+$outline = '<div class="error"><p>You must install and activate <a class="thickbox open-plugin-details-modal" href="' . $link . '"><strong>WooCommerce</strong></a> plugin to make the <strong>MRS Product Grid</strong> work.</p></div>';
+echo wp_kses_post( $outline );
+}
+
+
+/**
+ * Changing add to cart button text.
+ *
+ * @param [type] $text
+ * @return String
+ */
+function mrs_products_grid_custom_text( $text ) {
+	global $product;
+	global $sample_cart_text;
+
+	list( $addToCartText, $addToCartTextGroup, $addToCartTextVariable, $addToCartTextExternal, $addToCartTextDefault ) = $sample_cart_text;
+
+	$product_type = $product->get_type();
+
+	$product_types = array(
+		'simple' => $addToCartText,
+		'grouped'  => $addToCartTextGroup,
+		'external' => $addToCartTextExternal,
+		'variable' => $addToCartTextVariable,
+	);
+	return isset( $product_types[ $product_type ] ) ? esc_html( $product_types[ $product_type ] ) : esc_html( $addToCartTextDefault );
+
 }
 
 
@@ -163,7 +251,7 @@ function create_block_mrs_form_block_init() {
 add_action( 'init', 'create_block_mrs_form_block_init' );
 
 /**
- * Undocumented function
+ * Enqueue style.
  *
  * @return void
  */
@@ -175,7 +263,7 @@ add_action( 'wp_enqueue_scripts', 'mrs_products_grid_script_enqueue' );
 
 
 /**
- * Undocumented function
+ * Function for taking products meta key and id for localization.
  *
  * @return array
  */
@@ -206,7 +294,7 @@ function mrs_products_grid_product_data() {
 }
 
 /**
- * Undocumented function
+ * Localize products meta key and id.
  *
  * @return void
  */

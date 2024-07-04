@@ -6,7 +6,7 @@ import { SelectControl } from '@wordpress/components';
 import Responsive from './components/responsive/Responsive';
 
 const StyleTab = ({attributes, setAttributes}) => {
-    const { mrsProductImageBorderRadiusSet, mrsProductImageBorderRadius, productTitleShow, productTitleSize, productTitleColor, productPriceShow, productPriceSize, productPriceColor, showProductRatingStar, productRatingStarSize, productRatingStarColor, productRatingEmptyStarColor, showAddToCart, addToCartFontSize, addToCartTextColor, addToCartBGColor, addToCartWidth, productContentAlign, productsBGColor, productsContentPadding, productSpacing, saleBadgeBorderStyle, saleBadgeShow, saleBadgeTextColor, saleBadgeBGColor, saleBadgeBorderColor, saleBadgeBorderWidth, saleBadgeBorderRadius } = attributes;
+    const { mrsProductImageBorderRadiusSet, mrsProductImageBorderRadius, productTitleShow, productTitleSize, productTitleColor, productPriceShow, productPriceSize, productPriceColor, showProductRatingStar, productRatingStarSize, productRatingStarColor, showAddToCart, addToCartFontSize, addToCartTextColor, addToCartBGColor, addToCartWidth, productContentAlign, productsBGColor, productsContentPadding, productSpacing, saleBadgeBorderStyle, saleBadgeShow, saleBadgeTextColor, saleBadgeBGColor, saleBadgeBorderColor, saleBadgeBorderWidth, saleBadgeBorderRadius, mrsProductSaleBadgeStyle } = attributes;
 
     const pxCheck = (newObj) => {   
             
@@ -42,9 +42,9 @@ const StyleTab = ({attributes, setAttributes}) => {
         <PanelBody title={__('Products', 'mrs-products-grid')} initialOpen={true} className={'mrs-product-grid-panel-body'}>
         <h4>{__('Content Alignment', 'mrs-products-grid')}</h4>
             <ButtonGroup className={'mrs-products-btn-group'}>
-                <Button className={`mrs-products-btn ${productContentAlign === 'Left' ? 'is-active': ''}`} onClick={() => setAttributes({productContentAlign: 'Left'})}>Left</Button>
-                <Button className={`mrs-products-btn ${productContentAlign === 'Center' ? 'is-active': ''}`} onClick={() => setAttributes({productContentAlign: 'Center'})}>Center</Button>
-                <Button className={`mrs-products-btn ${productContentAlign === 'Right' ? 'is-active': ''}`} onClick={() => setAttributes({productContentAlign: 'Right'})}>Right</Button>
+                <Button className={`mrs-products-btn ${productContentAlign === 'flex-start' ? 'is-active': ''}`} onClick={() => setAttributes({productContentAlign: 'flex-start'})}>Left</Button>
+                <Button className={`mrs-products-btn ${productContentAlign === 'center' ? 'is-active': ''}`} onClick={() => setAttributes({productContentAlign: 'center'})}>Center</Button>
+                <Button className={`mrs-products-btn ${productContentAlign === 'flex-end' ? 'is-active': ''}`} onClick={() => setAttributes({productContentAlign: 'flex-end'})}>Right</Button>
             </ButtonGroup>
             <Divider />
             <PanelColorSettings
@@ -141,11 +141,6 @@ const StyleTab = ({attributes, setAttributes}) => {
                         label: __( 'Fill Rating Star Color', 'mrs-product-grid' ),
                         value: productRatingStarColor,
                         onChange: newValue => setAttributes({productRatingStarColor: newValue})
-                    },
-                    {
-                        label: __( 'Empty Rating Star Color', 'mrs-product-grid' ),
-                        value: productRatingEmptyStarColor,
-                        onChange: newValue => setAttributes({ productRatingEmptyStarColor: newValue })
                     }
                 ]}
             />
@@ -188,6 +183,16 @@ const StyleTab = ({attributes, setAttributes}) => {
 
         { saleBadgeShow && 
         <PanelBody title={__('Sale Badge Style', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
+            <SelectControl
+                label={__( 'Select a Sale Badge Style', 'mrs-products-grid' )}
+                value={mrsProductSaleBadgeStyle}
+                options={[
+                    { label: 'Simple', value: 'simple' },
+                    { label: 'Rotate Top Left', value: 'rTopLeft' },
+                    { label: 'Rotate Top Right', value: 'rTopRight' },
+                ]}
+                onChange={(newValue)=> setAttributes({mrsProductSaleBadgeStyle: newValue})}
+            />
             <PanelColorSettings
                 colorSettings={[
                     {

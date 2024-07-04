@@ -8,7 +8,8 @@ import Inspector from './Inspector';
 import './editor.scss';
 
 export default function Edit({ attributes, setAttributes, clientId }) {
-	const { postsPerPage, orderBy, order, uniqueID, frontendCss, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup, hideOutOfStock } = attributes;
+	const { postsPerPage, orderBy, order, uniqueID, frontendCss, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup, hideOutOfStock, hideProductEmptyRatingStar, mrsProductSaleBadgeStyle } = attributes;
+
 	const [ firstTLoad, setFirstTLoad ] = useState(true);
 	const [ loading, setLoading ] = useState(false);
 	const [mrsPro, setMrsPro] = useState([]);
@@ -105,7 +106,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 											if( parseInt(v.id) === parseInt(item.id) && v.onSale === true ){
 												return (
 													<div key={i}>
-														{ saleBadgeShow && saleBadgeText && <div className='mrs-product-img-overlay'>
+														{ saleBadgeShow && saleBadgeText && <div className={`mrs-product-img-overlay ${mrsProductSaleBadgeStyle}`}>
 															<span>{saleBadgeText}</span>
 														</div>}
 													</div>
@@ -124,6 +125,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 											<div className='mrs-product-ratting'>
 											{mrsProductsGrid?.products?.map( (v,i) =>{
 												if( parseInt(v.id) === parseInt(item.id)){
+													if ( hideProductEmptyRatingStar && v.rating == 0 ) { return '' }
 													return (
 														<div key={i}>
 															{ starRating(v.rating).map( (v, i) => {

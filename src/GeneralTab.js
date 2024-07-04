@@ -3,7 +3,7 @@ import { PanelBody, RangeControl, SelectControl, __experimentalDivider as Divide
 import MRSToggle from "./components/mrsToggle/MRSToggle";
 
 const GeneralTab = ({attributes, setAttributes}) => {
-    const { postsPerPage, orderBy, order, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeAlign, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup,hideOutOfStock } = attributes;
+    const { postsPerPage, orderBy, order, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeAlign, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup,hideOutOfStock, addToCartTextExternal, addToCartTextDefault, addToCartTextVariable, hideProductEmptyRatingStar } = attributes;
     return(
         <>
         <PanelBody title={__('Layout Settings', 'mrs-products-grid')} initialOpen={true} className={'mrs-product-grid-panel-body'}>
@@ -71,6 +71,14 @@ const GeneralTab = ({attributes, setAttributes}) => {
                 attributesKey={'showProductRatingStar'}
                 setAttributes={setAttributes}
             />
+            {showProductRatingStar && 
+            <MRSToggle
+                label={__('Hide Products Empty Rating', 'mrs-products-grid')}
+                attributes={hideProductEmptyRatingStar}
+                attributesKey={'hideProductEmptyRatingStar'}
+                setAttributes={setAttributes}
+            />
+            }
             <MRSToggle
                 label={__('Sale Badge', 'mrs-products-grid')}
                 attributes={saleBadgeShow}
@@ -119,6 +127,21 @@ const GeneralTab = ({attributes, setAttributes}) => {
                 label={__('Group Product', 'mrs-products-grid')}
                 value={addToCartTextGroup}
                 onChange={(newValue)=>setAttributes({addToCartTextGroup: newValue})}
+            />
+            <TextControl
+                label={__('Variable Product', 'mrs-products-grid')}
+                value={addToCartTextVariable}
+                onChange={(newValue)=>setAttributes({addToCartTextVariable: newValue})}
+            />
+            <TextControl
+                label={__('External Product', 'mrs-products-grid')}
+                value={addToCartTextExternal}
+                onChange={(newValue)=>setAttributes({addToCartTextExternal: newValue})}
+            />
+            <TextControl
+                label={__('Default Product', 'mrs-products-grid')}
+                value={addToCartTextDefault}
+                onChange={(newValue)=>setAttributes({addToCartTextDefault: newValue})}
             />
             </>
             }

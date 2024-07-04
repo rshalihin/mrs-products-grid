@@ -3,9 +3,10 @@ import { PanelColorSettings } from '@wordpress/block-editor';
 import { PanelBody, __experimentalDivider as Divider, ButtonGroup, Button, SelectControl } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import Spacing from './components/spacing/Spacing';
+import { RangeControl } from '@wordpress/components';
 
 const AdvanceTab = ({attributes, setAttributes}) => {
-    const { productsGridMargin, productsGridPadding, productsBorderStyle, productsBorderColor, productsBorderWidth, productsBorderRadius } = attributes;
+    const { productsGridMargin, productsGridPadding, productsBorderStyle, productsBorderColor, productsBorderWidth, productsBorderRadius, productsBorderRadiusHover, productsBorderWidthHover, productsBorderColorHover, productsBorderStyleHover, productsBorderTransition } = attributes;
     const [borderHover, setBorderHover] = useState('Normal');
     // console.log(productsGridMargin);
     // console.log(productsGridPadding);
@@ -64,6 +65,7 @@ const AdvanceTab = ({attributes, setAttributes}) => {
                 ]}
                 onChange={(value)=> setAttributes({productsBorderStyle: value})}
             />
+            { productsBorderStyle !== 'none' && (<>
             <Divider />
             <PanelColorSettings
                 colorSettings={[
@@ -87,9 +89,60 @@ const AdvanceTab = ({attributes, setAttributes}) => {
                     'bottom': __('Bottom', 'mrs-products-grid'),
                     'right': __('Right', 'mrs-products-grid')
                 }}
-            />
+            /> </>)}
             </>)}
-            {borderHover === 'Hover' && 'Hover Section'}
+            {borderHover === 'Hover' && (<>
+            <SelectControl
+                label={__('Hover Border Style', 'mrs-products-grid')}
+                value={productsBorderStyleHover}
+                options={[
+                    { label: "None", value: "none" },
+                    { label: "Solid", value: "solid" },
+                    { label: "Dashed", value: "Dashed" },
+                    { label: "Dotted", value: "dotted" },
+                    { label: "Double", value: "double" },
+                    { label: "Groove", value: "groove" },
+                    { label: "Inset", value: "inset" },
+                    { label: "Outset", value: "outset" },
+                    { label: "Ridge", value: "ridge" }
+                ]}
+                onChange={(value)=> setAttributes({productsBorderStyleHover: value})}
+            />
+            { productsBorderStyleHover !== 'none' && ( <>
+            <Divider />
+            <PanelColorSettings
+                colorSettings={[
+                    {
+                        label: __('Hover Border Color', 'mrs-products-grid'),
+                        value: productsBorderColorHover,
+                        onChange: (value) => setAttributes({productsBorderColorHover: value})
+                    }
+                ]}
+            />
+            <Divider />
+            <Spacing
+                label={__('Hover Border Width', 'mrs-products-grid')}
+                attributes={productsBorderWidthHover}
+                attributesKey={'productsBorderWidthHover'}
+                setAttributes={setAttributes}
+                units={['px', '%', 'em', 'rem']}
+                labelItem={{
+                    'top': __('Top', 'mrs-products-grid'),
+                    'left': __('Left', 'mrs-products-grid'),
+                    'bottom': __('Bottom', 'mrs-products-grid'),
+                    'right': __('Right', 'mrs-products-grid')
+                }}
+            />
+            <Divider />
+            <RangeControl
+                min={0.1}
+                max={5.0}
+                step={0.1}
+                value={productsBorderTransition}
+                onChange={(newValue)=>setAttributes({productsBorderTransition: newValue})}
+            />
+            </> )}
+            </>)}
             <Divider />
             <Spacing
                 label={__('Border Radius', 'mrs-products-grid')}

@@ -2,13 +2,22 @@ import cssString from './controls/controls';
 import { cssDataCheck } from './controls/controls';
 
 const dynamicCss = (attributes, deviceType = 'Desktop') => {
-    const { uniqueID, productTitleSize, productTitleColor, productPriceSize, productPriceColor, productRatingStarSize, productRatingStarColor, addToCartFontSize, addToCartBGColor, addToCartTextColor, mrsProductImageBorderRadius, addToCartWidth, saleBadgeAlign, productSpacing, saleBadgeBorderWidth, saleBadgeBorderStyle, saleBadgeBorderColor, saleBadgeBorderRadius, saleBadgeTextColor, saleBadgeBGColor, productsGridMargin, productsGridPadding } = attributes;
+    const { uniqueID, productTitleSize, productContentAlign, productsBGColor, productsContentPadding, productTitleColor, productPriceSize, productPriceColor, productRatingStarSize, productRatingStarColor, addToCartFontSize, addToCartBGColor, addToCartTextColor, mrsProductImageBorderRadius, addToCartWidth, saleBadgeAlign, productSpacing, saleBadgeBorderWidth, saleBadgeBorderStyle, saleBadgeBorderColor, saleBadgeBorderRadius, saleBadgeTextColor, saleBadgeBGColor, productsGridMargin, productsGridPadding, productsBorderWidth, productsBorderStyle, productsBorderColor, productsBorderRadius, productsBorderRadiusHover, productsBorderWidthHover, productsBorderColorHover, productsBorderStyleHover, productsBorderTransition } = attributes;
 
     const unit = (attributes, deviceType) => {
         if( 'object' !== typeof attributes.unit ) {
             return attributes.unit;
         } else {
             return attributes.unit[deviceType];
+        }
+    }
+    const flexTextAlign = ( value ) => {
+        if ( value == 'flex-start' ) {
+            return 'left';
+        } else if ( value === 'flex-end' ) {
+            return 'right';
+        } else {
+            return 'center';
         }
     }
 
@@ -20,6 +29,18 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
         [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper`] : {
             'margin': cssDataCheck(productsGridMargin.device.Desktop, unit(productsGridMargin, 'Desktop')),
             'padding': cssDataCheck(productsGridPadding.device.Desktop, unit(productsGridPadding, 'Desktop')),
+            'border-style': productsBorderStyle,
+            'border-color' : productsBorderColor,
+            'border-width' : cssDataCheck(productsBorderWidth.device.Desktop, unit(productsBorderWidth, 'Desktop')),
+            'border-radius' : cssDataCheck(productsBorderRadius.device.Desktop, unit(productsBorderRadius, 'Desktop')),
+            'transition' : `all ${productsBorderTransition}s ease-out`,
+        },
+        [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper:hover`] : {
+            'border-style': productsBorderStyleHover,
+            'border-color' : productsBorderColorHover,
+            'border-width' : cssDataCheck(productsBorderWidthHover.device.Desktop, unit(productsBorderWidth, 'Desktop')),
+            'border-radius' : cssDataCheck(productsBorderRadiusHover.device.Desktop, unit(productsBorderRadius, 'Desktop')),
+            
         },
         [`.mrs-product-${uniqueID} .mrs-products-grid-content`] : {
             'display' : 'flex',
@@ -53,12 +74,13 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
         },
         [`.mrs-product-${uniqueID} .mrs-product .mrs-product-img-wrapper`] : {
             'position': 'relative',
+            'overflow': 'hidden'
         },
         [`.mrs-product-${uniqueID} .mrs-product-img-wrapper .mrs-product-img img`] : {
             'width': '100%',
 			'height': 'auto',
         },
-        [`.mrs-product-${uniqueID} .mrs-product-img-wrapper .mrs-product-img-overlay`] : {
+        [`.mrs-product-${uniqueID} .mrs-product-img-wrapper .mrs-product-img-overlay.simple`] : {
             'position': 'absolute',
             'top': '5px',
             'right': `${saleBadgeAlign === 'Right' ? '0px' : 'auto'}`,
@@ -76,17 +98,58 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
             'border-bottom-left-radius': saleBadgeBorderRadius.left,
             'font-size': '14px',
         },
+        [`.mrs-product-${uniqueID} .mrs-product-img-wrapper .mrs-product-img-overlay.rTopLeft`] : {
+            'position': 'absolute',
+            'inset': '0 auto auto 0',
+            'transform-origin': '100% 0',
+            'transform': 'translate(-29.3%) rotate(-45deg)',
+            'box-shadow': `0 0 0 999px ${saleBadgeBGColor}`,
+            'clip-path': 'inset(0 -100%)',
+            'color': saleBadgeTextColor,
+            'background': saleBadgeBGColor,
+            'border-top': `${saleBadgeBorderWidth?.top} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+            'border-right': `${saleBadgeBorderWidth?.right} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+            'border-bottom': `${saleBadgeBorderWidth?.bottom} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+            'border-left': `${saleBadgeBorderWidth?.left} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+            'border-top-left-radius': saleBadgeBorderRadius.top,
+            'border-top-right-radius': saleBadgeBorderRadius.right,
+            'border-bottom-right-radius': saleBadgeBorderRadius.bottom,
+            'border-bottom-left-radius': saleBadgeBorderRadius.left,
+            'font-size': '14px',
+        },
+        [`.mrs-product-${uniqueID} .mrs-product-img-wrapper .mrs-product-img-overlay.rTopRight`] : {
+            'position': 'absolute',
+            'inset': '0 0 auto auto',
+            'transform-origin': '0 100%',
+            'transform': 'translate(-29.3%) rotate(45deg)',
+            'box-shadow': '0 0 0 999px #d8613c',
+            'clip-path': 'inset(0 -100%)',
+            'color': saleBadgeTextColor,
+            'background': saleBadgeBGColor,
+            'border-top': `${saleBadgeBorderWidth?.top} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+            'border-right': `${saleBadgeBorderWidth?.right} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+            'border-bottom': `${saleBadgeBorderWidth?.bottom} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+            'border-left': `${saleBadgeBorderWidth?.left} ${saleBadgeBorderStyle} ${saleBadgeBorderColor}`,
+            'border-top-left-radius': saleBadgeBorderRadius.top,
+            'border-top-right-radius': saleBadgeBorderRadius.right,
+            'border-bottom-right-radius': saleBadgeBorderRadius.bottom,
+            'border-bottom-left-radius': saleBadgeBorderRadius.left,
+            'font-size': '14px',
+        },
         [`.mrs-product-${uniqueID} .mrs-product .mrs-product-content-wrapper`] : {
             'display': 'flex',
             'flex-direction': 'column',
             'justify-content': 'center',
-            'align-items': 'center',
+            'align-items': productContentAlign,
+            'background': productsBGColor,
+            'padding': `${productsContentPadding.top} ${productsContentPadding.right} ${productsContentPadding.bottom} ${productsContentPadding.left}`,
         },
         [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-title h4`] : {
             'margin': '10px',
             'font-size': productTitleSize + 'px',
             'font-weight': '700',
-            'color': productTitleColor
+            'color': productTitleColor,
+            'text-align': flexTextAlign(productContentAlign),
         },
         [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-price`] : {
             'font-size': productPriceSize + 'px',

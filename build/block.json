@@ -69,6 +69,10 @@
       "type": "boolean",
       "default": true
     },
+    "hideProductEmptyRatingStar": {
+      "type": "boolean",
+      "default": true
+    },
     "productRatingStarSize": {
       "type": "number",
       "default": 16
@@ -76,10 +80,6 @@
     "productRatingStarColor": {
       "type": "string",
       "default": "#111111"
-    },
-    "productRatingEmptyStarColor": {
-      "type": "string",
-      "default": "#ffffff"
     },
     "productPriceShow": {
       "type": "boolean",
@@ -108,6 +108,18 @@
     "addToCartTextGroup": {
       "type": "string",
       "default": "View Products"
+    },
+    "addToCartTextVariable": {
+      "type": "string",
+      "default": "Select Options"
+    },
+    "addToCartTextExternal": {
+      "type": "string",
+      "default": "Buy Now"
+    },
+    "addToCartTextDefault": {
+      "type": "string",
+      "default": "Read More"
     },
     "addToCartBGColor": {
       "type": "string",
@@ -264,7 +276,7 @@
     },
     "productsBorderColor": {
       "type": "string",
-      "default": "#ffffff00"
+      "default": "#111111"
     },
     "productsBorderWidth": {
       "type": "object",
@@ -327,6 +339,84 @@
         },
         "allChange": true
       }
+    },
+    "productsBorderStyleHover": {
+      "type": "string",
+      "default": "none"
+    },
+    "productsBorderColorHover": {
+      "type": "string",
+      "default": "#111111"
+    },
+    "productsBorderWidthHover": {
+      "type": "object",
+      "default": {
+        "device": {
+          "Desktop": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          },
+          "Tablet": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          },
+          "Mobile": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          }
+        },
+        "unit": {
+          "Desktop": "px",
+          "Tablet": "px",
+          "Mobile": "px"
+        },
+        "allChange": true
+      }
+    },
+    "productsBorderRadiusHover": {
+      "type": "object",
+      "default": {
+        "device": {
+          "Desktop": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          },
+          "Tablet": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          },
+          "Mobile": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          }
+        },
+        "unit": {
+          "Desktop": "px",
+          "Tablet": "px",
+          "Mobile": "px"
+        },
+        "allChange": true
+      }
+    },
+    "productsBorderTransition": {
+      "type": "number",
+      "default": 0.3
+    },
+    "mrsProductSaleBadgeStyle": {
+      "type": "string",
+      "default": "sTopLeft"
     }
   },
   "textdomain": "mrs-products-grid",
