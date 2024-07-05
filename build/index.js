@@ -260,7 +260,6 @@ const GeneralTab = ({
     showProductRatingStar,
     showAddToCart,
     saleBadgeShow,
-    saleBadgeAlign,
     saleBadgeText,
     customAddToCartText,
     addToCartText,
@@ -374,21 +373,7 @@ const GeneralTab = ({
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sale Badge', 'mrs-products-grid'),
     initialOpen: false,
     className: 'mrs-product-grid-panel-body'
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    className: "mrs-product-grid-btn-label"
-  }, "Alignment"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ButtonGroup, {
-    className: 'mrs-products-btn-group'
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    className: `mrs-products-btn ${saleBadgeAlign === 'Left' ? 'is-active' : ''}`,
-    onClick: () => setAttributes({
-      saleBadgeAlign: 'Left'
-    })
-  }, "Left"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    className: `mrs-products-btn ${saleBadgeAlign === 'Right' ? 'is-active' : ''}`,
-    onClick: () => setAttributes({
-      saleBadgeAlign: 'Right'
-    })
-  }, "Right")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sale Text', 'mrs-products-grid'),
     value: saleBadgeText,
     onChange: newValue => setAttributes({
@@ -499,6 +484,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/mrsToggle/MRSToggle */ "./src/components/mrsToggle/MRSToggle.js");
 /* harmony import */ var _components_responsive_Responsive__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/responsive/Responsive */ "./src/components/responsive/Responsive.js");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__);
+
 
 
 
@@ -538,7 +526,8 @@ const StyleTab = ({
     saleBadgeBorderColor,
     saleBadgeBorderWidth,
     saleBadgeBorderRadius,
-    mrsProductSaleBadgeStyle
+    mrsProductSaleBadgeStyle,
+    saleBadgeAlign
   } = attributes;
   const pxCheck = newObj => {
     for (let side in newObj) {
@@ -576,6 +565,17 @@ const StyleTab = ({
       saleBadgeBorderRadius: checkValues
     });
   };
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useEffect)(() => {
+    if (mrsProductSaleBadgeStyle !== 'simple') {
+      setAttributes({
+        saleBadgeBorderStyle: 'none'
+      });
+    } else {
+      setAttributes({
+        saleBadgeBorderStyle: 'solid'
+      });
+    }
+  }, [mrsProductSaleBadgeStyle]);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Products', 'mrs-products-grid'),
     initialOpen: true,
@@ -760,7 +760,21 @@ const StyleTab = ({
     onChange: newValue => setAttributes({
       mrsProductSaleBadgeStyle: newValue
     })
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+  }), mrsProductSaleBadgeStyle === 'simple' && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    className: "mrs-product-grid-btn-label"
+  }, "Alignment"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ButtonGroup, {
+    className: 'mrs-products-btn-group'
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${saleBadgeAlign === 'Left' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      saleBadgeAlign: 'Left'
+    })
+  }, "Left"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${saleBadgeAlign === 'Right' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      saleBadgeAlign: 'Right'
+    })
+  }, "Right")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
     colorSettings: [{
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sale Text Color', 'mrs-products-grid'),
       value: saleBadgeTextColor,
@@ -774,7 +788,7 @@ const StyleTab = ({
         saleBadgeBGColor: newValue
       })
     }]
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), mrsProductSaleBadgeStyle === 'simple' && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Border', 'mrs-products-grid'),
     value: saleBadgeBorderStyle,
     options: [{
@@ -808,7 +822,7 @@ const StyleTab = ({
     onChange: newValue => setAttributes({
       saleBadgeBorderStyle: newValue
     })
-  }), saleBadgeBorderStyle !== 'none' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+  }), saleBadgeBorderStyle !== 'none' && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
     colorSettings: [{
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Border Color', 'mrs-products-grid'),
       value: saleBadgeBorderColor,
@@ -832,7 +846,7 @@ const StyleTab = ({
       label: 'px',
       value: 'px'
     }]
-  })) : ''));
+  })))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StyleTab);
 

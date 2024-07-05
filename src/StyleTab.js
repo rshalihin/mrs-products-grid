@@ -4,9 +4,10 @@ import { PanelColorSettings } from '@wordpress/block-editor';
 import MRSToggle from './components/mrsToggle/MRSToggle';
 import { SelectControl } from '@wordpress/components';
 import Responsive from './components/responsive/Responsive';
+import { useEffect } from '@wordpress/element';
 
 const StyleTab = ({attributes, setAttributes}) => {
-    const { mrsProductImageBorderRadiusSet, mrsProductImageBorderRadius, productTitleShow, productTitleSize, productTitleColor, productPriceShow, productPriceSize, productPriceColor, showProductRatingStar, productRatingStarSize, productRatingStarColor, showAddToCart, addToCartFontSize, addToCartTextColor, addToCartBGColor, addToCartWidth, productContentAlign, productsBGColor, productsContentPadding, productSpacing, saleBadgeBorderStyle, saleBadgeShow, saleBadgeTextColor, saleBadgeBGColor, saleBadgeBorderColor, saleBadgeBorderWidth, saleBadgeBorderRadius, mrsProductSaleBadgeStyle } = attributes;
+    const { mrsProductImageBorderRadiusSet, mrsProductImageBorderRadius, productTitleShow, productTitleSize, productTitleColor, productPriceShow, productPriceSize, productPriceColor, showProductRatingStar, productRatingStarSize, productRatingStarColor, showAddToCart, addToCartFontSize, addToCartTextColor, addToCartBGColor, addToCartWidth, productContentAlign, productsBGColor, productsContentPadding, productSpacing, saleBadgeBorderStyle, saleBadgeShow, saleBadgeTextColor, saleBadgeBGColor, saleBadgeBorderColor, saleBadgeBorderWidth, saleBadgeBorderRadius, mrsProductSaleBadgeStyle, saleBadgeAlign } = attributes;
 
     const pxCheck = (newObj) => {   
             
@@ -37,6 +38,15 @@ const StyleTab = ({attributes, setAttributes}) => {
         let checkValues = pxCheck(newValues);
         setAttributes({saleBadgeBorderRadius: checkValues})
     }
+
+    useEffect(() => {
+        if ( mrsProductSaleBadgeStyle !== 'simple' ){
+            setAttributes({saleBadgeBorderStyle: 'none'});
+        } else {
+            setAttributes({saleBadgeBorderStyle: 'solid'});
+        }
+    },[mrsProductSaleBadgeStyle])
+
     return(
         <>        
         <PanelBody title={__('Products', 'mrs-products-grid')} initialOpen={true} className={'mrs-product-grid-panel-body'}>
@@ -193,6 +203,16 @@ const StyleTab = ({attributes, setAttributes}) => {
                 ]}
                 onChange={(newValue)=> setAttributes({mrsProductSaleBadgeStyle: newValue})}
             />
+            { mrsProductSaleBadgeStyle === 'simple' && (
+                <>
+                <label className='mrs-product-grid-btn-label'>Alignment</label>
+                <ButtonGroup className={'mrs-products-btn-group'}>
+                    <Button className={`mrs-products-btn ${saleBadgeAlign === 'Left' ? 'is-active' : ''}`} onClick={() => setAttributes({ saleBadgeAlign: 'Left'})}>Left</Button>
+                    <Button className={`mrs-products-btn ${saleBadgeAlign === 'Right' ? 'is-active' : ''}`} onClick={() => setAttributes({ saleBadgeAlign: 'Right'})}>Right</Button>
+                </ButtonGroup>
+                <Divider />
+                </>
+            )}
             <PanelColorSettings
                 colorSettings={[
                     {
@@ -207,8 +227,10 @@ const StyleTab = ({attributes, setAttributes}) => {
                     }
                 ]}
             />
-            <Divider />            
-            <SelectControl
+            <Divider />
+            { mrsProductSaleBadgeStyle === 'simple' && (
+                <>
+                <SelectControl
                 label={__('Border', 'mrs-products-grid')}
                 value={saleBadgeBorderStyle}
                 options={[
@@ -223,34 +245,37 @@ const StyleTab = ({attributes, setAttributes}) => {
                     { label: 'Ridge', value: 'ridge' }
                 ]}
                 onChange={(newValue)=>setAttributes({saleBadgeBorderStyle: newValue})}
-            />
-            { (saleBadgeBorderStyle !== 'none') ?
-            <>
-            <Divider />
-            <PanelColorSettings
-                colorSettings={[
-                    {
-                        label: __('Border Color', 'mrs-products-grid'),
-                        value: saleBadgeBorderColor,
-                        onChange: newValue => setAttributes({saleBadgeBorderColor: newValue})
-                    }
-                ]}
-            />
-            <Divider />
-            <BoxControl
-                label={__('Border Width', 'mrs-products-grid')}
-                values={saleBadgeBorderWidth}
-                onChange={saleBadgeBorderWidthOnChangeHandle}
-                units={[{ label: 'px', value: 'px'}]}
-            />
-            <Divider />
-            <BoxControl
-                label={__('Border Radius', 'mrs-products-grid')}
-                values={saleBadgeBorderRadius}
-                onChange={saleBadgeBorderRadiusOnChangeHandle}                
-                units={[{ label: 'px', value: 'px'}]}
-            />
-            </> : ''}
+                />
+                { (saleBadgeBorderStyle !== 'none') &&
+                    <>
+                    <Divider />
+                    <PanelColorSettings
+                        colorSettings={[
+                            {
+                                label: __('Border Color', 'mrs-products-grid'),
+                                value: saleBadgeBorderColor,
+                                onChange: newValue => setAttributes({saleBadgeBorderColor: newValue})
+                            }
+                        ]}
+                    />
+                    <Divider />
+                    <BoxControl
+                        label={__('Border Width', 'mrs-products-grid')}
+                        values={saleBadgeBorderWidth}
+                        onChange={saleBadgeBorderWidthOnChangeHandle}
+                        units={[{ label: 'px', value: 'px'}]}
+                    />
+                    <Divider />
+                    <BoxControl
+                        label={__('Border Radius', 'mrs-products-grid')}
+                        values={saleBadgeBorderRadius}
+                        onChange={saleBadgeBorderRadiusOnChangeHandle}                
+                        units={[{ label: 'px', value: 'px'}]}
+                    />
+                    </>}
+                </>
+            )}
+            
         </PanelBody>
         }
         </>

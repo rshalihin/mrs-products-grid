@@ -3,7 +3,7 @@ import { PanelBody, RangeControl, SelectControl, __experimentalDivider as Divide
 import MRSToggle from "./components/mrsToggle/MRSToggle";
 
 const GeneralTab = ({attributes, setAttributes}) => {
-    const { postsPerPage, orderBy, order, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeAlign, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup,hideOutOfStock, addToCartTextExternal, addToCartTextDefault, addToCartTextVariable, hideProductEmptyRatingStar } = attributes;
+    const { postsPerPage, orderBy, order, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup,hideOutOfStock, addToCartTextExternal, addToCartTextDefault, addToCartTextVariable, hideProductEmptyRatingStar } = attributes;
     return(
         <>
         <PanelBody title={__('Layout Settings', 'mrs-products-grid')} initialOpen={true} className={'mrs-product-grid-panel-body'}>
@@ -94,12 +94,6 @@ const GeneralTab = ({attributes, setAttributes}) => {
         </PanelBody>
         { saleBadgeShow && 
         <PanelBody title={__('Sale Badge', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
-            <label className='mrs-product-grid-btn-label'>Alignment</label>
-            <ButtonGroup className={'mrs-products-btn-group'}>
-                <Button className={`mrs-products-btn ${saleBadgeAlign === 'Left' ? 'is-active' : ''}`} onClick={() => setAttributes({ saleBadgeAlign: 'Left'})}>Left</Button>
-                <Button className={`mrs-products-btn ${saleBadgeAlign === 'Right' ? 'is-active' : ''}`} onClick={() => setAttributes({ saleBadgeAlign: 'Right'})}>Right</Button>
-            </ButtonGroup>
-            <Divider />
             <TextControl
                 label={__('Sale Text', 'mrs-products-grid')}
                 value={saleBadgeText}
