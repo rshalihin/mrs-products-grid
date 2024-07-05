@@ -4,9 +4,11 @@ import { PanelBody, __experimentalDivider as Divider, ButtonGroup, Button, Selec
 import { useState } from '@wordpress/element';
 import Spacing from './components/spacing/Spacing';
 import { RangeControl } from '@wordpress/components';
+import MRSRangeControl from './components/mrsRangControl/MRSRangeControl';
+import MRSTypography from './components/mrsTypography/MRSTypography';
 
 const AdvanceTab = ({attributes, setAttributes}) => {
-    const { productsGridMargin, productsGridPadding, productsBorderStyle, productsBorderColor, productsBorderWidth, productsBorderRadius, productsBorderRadiusHover, productsBorderWidthHover, productsBorderColorHover, productsBorderStyleHover, productsBorderTransition } = attributes;
+    const { productsGridMargin, productsGridPadding, productsBorderStyle, productsBorderColor, productsBorderWidth, productsBorderRadius, productsBorderRadiusHover, productsBorderWidthHover, productsBorderColorHover, productsBorderStyleHover, productsBorderTransition, productsTitleFontSize, productsTestColumn, titleTypography, titleFontSizeTest, titleFontSpacingTest, titleLineHeightTest } = attributes;
     const [borderHover, setBorderHover] = useState('Normal');
     // console.log(productsGridMargin);
     // console.log(productsGridPadding);
@@ -157,6 +159,42 @@ const AdvanceTab = ({attributes, setAttributes}) => {
                     'right': __('Right', 'mrs-products-grid')
                 }}
             />
+            <Divider />
+            <MRSRangeControl
+                label={__('Test Font Size Range', 'mrs-products-grid')}
+                min={1}
+                max={200}
+                units={['px', '%', 'em', 'rem']}
+                attributes={productsTitleFontSize}
+                attributesKey={'productsTitleFontSize'}
+                setAttributes={setAttributes}
+            />
+            <MRSRangeControl
+                label={__('Test Column', 'mrs-products-grid')}
+                min={1}
+                max={6}
+                step={1}
+                attributes={productsTestColumn}
+                attributesKey={'productsTestColumn'}
+                setAttributes={setAttributes}
+            />
+            <Divider />
+            <MRSTypography
+            attributes={{
+                family: titleTypography,
+                familyKey: 'titleTypography',
+                fontSize: titleFontSizeTest,
+                fontSizeKey: 'titleFontSizeTest',
+                fontSpacing: titleFontSpacingTest,
+                fontSpacingKey: 'titleFontSpacingTest',
+                lineHeight: titleLineHeightTest,
+                lineHeightKey: 'titleLineHeightTest' 
+            }}
+            setAttributes={setAttributes}
+            spacingDefaultValue={{unit: 'px', value: 0}}
+            fontSizeDefault={{unit: 'px', value: 20}}
+            lineDefaultValue={{unit: 'px', value: 32}}
+        />
         </PanelBody>
         </>
     );

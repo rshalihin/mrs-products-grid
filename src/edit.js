@@ -6,6 +6,7 @@ import { useSelect } from "@wordpress/data";
 import dynamicCss from "./dynamicCss";
 import Inspector from './Inspector';
 import './editor.scss';
+import { useDeviceType } from './controls/controls';
 
 export default function Edit({ attributes, setAttributes, clientId }) {
 	const { postsPerPage, orderBy, order, uniqueID, frontendCss, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup, hideOutOfStock, hideProductEmptyRatingStar, mrsProductSaleBadgeStyle } = attributes;
@@ -20,6 +21,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		return select('core').getEntityRecords('postType', 'product', {per_page: postsPerPage, _embed: true, orderby: orderBy, order });
 	}, [postsPerPage, orderBy, order]);
 
+	const deviceType = useDeviceType();
 
 	useEffect(() => {
 		if ( selectProduct ) {
@@ -96,7 +98,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 					{mrsPro && mrsPro.length > 0 && (							
 						mrsPro.map((item, i) => {
 							return(
-								<div className={`mrs-product-col has-${productsColumn}-col`} key={i}>
+								<div className={`mrs-product-col ${[deviceType]}-has-${productsColumn.device[deviceType]}-col`} key={i}>
 									<div className='mrs-product'>
 										<div className='mrs-product-img-wrapper'>
 											<div className='mrs-product-img'>

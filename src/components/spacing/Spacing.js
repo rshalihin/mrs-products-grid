@@ -86,7 +86,7 @@ const Spacing = ({ label, attributes, attributesKey, setAttributes, units, linkB
                     <div className='mrs-header-control-right'>
                         <Button onClick={() => setDefaultValue()} className={`mrs-header-control-reset ${activeResetButton()}`}><ResetIcon /></Button>
                         <div className='mrs-units'>
-                        <span className={''}>{( 'object' !== typeof attributes.unit) ? attributes?.unit : attributes.unit[deviceType]}</span>
+                        <span>{( 'object' !== typeof attributes.unit) ? attributes?.unit : attributes.unit[deviceType]}</span>
                             <div className='mrs-units-btn'>
                                 {units?.map(( item, i ) => (
                                     <Button className={attributes.unit[deviceType] === item.toLowerCase() ? 'active' : ''} key={i} value={item} onClick={(e) => setUnit(e.target.value)}>{item}</Button>

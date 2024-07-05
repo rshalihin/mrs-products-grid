@@ -37,8 +37,15 @@
       "default": "desc"
     },
     "productsColumn": {
-      "type": "number",
-      "default": 3
+      "type": "object",
+      "default": {
+        "device": {
+          "Desktop": 4,
+          "Tablet": 2,
+          "Mobile": 1
+        },
+        "unit": false
+      }
     },
     "mrsProductImageBorderRadiusSet": {
       "type": "boolean",
@@ -417,6 +424,101 @@
     "mrsProductSaleBadgeStyle": {
       "type": "string",
       "default": "sTopLeft"
+    },
+    "productsTitleFontSize": {
+      "type": "object",
+      "default": {
+        "device": {
+          "Desktop": 16,
+          "Tablet": 14,
+          "Mobile": 10
+        },
+        "unit": {
+          "Desktop": "px",
+          "Tablet": "px",
+          "Mobile": "px"
+        }
+      }
+    },
+    "productsTestColumn": {
+      "type": "object",
+      "default": {
+        "device": {
+          "Desktop": 6,
+          "Tablet": 3,
+          "Mobile": 1
+        }
+      }
+    },
+    "titleTypography": {
+      "type": "object",
+      "default": {
+        "googleFont": {
+          "family": "Default",
+          "variants": [
+            "200",
+            "300",
+            "400",
+            "500",
+            "600",
+            "700",
+            "800",
+            "900"
+          ]
+        },
+        "typography": {
+          "family": "",
+          "fontWeight": "400",
+          "style": "normal",
+          "transform": "capitalize",
+          "decoration": "none"
+        }
+      }
+    },
+    "titleFontSizeTest": {
+      "type": "object",
+      "default": {
+        "device": {
+          "Desktop": 18,
+          "Tablet": "",
+          "Mobile": ""
+        },
+        "unit": {
+          "Desktop": "px",
+          "Tablet": "px",
+          "Mobile": "px"
+        }
+      }
+    },
+    "titleFontSpacingTest": {
+      "type": "object",
+      "default": {
+        "device": {
+          "Desktop": 18,
+          "Tablet": "",
+          "Mobile": ""
+        },
+        "unit": {
+          "Desktop": "px",
+          "Tablet": "px",
+          "Mobile": "px"
+        }
+      }
+    },
+    "titleLineHeightTest": {
+      "type": "object",
+      "default": {
+        "device": {
+          "Desktop": 18,
+          "Tablet": "",
+          "Mobile": ""
+        },
+        "unit": {
+          "Desktop": "px",
+          "Tablet": "px",
+          "Mobile": "px"
+        }
+      }
     }
   },
   "textdomain": "mrs-products-grid",

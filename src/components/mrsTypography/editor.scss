@@ -1,0 +1,27 @@
+.mrs-product-grid-panel-body {
+    .mrs-typography {
+        .mrs-typography-btn {
+            display: flex;
+            justify-content: space-between;
+            .mrs-component-title {
+                text-transform: uppercase;
+                color: #757575;
+                font-weight: 700;
+                font-size: 11px;
+                margin-bottom: 8px;
+                display: flex;
+                align-items: center;
+            }
+            .components-button {
+                border: 1px solid #9b438b;
+                color: #9b438b;
+            }
+            &.active {
+                .components-button {
+                    background-color: #9b438b;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}

@@ -1,8 +1,8 @@
-import cssString from './controls/controls';
+import cssString, { useDeviceType } from './controls/controls';
 import { cssDataCheck } from './controls/controls';
 
 const dynamicCss = (attributes, deviceType = 'Desktop') => {
-    const { uniqueID, productTitleSize, productContentAlign, productsBGColor, productsContentPadding, productTitleColor, productPriceSize, productPriceColor, productRatingStarSize, productRatingStarColor, addToCartFontSize, addToCartBGColor, addToCartTextColor, mrsProductImageBorderRadius, addToCartWidth, saleBadgeAlign, productSpacing, saleBadgeBorderWidth, saleBadgeBorderStyle, saleBadgeBorderColor, saleBadgeBorderRadius, saleBadgeTextColor, saleBadgeBGColor, productsGridMargin, productsGridPadding, productsBorderWidth, productsBorderStyle, productsBorderColor, productsBorderRadius, productsBorderRadiusHover, productsBorderWidthHover, productsBorderColorHover, productsBorderStyleHover, productsBorderTransition } = attributes;
+    const { uniqueID, productTitleSize, productContentAlign, productsBGColor, productsContentPadding, productTitleColor, productPriceSize, productPriceColor, productRatingStarSize, productRatingStarColor, addToCartFontSize, addToCartBGColor, addToCartTextColor, mrsProductImageBorderRadius, addToCartWidth, saleBadgeAlign, productSpacing, saleBadgeBorderWidth, saleBadgeBorderStyle, saleBadgeBorderColor, saleBadgeBorderRadius, saleBadgeTextColor, saleBadgeBGColor, productsGridMargin, productsGridPadding, productsBorderWidth, productsBorderStyle, productsBorderColor, productsBorderRadius, productsBorderRadiusHover, productsBorderWidthHover, productsBorderColorHover, productsBorderStyleHover, productsBorderTransition, productsColumn } = attributes;
 
     const unit = (attributes, deviceType) => {
         if( 'object' !== typeof attributes.unit ) {
@@ -21,6 +21,7 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
         }
     }
 
+  
     let desktopCss = {
         [`.mrs-block-mrs-products-grid .mrs-product-${uniqueID}`] : {
             'display' : 'block',
@@ -49,27 +50,31 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
         [`.mrs-product-${uniqueID} .mrs-products-grid-content .mrs-product-col`] : {
             'box-sizing' : 'border-box',
         },
-        [`.mrs-product-${uniqueID} .mrs-product-col.has-1-col`] : {
-            'width': '100%',
-        },
-        [`.mrs-product-${uniqueID} .mrs-product-col.has-2-col`] : {
-            'width': `calc(100% / 2 - ${productSpacing * 2 }px)`,
-            'margin': '5px ' + productSpacing + 'px',
-        },
-        [`.mrs-product-${uniqueID} .mrs-product-col.has-3-col`] : {
-            'width': `calc(100% / 3 - ${productSpacing * 2 }px)`,
-            'margin': '5px ' + productSpacing + 'px',
-        },
-        [`.mrs-product-${uniqueID} .mrs-product-col.has-4-col`] : {
-            'width': `calc(100% / 4 - ${productSpacing * 2 }px)`,
-            'margin': '5px ' + productSpacing + 'px',
-        },
-        [`.mrs-product-${uniqueID} .mrs-product-col.has-5-col`] : {
-            'width': `calc(100% / 5 - ${productSpacing * 2 }px)`,
-            'margin': '5px ' + productSpacing + 'px',
-        },
-        [`.mrs-product-${uniqueID} .mrs-product-col.has-6-col`] : {
-            'width': `calc(100% / 6 - ${productSpacing * 2 }px)`,
+        // [`.mrs-product-${uniqueID} .mrs-product-col.has-1-col`] : {
+        //     'width': '100%',
+        // },
+        // [`.mrs-product-${uniqueID} .mrs-product-col.has-2-col`] : {
+        //     'width': `calc(100% / 2 - ${productSpacing * 2 }px)`,
+        //     'margin': '5px ' + productSpacing + 'px',
+        // },
+        // [`.mrs-product-${uniqueID} .mrs-product-col.has-3-col`] : {
+        //     'width': `calc(100% / 3 - ${productSpacing * 2 }px)`,
+        //     'margin': '5px ' + productSpacing + 'px',
+        // },
+        // [`.mrs-product-${uniqueID} .mrs-product-col.has-4-col`] : {
+        //     'width': `calc(100% / 4 - ${productSpacing * 2 }px)`,
+        //     'margin': '5px ' + productSpacing + 'px',
+        // },
+        // [`.mrs-product-${uniqueID} .mrs-product-col.has-5-col`] : {
+        //     'width': `calc(100% / 5 - ${productSpacing * 2 }px)`,
+        //     'margin': '5px ' + productSpacing + 'px',
+        // },
+        // [`.mrs-product-${uniqueID} .mrs-product-col.has-6-col`] : {
+        //     'width': `calc(100% / 6 - ${productSpacing * 2 }px)`,
+        //     'margin': '5px ' + productSpacing + 'px',
+        // },
+        [`.mrs-product-${uniqueID} .mrs-product-col.${[deviceType]}-has-${productsColumn.device[deviceType]}-col`] : {
+            'width': `calc(100% / ${productsColumn.device[deviceType]} - ${productSpacing * 2 }px)`,
             'margin': '5px ' + productSpacing + 'px',
         },
         [`.mrs-product-${uniqueID} .mrs-product .mrs-product-img-wrapper`] : {
@@ -195,13 +200,26 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
         [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-price ins`] : {
             'text-decoration': 'none',
         },
-        
-
-
     };
 
+    let tabletCss = {
+        [`.mrs-product-${uniqueID} .mrs-product-col.Tablet-has-${productsColumn.device.Tablet}-col`] : {
+            'width': `calc(100% / ${productsColumn.device.Tablet} - ${productSpacing * 2 }px)`,
+            'margin': '5px ' + productSpacing + 'px',
+        },
+    }
+    let mobileCss = {
+        [`.mrs-product-${uniqueID} .mrs-product-col.Mobile-has-${productsColumn.device.Mobile}-col`] : {
+            'width': `calc(100% / ${productsColumn.device.Mobile} - ${productSpacing * 2 }px)`,
+            'margin': '5px ' + productSpacing + 'px',
+        },
+    }
+
     desktopCss = cssString(desktopCss);
-    const styling = `${desktopCss}`;
+    tabletCss = '' !== cssString(tabletCss) ? `@media only screen and (max-width: 780px) {${cssString(tabletCss)}}` : '';
+    mobileCss = '' !== cssString(mobileCss) ? `@media only screen and (max-width: 360px) {${cssString(mobileCss)}}` : '';
+
+    const styling = `${desktopCss + tabletCss + mobileCss}`;
     return styling;
 }
 

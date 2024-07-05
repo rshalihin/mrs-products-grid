@@ -1,18 +1,22 @@
 import { __ } from '@wordpress/i18n';
 import { PanelBody, RangeControl, SelectControl, __experimentalDivider as Divider, ButtonGroup, Button, TextControl } from '@wordpress/components';
 import MRSToggle from "./components/mrsToggle/MRSToggle";
+import MRSRangeControl from './components/mrsRangControl/MRSRangeControl';
 
 const GeneralTab = ({attributes, setAttributes}) => {
     const { postsPerPage, orderBy, order, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup,hideOutOfStock, addToCartTextExternal, addToCartTextDefault, addToCartTextVariable, hideProductEmptyRatingStar } = attributes;
     return(
         <>
         <PanelBody title={__('Layout Settings', 'mrs-products-grid')} initialOpen={true} className={'mrs-product-grid-panel-body'}>
-            <RangeControl
+            <MRSRangeControl
                 label={__('Column(s)', 'mrs-products-grid')}
-                value={productsColumn}
+                help={__('Set the number of column(s) you want to show.', 'mrs-products-grid')}
+                attributes={productsColumn}
+                attributesKey={'productsColumn'}
+                setAttributes={setAttributes}
                 min={1}
                 max={6}
-                onChange={(newValue) => setAttributes({productsColumn: newValue})}
+                step={1}
             />
             <RangeControl
                 label={__('Limit', 'mrs-products-grid')}

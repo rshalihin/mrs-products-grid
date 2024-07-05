@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Makes sure the plugin is defined before trying to use it.
 if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
-    require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+	require_once ABSPATH . '/wp-admin/includes/plugin.php';
 }
 
 // Determines whether the plugin is active for the entire network. If not call error notice.
@@ -42,14 +42,14 @@ function mrs_block_products_grid_rendering( $attributes ) {
 		add_filter( 'woocommerce_product_add_to_cart_text', 'mrs_products_grid_custom_text', 10, 1 );
 	}
 
-	$addToCartText      = $attributes['addToCartText'];
-	$addToCartTextGroup = $attributes['addToCartTextGroup'];
+	$addToCartText         = $attributes['addToCartText'];
+	$addToCartTextGroup    = $attributes['addToCartTextGroup'];
 	$addToCartTextVariable = $attributes['addToCartTextVariable'];
 	$addToCartTextExternal = $attributes['addToCartTextExternal'];
-	$addToCartTextDefault = $attributes['addToCartTextDefault'];
+	$addToCartTextDefault  = $attributes['addToCartTextDefault'];
 
 	global $sample_cart_text;
-	$sample_cart_text = [ $addToCartText, $addToCartTextGroup, $addToCartTextVariable, $addToCartTextExternal, $addToCartTextDefault ];
+	$sample_cart_text = array( $addToCartText, $addToCartTextGroup, $addToCartTextVariable, $addToCartTextExternal, $addToCartTextDefault );
 
 	$args = array(
 		'post_type'   => 'product',
@@ -89,7 +89,6 @@ function mrs_block_products_grid_rendering( $attributes ) {
 
 	$mrs_products_grid_query = new \WP_Query( $args );
 
-
 	ob_start();
 
 	?>
@@ -120,9 +119,16 @@ function mrs_block_products_grid_rendering( $attributes ) {
 			for ( $i = intval( $mrs_ratings ); $i < 5; $i++ ) {
 				$mrs_avg_rating .= '<span class="dashicons dashicons-star-empty"></span>';
 			}
+			$desktop_column_class = isset( $attributes['productsColumn']['device']['Desktop'] ) ? $attributes['productsColumn']['device']['Desktop'] : 4;
+			$tablet_column_class = isset( $attributes['productsColumn']['device']['Tablet'] ) ? $attributes['productsColumn']['device']['Tablet'] : 3;
+			$mobile_column_class = isset( $attributes['productsColumn']['device']['Mobile'] ) ? $attributes['productsColumn']['device']['Mobile'] : 1;
 
+			// $css = isset( $attributes['frontendCss'] ) ? json_decode( $attributes['frontendCss'] ) : '';
+			// var_dump($css);
+			// wp_die();
+			
 			?>
-			<div class="mrs-product-col has-<?php echo esc_attr( $attributes['productsColumn'] ); ?>-col">
+			<div class="mrs-product-col Desktop-has-<?php echo esc_attr( $desktop_column_class ); ?>-col Tablet-has-<?php echo esc_attr( $tablet_column_class ); ?>-col Mobile-has-<?php echo esc_attr( $mobile_column_class ); ?>-col">
 				<div class="mrs-product">
 					<div class="mrs-product-img-wrapper">
 						<div class="mrs-product-img">
@@ -131,7 +137,7 @@ function mrs_block_products_grid_rendering( $attributes ) {
 							</a>
 						</div>
 						<?php if ( $attributes['saleBadgeShow'] ) : ?>
-						<?php if ( $is_on_sale_product ) { ?>
+							<?php if ( $is_on_sale_product ) { ?>
 						<div>
 							<div class="mrs-product-img-overlay <?php echo esc_attr( $attributes['mrsProductSaleBadgeStyle'] ); ?>">
 								<span><?php echo wp_kses_post( $attributes['saleBadgeText'] ); ?></span>
@@ -141,13 +147,14 @@ function mrs_block_products_grid_rendering( $attributes ) {
 						<?php endif; ?>
 					</div>
 					<div class="mrs-product-content-wrapper">
-						<?php if ( $attributes['productTitleShow']) : ?>
+						<?php if ( $attributes['productTitleShow'] ) : ?>
 							<div class="mrs-product-title">
 								<h4><?php echo wp_kses_post( get_the_title() ); ?></h4>
 							</div>
 							<?php endif; ?>
 							<?php if ( $attributes['showProductRatingStar'] ) : ?>
-								<?php if ( $attributes['hideProductEmptyRatingStar'] === true && $mrs_ratings === '0' ) {
+								<?php
+								if ( $attributes['hideProductEmptyRatingStar'] === true && $mrs_ratings === '0' ) {
 									?>
 									<span></span>
 									<?php
@@ -157,7 +164,8 @@ function mrs_block_products_grid_rendering( $attributes ) {
 										<div><?php echo wp_kses_post( $mrs_avg_rating ); ?></div>
 									</div>
 									<?php
-								} ?>
+								}
+								?>
 							<?php endif; ?>
 							<?php if ( $attributes['productPriceShow'] ) : ?>
 							<div class="mrs-product-price"><?php echo wp_kses_post( $mrs_product_price ); ?></div>
@@ -196,20 +204,20 @@ function mrs_block_products_grid_rendering( $attributes ) {
  * WooCommerce not installed error message
  */
 function error_admin_notice() {
-$link    = esc_url(
-	add_query_arg(
-		array(
-			'tab'       => 'plugin-information',
-			'plugin'    => 'woocommerce',
-			'TB_iframe' => 'true',
-			'width'     => '772',
-			'height'    => '446',
-		),
-		admin_url( 'plugin-install.php' )
-	)
-);
-$outline = '<div class="error"><p>You must install and activate <a class="thickbox open-plugin-details-modal" href="' . $link . '"><strong>WooCommerce</strong></a> plugin to make the <strong>MRS Product Grid</strong> work.</p></div>';
-echo wp_kses_post( $outline );
+	$link    = esc_url(
+		add_query_arg(
+			array(
+				'tab'       => 'plugin-information',
+				'plugin'    => 'woocommerce',
+				'TB_iframe' => 'true',
+				'width'     => '772',
+				'height'    => '446',
+			),
+			admin_url( 'plugin-install.php' )
+		)
+	);
+	$outline = '<div class="error"><p>You must install and activate <a class="thickbox open-plugin-details-modal" href="' . $link . '"><strong>WooCommerce</strong></a> plugin to make the <strong>MRS Product Grid</strong> work.</p></div>';
+	echo wp_kses_post( $outline );
 }
 
 
@@ -228,7 +236,7 @@ function mrs_products_grid_custom_text( $text ) {
 	$product_type = $product->get_type();
 
 	$product_types = array(
-		'simple' => $addToCartText,
+		'simple'   => $addToCartText,
 		'grouped'  => $addToCartTextGroup,
 		'external' => $addToCartTextExternal,
 		'variable' => $addToCartTextVariable,
