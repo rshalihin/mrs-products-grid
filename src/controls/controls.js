@@ -46,6 +46,7 @@ export const cssDataCheck = ( value, unit = '' ) => {
             data += ` ${value}${unit}`;
         }
     }
+    // console.log(data);
     return data;
 }
 

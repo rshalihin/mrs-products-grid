@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n';
 import { Button } from '@wordpress/components';
 import { useDeviceType } from '../../controls/controls';
 import { ResetIcon, SpacingControlIcon, SpacingControlActiveIcon } from '../../controls/svgIcon';
@@ -5,10 +6,10 @@ import Responsive from '../responsive/Responsive';
 import './editor.scss';
 
 const Spacing = ({ label, attributes, attributesKey, setAttributes, units, linkButton = true, labelItem = {
-    'top': 'Top',
-    'right': 'Right',
-    'bottom': 'Bottom',
-    'left': 'Left'
+    'top': __('Top', 'mrs-products-grid'),
+    'right': __('Right', 'mrs-products-grid'),
+    'bottom': __('Bottom', 'mrs-products-grid'),
+    'left': __('Left', 'mrs-products-grid'),
 }, defaultValue = { 'unit': 'px', 'value': {
     'top': '0px',
     'right': '0px',
@@ -51,13 +52,23 @@ const Spacing = ({ label, attributes, attributesKey, setAttributes, units, linkB
         }
         if ( attributes.device && attributes.allChange ) {
             let data = {
-                ...attributes,
+                ...attributes?.device[deviceType],
                 'top': newValue,
                 'right': newValue,
                 'bottom': newValue,
                 'left': newValue,
             };
             setAttributes({ [attributesKey] : {...attributes, 'device' : { ...attributes.device, [deviceType] : data }}});
+        }
+        if ( !attributes.device && attributes.allChange ) {
+            let data = {
+                ...attributes,
+                'top': newValue,
+                'right': newValue,
+                'bottom': newValue,
+                'left': newValue,
+            }
+            setAttributes({ [attributesKey] : data })
         }
     }
 

@@ -178,23 +178,23 @@ const AdvanceTab = ({attributes, setAttributes}) => {
                 attributesKey={'productsTestColumn'}
                 setAttributes={setAttributes}
             />
-            <Divider />
+            {/* <Divider />
             <MRSTypography
-            attributes={{
-                family: titleTypography,
-                familyKey: 'titleTypography',
-                fontSize: titleFontSizeTest,
-                fontSizeKey: 'titleFontSizeTest',
-                fontSpacing: titleFontSpacingTest,
-                fontSpacingKey: 'titleFontSpacingTest',
-                lineHeight: titleLineHeightTest,
-                lineHeightKey: 'titleLineHeightTest' 
-            }}
-            setAttributes={setAttributes}
-            spacingDefaultValue={{unit: 'px', value: 0}}
-            fontSizeDefault={{unit: 'px', value: 20}}
-            lineDefaultValue={{unit: 'px', value: 32}}
-        />
+                attributes={{
+                    family: titleTypography,
+                    familyKey: 'titleTypography',
+                    fontSize: titleFontSizeTest,
+                    fontSizeKey: 'titleFontSizeTest',
+                    fontSpacing: titleFontSpacingTest,
+                    fontSpacingKey: 'titleFontSpacingTest',
+                    lineHeight: titleLineHeightTest,
+                    lineHeightKey: 'titleLineHeightTest' 
+                }}
+                setAttributes={setAttributes}
+                spacingDefaultValue={{unit: 'px', value: 0}}
+                fontSizeDefault={{unit: 'px', value: 20}}
+                lineDefaultValue={{unit: 'px', value: 32}}
+            /> */}
         </PanelBody>
         </>
     );

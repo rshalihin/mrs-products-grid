@@ -43,7 +43,7 @@
   display: inline-block;
 }
 .components-panel__body .mrs-range-control .mrs-range-control-part-1 .mrs-header-control .mrs-header-control-left .mrs-products-grid-responsive {
-  margin-left: 10px;
+  margin-right: 10px;
 }
 .components-panel__body .mrs-range-control .mrs-range-control-part-1 .mrs-header-control .mrs-header-control-left .mrs-products-grid-responsive .mrs-products-units {
   position: relative;
@@ -67,7 +67,7 @@
   fill: #9b438b;
 }
 .components-panel__body .mrs-range-control .mrs-range-control-part-1 .mrs-header-control .mrs-header-control-left .mrs-products-grid-responsive .mrs-products-units .mrs-products-units-btn {
-  box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: -2px 2px 8px 0px rgba(0, 0, 0, 0.15);
   position: absolute;
   z-index: 999;
   margin-top: 2px;
@@ -103,7 +103,7 @@
 .components-panel__body .mrs-range-control .mrs-range-control-part-1 .mrs-header-control .mrs-header-control-right .mrs-header-control-reset {
   height: 18px;
   padding: 0;
-  margin-right: 10px;
+  margin-left: 10px;
 }
 .components-panel__body .mrs-range-control .mrs-range-control-part-1 .mrs-header-control .mrs-header-control-right .mrs-header-control-reset.active {
   color: #9b438b;
@@ -117,7 +117,7 @@
   color: #8C8F94;
 }
 .components-panel__body .mrs-range-control .mrs-range-control-part-1 .mrs-header-control .mrs-header-control-right .mrs-units .mrs-units-btn {
-  box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: -2px 2px 8px 0px rgba(0, 0, 0, 0.15);
   position: absolute;
   z-index: 999;
   margin-top: 2px;
@@ -181,7 +181,7 @@
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/components/responsive/editor.scss ***!
   \**************************************************************************************************************************************************************************************************************************************************************/
 .mrs-products-grid-responsive {
-  margin-left: 10px;
+  margin-right: 10px;
 }
 /*!*****************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/components/mrsTypography/editor.scss ***!
@@ -246,7 +246,7 @@
   display: inline-block;
 }
 .components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-left .mrs-products-grid-responsive {
-  margin-left: 10px;
+  margin-right: 10px;
 }
 .components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-left .mrs-products-grid-responsive .mrs-products-units {
   position: relative;
@@ -270,7 +270,7 @@
   fill: #9b438b;
 }
 .components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-left .mrs-products-grid-responsive .mrs-products-units .mrs-products-units-btn {
-  box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: -2px 2px 8px 0px rgba(0, 0, 0, 0.15);
   position: absolute;
   z-index: 999;
   margin-top: 2px;
@@ -306,7 +306,7 @@
 .components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-header-control-reset {
   height: 18px;
   padding: 0;
-  margin-right: 10px;
+  margin-left: 10px;
 }
 .components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-header-control-reset.active {
   color: #9b438b;
@@ -320,7 +320,7 @@
   color: #8C8F94;
 }
 .components-panel__body .mrs-component-spacing .mrs-spacing-part-1 .mrs-header-control .mrs-header-control-right .mrs-units .mrs-units-btn {
-  box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: -2px 2px 8px 0px rgba(0, 0, 0, 0.15);
   position: absolute;
   z-index: 999;
   margin-top: 2px;
@@ -391,7 +391,7 @@
   padding: 0;
   text-align: center;
   border-radius: 0;
-  border-right: 0;
+  border-left: 0;
   border-color: #DDD;
 }
 .components-panel__body .mrs-component-spacing .mrs-spacing-part-2 input:focus:not(:disabled) {
@@ -400,7 +400,7 @@
   border-color: #DDD;
 }
 .components-panel__body .mrs-component-spacing .mrs-spacing-part-2 .mrs-spacing-left input {
-  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
 }
 .components-panel__body .mrs-component-spacing .mrs-spacing-part-2 .mrs-spacing-all button {
   border: 1px solid #ddd;
@@ -540,7 +540,7 @@
 .components-tab-panel__tab-content .mrs-product-grid-panel-body .mrs-products-style-select .mrs-products-style-image-group .mrs-products-style-image-single.mrs-is-active figure::before {
   position: absolute;
   top: 7px;
-  right: 7px;
+  left: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -565,5 +565,3 @@
 .components-tab-panel__tab-content .mrs-products-btn-group button:focus {
   box-shadow: none;
 }
-
-/*# sourceMappingURL=index.css.map*/

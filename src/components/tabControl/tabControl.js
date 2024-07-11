@@ -1,5 +1,6 @@
 import { TabPanel } from '@wordpress/components';
 import './editor.scss';
+import { GeneralTabIcon } from '../../controls/svgIcon';
 
 const TabControl = ({ attributes, setAttributes, GeneralTab = '', StyleTab='', AdvanceTab='' }) => {
 
@@ -7,7 +8,7 @@ const TabControl = ({ attributes, setAttributes, GeneralTab = '', StyleTab='', A
     if(GeneralTab) {
         Tabs.push({
             name: 'general',
-            title: <span className='mrs-products-tab-panel-title'>General</span>,
+            title: <span className='mrs-products-tab-panel-title'><GeneralTabIcon/> General</span>,
             className: 'mrs-products-general-tab'
         })
     }

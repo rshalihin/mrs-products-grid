@@ -23,5 +23,21 @@
                 }
             }
         }
+        .mrs-typography-fonts {
+            display: none;
+            margin: 20px auto;
+            padding: 20px 15px 10px;
+            box-shadow: 0px 1.2px 2px -0.2px rgba(0, 0, 0, 0.1), 0px 0.3px 4px -0.5px rgba(0, 0, 0, 0.1);
+            &.open {
+                display: block;
+            }
+        }
+        .typography-btn-group-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
     }
 }

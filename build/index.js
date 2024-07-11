@@ -2426,30 +2426,6 @@ const AdvanceTab = ({
     attributes: productsTestColumn,
     attributesKey: 'productsTestColumn',
     setAttributes: setAttributes
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsTypography_MRSTypography__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    attributes: {
-      family: titleTypography,
-      familyKey: 'titleTypography',
-      fontSize: titleFontSizeTest,
-      fontSizeKey: 'titleFontSizeTest',
-      fontSpacing: titleFontSpacingTest,
-      fontSpacingKey: 'titleFontSpacingTest',
-      lineHeight: titleLineHeightTest,
-      lineHeightKey: 'titleLineHeightTest'
-    },
-    setAttributes: setAttributes,
-    spacingDefaultValue: {
-      unit: 'px',
-      value: 0
-    },
-    fontSizeDefault: {
-      unit: 'px',
-      value: 20
-    },
-    lineDefaultValue: {
-      unit: 'px',
-      value: 32
-    }
   })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AdvanceTab);
@@ -2474,6 +2450,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/mrsToggle/MRSToggle */ "./src/components/mrsToggle/MRSToggle.js");
 /* harmony import */ var _components_mrsRangControl_MRSRangeControl__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/mrsRangControl/MRSRangeControl */ "./src/components/mrsRangControl/MRSRangeControl.js");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _assets_image_product_style_1_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../assets/image/product-style-1.png */ "./assets/image/product-style-1.png");
+/* harmony import */ var _assets_image_product_style_2_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../assets/image/product-style-2.png */ "./assets/image/product-style-2.png");
+/* harmony import */ var _assets_image_product_style_3_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../assets/image/product-style-3.png */ "./assets/image/product-style-3.png");
+
+
+
+
+
 
 
 
@@ -2501,13 +2489,79 @@ const GeneralTab = ({
     addToCartTextExternal,
     addToCartTextDefault,
     addToCartTextVariable,
-    hideProductEmptyRatingStar
+    hideProductEmptyRatingStar,
+    searchByCategory,
+    showCategory,
+    productFilterBy,
+    mrsProductStyle
   } = attributes;
+  const [cateOptions, setCateOptions] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)([]);
+  const productsCategory = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_6__.useSelect)(select => {
+    return select('core').getEntityRecords('taxonomy', 'product_cat');
+  }, []);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useEffect)(() => {
+    let options = productsCategory?.map(v => ({
+      label: v.name,
+      value: v.id
+    }));
+    if (options) {
+      let allOpt = [{
+        label: "All",
+        value: "all"
+      }, ...options];
+      setCateOptions(allOpt);
+    }
+  }, []);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Layout Settings', 'mrs-products-grid'),
     initialOpen: true,
     className: 'mrs-product-grid-panel-body'
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsRangControl_MRSRangeControl__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mrs-products-style-select"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mrs-products-style-title"
+  }, "Select a Product Style"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mrs-products-style-image-group"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `mrs-products-style-image-single ${mrsProductStyle === 'style-1' && 'mrs-is-active'}`
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", {
+    onClick: () => setAttributes({
+      mrsProductStyle: 'style-1'
+    })
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    src: _assets_image_product_style_1_png__WEBPACK_IMPORTED_MODULE_7__,
+    alt: "style-1"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "radio"
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mrs-products-single-style-title"
+  }, "Straight")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `mrs-products-style-image-single ${mrsProductStyle === 'style-2' && 'mrs-is-active'}`
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", {
+    onClick: () => setAttributes({
+      mrsProductStyle: 'style-2'
+    })
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    src: _assets_image_product_style_2_png__WEBPACK_IMPORTED_MODULE_8__,
+    alt: "style-2"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "radio"
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mrs-products-single-style-title"
+  }, "Hover Btn")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `mrs-products-style-image-single ${mrsProductStyle === 'style-3' && 'mrs-is-active'}`
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("figure", {
+    onClick: () => setAttributes({
+      mrsProductStyle: 'style-3'
+    })
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    src: _assets_image_product_style_3_png__WEBPACK_IMPORTED_MODULE_9__,
+    alt: "style-3"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "radio"
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mrs-products-single-style-title"
+  }, "Hover Text")))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsRangControl_MRSRangeControl__WEBPACK_IMPORTED_MODULE_4__["default"], {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Column(s)', 'mrs-products-grid'),
     help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Set the number of column(s) you want to show.', 'mrs-products-grid'),
     attributes: productsColumn,
@@ -2516,19 +2570,16 @@ const GeneralTab = ({
     min: 1,
     max: 6,
     step: 1
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mrs-products-mb"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Limit', 'mrs-products-grid'),
     help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Set number of total products to show.', 'mrs-products-grid'),
     value: postsPerPage,
     onChange: newValue => setAttributes({
       postsPerPage: newValue
     })
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Hide Out Of Stock Product', 'mrs-products-grid'),
-    attributes: hideOutOfStock,
-    attributesKey: 'hideOutOfStock',
-    setAttributes: setAttributes
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Filter Settings', 'mrs-products-grid'),
     initialOpen: false,
     className: 'mrs-product-grid-panel-body'
@@ -2569,11 +2620,41 @@ const GeneralTab = ({
     onChange: newValue => setAttributes({
       order: newValue
     })
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Show Products By Specific Category', 'mrs-products-grid'),
+    options: cateOptions,
+    value: searchByCategory,
+    onChange: v => setAttributes({
+      searchByCategory: v
+    })
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mrs-products-mb"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Filter Products', 'mrs-products-grid'),
+    options: [{
+      label: 'All',
+      value: 'all'
+    }, {
+      label: 'Featured',
+      value: 'featured'
+    }, {
+      label: 'On Sale',
+      value: 'onSale'
+    }],
+    value: productFilterBy,
+    onChange: v => setAttributes({
+      productFilterBy: v
+    })
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Template Settings', 'mrs-products-grid'),
     initialOpen: false,
     className: 'mrs-product-grid-panel-body'
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Hide Out Of Stock Product', 'mrs-products-grid'),
+    attributes: hideOutOfStock,
+    attributesKey: 'hideOutOfStock',
+    setAttributes: setAttributes
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_3__["default"], {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Show Products Name', 'mrs-products-grid'),
     attributes: productTitleShow,
     attributesKey: 'productTitleShow',
@@ -2603,17 +2684,24 @@ const GeneralTab = ({
     attributes: showAddToCart,
     attributesKey: 'showAddToCart',
     setAttributes: setAttributes
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Show Category', 'mrs-products-grid'),
+    attributes: showCategory,
+    attributesKey: 'showCategory',
+    setAttributes: setAttributes
   })), saleBadgeShow && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sale Badge', 'mrs-products-grid'),
     initialOpen: false,
     className: 'mrs-product-grid-panel-body'
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mrs-products-mb"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sale Text', 'mrs-products-grid'),
     value: saleBadgeText,
     onChange: newValue => setAttributes({
       saleBadgeText: newValue
     })
-  })), showAddToCart && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+  }))), showAddToCart && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Cart Text', 'mrs-products-grid'),
     initialOpen: false,
     className: 'mrs-product-grid-panel-body'
@@ -2718,8 +2806,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _components_mrsToggle_MRSToggle__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/mrsToggle/MRSToggle */ "./src/components/mrsToggle/MRSToggle.js");
 /* harmony import */ var _components_responsive_Responsive__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/responsive/Responsive */ "./src/components/responsive/Responsive.js");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _components_mrsTypography_MRSTypography__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/mrsTypography/MRSTypography */ "./src/components/mrsTypography/MRSTypography.js");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _components_spacing_Spacing__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/spacing/Spacing */ "./src/components/spacing/Spacing.js");
+
+
 
 
 
@@ -2736,10 +2828,12 @@ const StyleTab = ({
     mrsProductImageBorderRadiusSet,
     mrsProductImageBorderRadius,
     productTitleShow,
-    productTitleSize,
+    titleTypography,
+    titleFontSize,
+    titleFontSpacing,
+    titleLineHeight,
     productTitleColor,
     productPriceShow,
-    productPriceSize,
     productPriceColor,
     showProductRatingStar,
     productRatingStarSize,
@@ -2748,7 +2842,7 @@ const StyleTab = ({
     addToCartFontSize,
     addToCartTextColor,
     addToCartBGColor,
-    addToCartWidth,
+    callToActionPadding,
     productContentAlign,
     productsBGColor,
     productsContentPadding,
@@ -2761,8 +2855,21 @@ const StyleTab = ({
     saleBadgeBorderWidth,
     saleBadgeBorderRadius,
     mrsProductSaleBadgeStyle,
-    saleBadgeAlign
+    saleBadgeAlign,
+    productRowGap,
+    priceTypography,
+    priceFontSize,
+    priceFontSpacing,
+    priceLineHeight,
+    callToActionBorderRadius,
+    mrsCategoryColor,
+    showCategory,
+    categoryTypography,
+    categoryFontSize,
+    categoryLineHeight,
+    categoryLetterSpacing
   } = attributes;
+  const [cartColorBtn, setCartColorBtn] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.useState)('normal');
   const pxCheck = newObj => {
     for (let side in newObj) {
       if (newObj[side] === undefined) {
@@ -2799,7 +2906,7 @@ const StyleTab = ({
       saleBadgeBorderRadius: checkValues
     });
   };
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useEffect)(() => {
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.useEffect)(() => {
     if (mrsProductSaleBadgeStyle !== 'simple') {
       setAttributes({
         saleBadgeBorderStyle: 'none'
@@ -2831,7 +2938,8 @@ const StyleTab = ({
     onClick: () => setAttributes({
       productContentAlign: 'flex-end'
     })
-  }, "Right")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+  }, "Right")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    className: "mrs-color-settings-panel",
     colorSettings: [{
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Content Background Color', 'mrs-products-grid'),
       value: productsBGColor,
@@ -2839,17 +2947,42 @@ const StyleTab = ({
         productsBGColor: newValue
       })
     }]
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalBoxControl, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_spacing_Spacing__WEBPACK_IMPORTED_MODULE_8__["default"], {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Padding', 'mrs-products-grid'),
-    values: productsContentPadding,
-    onChange: productsContentPaddingHandle
+    attributes: productsContentPadding,
+    attributesKey: 'productsContentPadding',
+    setAttributes: setAttributes,
+    units: ['px', '%', 'rem', 'em'],
+    labelItem: {
+      'top': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Top', 'mrs-products-grid'),
+      'right': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Right', 'mrs-products-grid'),
+      'bottom': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Bottom', 'mrs-products-grid'),
+      'left': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Left', 'mrs-products-grid')
+    },
+    defaultValue: {
+      unit: 'px',
+      value: {
+        'top': '0',
+        'right': '0',
+        'bottom': '0',
+        'left': '0'
+      }
+    }
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Spacing', 'mrs-products-grid'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Column Gap', 'mrs-products-grid'),
     value: productSpacing,
     onChange: newValue => setAttributes({
       productSpacing: newValue
     })
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "mrs-products-mb"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Row Gap', 'mrs-products-grid'),
+    value: productRowGap,
+    onChange: newValue => setAttributes({
+      productRowGap: newValue
+    })
+  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Image Settings', 'mrs-products-grid'),
     initialOpen: false,
     className: 'mrs-product-grid-panel-body'
@@ -2867,38 +3000,60 @@ const StyleTab = ({
       label: 'px'
     }]
   })), productTitleShow && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product Name Settings', 'mrs-products-grid'),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product Title Settings', 'mrs-products-grid'),
     initialOpen: false,
     className: 'mrs-product-grid-panel-body'
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product Name Font Size', 'mrs-products-grid'),
-    value: productTitleSize,
-    onChange: newValue => setAttributes({
-      productTitleSize: newValue
-    }),
-    min: 10,
-    max: 100
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    className: "mrs-color-settings-panel",
     colorSettings: [{
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product Name Color', 'mrs-product-grid'),
-      value: productTitleColor,
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Title Color', 'mrs-product-grid'),
+      value: productTitleColor.color,
       onChange: newValue => setAttributes({
-        productTitleColor: newValue
+        productTitleColor: {
+          ...productTitleColor,
+          'color': newValue
+        }
+      })
+    }, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Title Hover Color', 'mrs-product-grid'),
+      value: productTitleColor.hover,
+      onChange: newValue => setAttributes({
+        productTitleColor: {
+          ...productTitleColor,
+          'hover': newValue
+        }
       })
     }]
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsTypography_MRSTypography__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    attributes: {
+      family: titleTypography,
+      familyKey: 'titleTypography',
+      fontSize: titleFontSize,
+      fontSizeKey: 'titleFontSize',
+      fontSpacing: titleFontSpacing,
+      fontSpacingKey: 'titleFontSpacing',
+      lineHeight: titleLineHeight,
+      lineHeightKey: 'titleLineHeight'
+    },
+    setAttributes: setAttributes,
+    fontSizeDefault: {
+      unit: 'px',
+      value: 16
+    },
+    spacingDefaultValue: {
+      unit: 'px',
+      value: 0
+    },
+    lineHeightDefault: {
+      unit: 'px',
+      value: 0
+    }
   })), productPriceShow && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product Price', 'mrs-products-grid'),
     initialOpen: false,
     className: 'mrs-product-grid-panel-body'
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product Price Font Size', 'mrs-products-grid'),
-    value: productPriceSize,
-    onChange: newValue => setAttributes({
-      productPriceSize: newValue
-    }),
-    min: 10,
-    max: 100
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    className: "mrs-color-settings-panel",
     colorSettings: [{
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product Price Color', 'mrs-product-grid'),
       value: productPriceColor,
@@ -2906,6 +3061,30 @@ const StyleTab = ({
         productPriceColor: newValue
       })
     }]
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsTypography_MRSTypography__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    attributes: {
+      family: priceTypography,
+      familyKey: 'priceTypography',
+      fontSize: priceFontSize,
+      fontSizeKey: 'priceFontSize',
+      fontSpacing: priceFontSpacing,
+      fontSpacingKey: 'priceFontSpacing',
+      lineHeight: priceLineHeight,
+      lineHeightKey: 'priceLineHeight'
+    },
+    setAttributes: setAttributes,
+    fontSizeDefault: {
+      unit: 'px',
+      value: 16
+    },
+    spacingDefaultValue: {
+      unit: 'px',
+      value: 0
+    },
+    lineHeightDefault: {
+      unit: 'px',
+      value: 0
+    }
   })), showProductRatingStar && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Product Rating', 'mrs-products-grid'),
     initialOpen: false,
@@ -2919,6 +3098,7 @@ const StyleTab = ({
     min: 10,
     max: 100
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    className: "mrs-color-settings-panel",
     colorSettings: [{
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Fill Rating Star Color', 'mrs-product-grid'),
       value: productRatingStarColor,
@@ -2927,54 +3107,110 @@ const StyleTab = ({
       })
     }]
   })), showAddToCart && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add To Cart', 'mrs-products-grid'),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Call to Action', 'mrs-products-grid'),
     initialOpen: false,
     className: 'mrs-product-grid-panel-body'
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add To Cart Font Size', 'mrs-products-grid'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Call To Action Font Size', 'mrs-products-grid'),
     value: addToCartFontSize,
     onChange: newValue => setAttributes({
       addToCartFontSize: newValue
     }),
     min: 10,
-    max: 100
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    max: 50
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ButtonGroup, {
+    className: 'mrs-products-btn-group'
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${cartColorBtn === 'normal' ? 'is-active' : ''}`,
+    onClick: () => setCartColorBtn('normal')
+  }, "Normal"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${cartColorBtn === 'hover' ? 'is-active' : ''}`,
+    onClick: () => setCartColorBtn('hover')
+  }, "Hover")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, 'normal' === cartColorBtn && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    className: "mrs-color-settings-panel",
     colorSettings: [{
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Text Color', 'mrs-products-grid'),
-      value: addToCartTextColor,
+      value: addToCartTextColor.color,
       onChange: newValue => setAttributes({
-        addToCartTextColor: newValue
+        addToCartTextColor: {
+          ...addToCartTextColor,
+          "color": newValue
+        }
       })
     }, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Background Color', 'mrs-products-grid'),
-      value: addToCartBGColor,
+      value: addToCartBGColor.color,
       onChange: newValue => setAttributes({
-        addToCartBGColor: newValue
+        addToCartBGColor: {
+          ...addToCartBGColor,
+          "color": newValue
+        }
       })
     }]
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add To Cart Button Width', 'mrs-products-grid')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ButtonGroup, {
-    className: 'mrs-products-btn-group'
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    className: `mrs-products-btn ${addToCartWidth === '25%' ? 'is-active' : ''}`,
-    onClick: () => setAttributes({
-      addToCartWidth: '25%'
-    })
-  }, "25%"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    className: `mrs-products-btn ${addToCartWidth === '50%' ? 'is-active' : ''}`,
-    onClick: () => setAttributes({
-      addToCartWidth: '50%'
-    })
-  }, "50%"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    className: `mrs-products-btn ${addToCartWidth === '75%' ? 'is-active' : ''}`,
-    onClick: () => setAttributes({
-      addToCartWidth: '75%'
-    })
-  }, "75%"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    className: `mrs-products-btn ${addToCartWidth === '100%' ? 'is-active' : ''}`,
-    onClick: () => setAttributes({
-      addToCartWidth: '100%'
-    })
-  }, "100%"))), saleBadgeShow && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+  }), 'hover' === cartColorBtn && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    className: "mrs-color-settings-panel",
+    colorSettings: [{
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Text Hover Color', 'mrs-products-grid'),
+      value: addToCartTextColor.hover,
+      onChange: newValue => setAttributes({
+        addToCartTextColor: {
+          ...addToCartTextColor,
+          "hover": newValue
+        }
+      })
+    }, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Background Hover Color', 'mrs-products-grid'),
+      value: addToCartBGColor.hover,
+      onChange: newValue => setAttributes({
+        addToCartBGColor: {
+          ...addToCartBGColor,
+          "hover": newValue
+        }
+      })
+    }]
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_spacing_Spacing__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Padding', 'mrs-products-grid'),
+    attributes: callToActionPadding,
+    attributesKey: 'callToActionPadding',
+    setAttributes: setAttributes,
+    units: ['px', 'em', 'rem', '%'],
+    labelItem: {
+      'top': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Top', 'mrs-products-grid'),
+      'right': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Right', 'mrs-products-grid'),
+      'bottom': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Bottom', 'mrs-products-grid'),
+      'left': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Left', 'mrs-products-grid')
+    },
+    defaultValue: {
+      unit: 'px',
+      value: {
+        'top': '5px',
+        'right': '20px',
+        'bottom': '5px',
+        'left': '20px'
+      }
+    }
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_spacing_Spacing__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Border Radius', 'mrs-products-grid'),
+    attributes: callToActionBorderRadius,
+    attributesKey: 'callToActionBorderRadius',
+    setAttributes: setAttributes,
+    units: ['px', 'em', 'rem', '%'],
+    labelItem: {
+      'top': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('T-Left', 'mrs-products-grid'),
+      'right': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('T-Right', 'mrs-products-grid'),
+      'bottom': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('B-Right', 'mrs-products-grid'),
+      'left': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('B-Left', 'mrs-products-grid')
+    },
+    defaultValue: {
+      unit: 'px',
+      value: {
+        'top': '5',
+        'right': '5',
+        'bottom': '5',
+        'left': '5'
+      }
+    }
+  })), saleBadgeShow && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sale Badge Style', 'mrs-products-grid'),
     initialOpen: false,
     className: 'mrs-product-grid-panel-body'
@@ -3009,6 +3245,7 @@ const StyleTab = ({
       saleBadgeAlign: 'Right'
     })
   }, "Right")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    className: "mrs-color-settings-panel",
     colorSettings: [{
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Sale Text Color', 'mrs-products-grid'),
       value: saleBadgeTextColor,
@@ -3080,7 +3317,44 @@ const StyleTab = ({
       label: 'px',
       value: 'px'
     }]
-  })))));
+  })))), showCategory && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Category', 'mrs-products-grid'),
+    initialOpen: false,
+    className: 'mrs-product-grid-panel-body'
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    className: "mrs-color-settings-panel",
+    colorSettings: [{
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Category Color', 'mrs-products-grid'),
+      value: mrsCategoryColor,
+      onChange: newValue => setAttributes({
+        mrsCategoryColor: newValue
+      })
+    }]
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_mrsTypography_MRSTypography__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    attributes: {
+      family: categoryTypography,
+      familyKey: 'categoryTypography',
+      fontSize: categoryFontSize,
+      fontSizeKey: 'categoryFontSize',
+      fontSpacing: categoryLetterSpacing,
+      fontSpacingKey: 'categoryLetterSpacing',
+      lineHeight: categoryLineHeight,
+      lineHeightKey: 'categoryLineHeight'
+    },
+    setAttributes: setAttributes,
+    fontSizeDefault: {
+      unit: 'px',
+      value: 12
+    },
+    lineHeightDefault: {
+      unit: 'px',
+      value: 0
+    },
+    spacingDefaultValue: {
+      unit: 'px',
+      value: 0
+    }
+  })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StyleTab);
 
@@ -3360,14 +3634,33 @@ const MRSTypography = ({
       });
     }
   });
-  console.log(fontList);
+  const fontWCheck = ['100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic'];
+  const fontW = family?.googleFont?.variants?.map(value => {
+    if (fontWCheck.includes(value) || '100' === value) {
+      return '';
+    }
+    if ('regular' === value) {
+      value = '400';
+    }
+    return {
+      label: value,
+      value: value
+    };
+  });
+  let fontWeightList = [];
+  if (fontW) {
+    fontWeightList = fontW.filter((item, pos) => {
+      return '' !== item;
+    });
+  }
+  console.log(family);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "mrs-typography mrs-components-mb",
-    onClick: () => {
+    className: "mrs-typography mrs-components-mb"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: `mrs-typography-btn ${typographyOpen ? 'active' : ''}`,
+    onClick: e => {
       typographyOpen && setTypographyOpen(false);
     }
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: `mrs-typography-btn ${typographyOpen ? 'active' : ''}`
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "mrs-component-title"
   }, "Typography"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
@@ -3397,7 +3690,163 @@ const MRSTypography = ({
       }
     }),
     onInputChange: inputValue => fontSearch(inputValue)
-  })))));
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_mrsRangControl_MRSRangeControl__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Font Size', 'mrs-products-grid'),
+    attributes: fontSize,
+    attributesKey: fontSizeKey,
+    setAttributes: setAttributes,
+    units: ['px', 'em', 'rem'],
+    defaultValue: fontSizeDefault
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Font Style', 'mrs-products-grid'),
+    value: family.typography.style,
+    options: [{
+      label: 'Default',
+      value: 'default',
+      disabled: true
+    }, {
+      label: 'Normal',
+      value: 'normal'
+    }, {
+      label: 'Italic',
+      value: 'italic'
+    }, {
+      label: 'Oblique',
+      value: 'oblique'
+    }],
+    onChange: newStyle => setAttributes({
+      [familyKey]: {
+        ...family,
+        'typography': {
+          ...family.typography,
+          'style': newStyle
+        }
+      }
+    })
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Font Weight', 'mrs-products-grid'),
+    value: family.typography.fontWeight,
+    options: fontWeightList,
+    onChange: newFontWeight => setAttributes({
+      [familyKey]: {
+        ...family,
+        'typography': {
+          ...family.typography,
+          'fontWeight': newFontWeight
+        }
+      }
+    })
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_mrsRangControl_MRSRangeControl__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Title Later Spacing', 'mrs-products-grid'),
+    attributes: fontSpacing,
+    attributesKey: fontSpacingKey,
+    setAttributes: setAttributes,
+    defaultValue: spacingDefaultValue,
+    units: ['px', 'em', 'rem']
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_mrsRangControl_MRSRangeControl__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Line Height', 'mrs-products-grid'),
+    attributes: lineHeight,
+    attributesKey: lineHeightKey,
+    setAttributes: setAttributes,
+    units: ['px', 'em', 'rem'],
+    defaultValue: lineHeightDefault
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "typography-btn-group-label"
+  }, "Text Decoration"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ButtonGroup, {
+    className: "mrs-products-btn-group"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${family?.typography?.decoration === 'none' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      [familyKey]: {
+        ...family,
+        'typography': {
+          ...family.typography,
+          'decoration': 'none'
+        }
+      }
+    })
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_controls_svgIcon__WEBPACK_IMPORTED_MODULE_5__.DecorationNone, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${family?.typography?.decoration === 'underline' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      [familyKey]: {
+        ...family,
+        'typography': {
+          ...family.typography,
+          'decoration': 'underline'
+        }
+      }
+    })
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_controls_svgIcon__WEBPACK_IMPORTED_MODULE_5__.DecorationUnderline, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${family?.typography?.decoration === 'line-through' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      [familyKey]: {
+        ...family,
+        'typography': {
+          ...family.typography,
+          'decoration': 'line-through'
+        }
+      }
+    })
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_controls_svgIcon__WEBPACK_IMPORTED_MODULE_5__.DecorationLineThrough, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${family?.typography?.decoration === 'overline' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      [familyKey]: {
+        ...family,
+        'typography': {
+          ...family.typography,
+          'decoration': 'overline'
+        }
+      }
+    })
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_controls_svgIcon__WEBPACK_IMPORTED_MODULE_5__.DecorationOverLine, null))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "typography-btn-group-label"
+  }, "Latter Case"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ButtonGroup, {
+    className: "mrs-products-btn-group"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${family?.typography?.transform === 'none' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      [familyKey]: {
+        ...family,
+        'typography': {
+          ...family.typography,
+          'transform': 'none'
+        }
+      }
+    })
+  }, "None"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${family?.typography?.transform === 'uppercase' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      [familyKey]: {
+        ...family,
+        'typography': {
+          ...family.typography,
+          'transform': 'uppercase'
+        }
+      }
+    })
+  }, "AB"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${family?.typography?.transform === 'lowercase' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      [familyKey]: {
+        ...family,
+        'typography': {
+          ...family.typography,
+          'transform': 'lowercase'
+        }
+      }
+    })
+  }, "ab"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    className: `mrs-products-btn ${family?.typography?.transform === 'capitalize' ? 'is-active' : ''}`,
+    onClick: () => setAttributes({
+      [familyKey]: {
+        ...family,
+        'typography': {
+          ...family.typography,
+          'transform': 'capitalize'
+        }
+      }
+    })
+  }, "Ab")))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MRSTypography);
 
@@ -3485,12 +3934,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _controls_controls__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../controls/controls */ "./src/controls/controls.js");
-/* harmony import */ var _controls_svgIcon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../controls/svgIcon */ "./src/controls/svgIcon.js");
-/* harmony import */ var _responsive_Responsive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../responsive/Responsive */ "./src/components/responsive/Responsive.js");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./editor.scss */ "./src/components/spacing/editor.scss");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _controls_controls__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../controls/controls */ "./src/controls/controls.js");
+/* harmony import */ var _controls_svgIcon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../controls/svgIcon */ "./src/controls/svgIcon.js");
+/* harmony import */ var _responsive_Responsive__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../responsive/Responsive */ "./src/components/responsive/Responsive.js");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./src/components/spacing/editor.scss");
+
 
 
 
@@ -3505,10 +3957,10 @@ const Spacing = ({
   units,
   linkButton = true,
   labelItem = {
-    'top': 'Top',
-    'right': 'Right',
-    'bottom': 'Bottom',
-    'left': 'Left'
+    'top': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Top', 'mrs-products-grid'),
+    'right': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Right', 'mrs-products-grid'),
+    'bottom': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Bottom', 'mrs-products-grid'),
+    'left': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Left', 'mrs-products-grid')
   },
   defaultValue = {
     'unit': 'px',
@@ -3520,8 +3972,8 @@ const Spacing = ({
     }
   }
 }) => {
-  const deviceType = (0,_controls_controls__WEBPACK_IMPORTED_MODULE_2__.useDeviceType)();
-  const SpacingAllChangeIcon = attributes?.allChange ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_controls_svgIcon__WEBPACK_IMPORTED_MODULE_3__.SpacingControlActiveIcon, null) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_controls_svgIcon__WEBPACK_IMPORTED_MODULE_3__.SpacingControlIcon, null);
+  const deviceType = (0,_controls_controls__WEBPACK_IMPORTED_MODULE_3__.useDeviceType)();
+  const SpacingAllChangeIcon = attributes?.allChange ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_controls_svgIcon__WEBPACK_IMPORTED_MODULE_4__.SpacingControlActiveIcon, null) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_controls_svgIcon__WEBPACK_IMPORTED_MODULE_4__.SpacingControlIcon, null);
   const value = attributes?.device ? attributes?.device[deviceType] : attributes;
   const setDefaultValue = () => {
     if (attributes?.device) {
@@ -3589,7 +4041,7 @@ const Spacing = ({
     }
     if (attributes.device && attributes.allChange) {
       let data = {
-        ...attributes,
+        ...attributes?.device[deviceType],
         'top': newValue,
         'right': newValue,
         'bottom': newValue,
@@ -3603,6 +4055,18 @@ const Spacing = ({
             [deviceType]: data
           }
         }
+      });
+    }
+    if (!attributes.device && attributes.allChange) {
+      let data = {
+        ...attributes,
+        'top': newValue,
+        'right': newValue,
+        'bottom': newValue,
+        'left': newValue
+      };
+      setAttributes({
+        [attributesKey]: data
       });
     }
   };
@@ -3637,16 +4101,16 @@ const Spacing = ({
     className: "mrs-header-control-left"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     className: "mrs-component-title"
-  }, label), attributes?.device && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_responsive_Responsive__WEBPACK_IMPORTED_MODULE_4__["default"], null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, label), attributes?.device && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_responsive_Responsive__WEBPACK_IMPORTED_MODULE_5__["default"], null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mrs-header-control-right"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     onClick: () => setDefaultValue(),
     className: `mrs-header-control-reset ${activeResetButton()}`
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_controls_svgIcon__WEBPACK_IMPORTED_MODULE_3__.ResetIcon, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_controls_svgIcon__WEBPACK_IMPORTED_MODULE_4__.ResetIcon, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mrs-units"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, 'object' !== typeof attributes.unit ? attributes?.unit : attributes.unit[deviceType]), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mrs-units-btn"
-  }, units?.map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+  }, units?.map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     className: attributes.unit[deviceType] === item.toLowerCase() ? 'active' : '',
     key: i,
     value: item,
@@ -3691,7 +4155,7 @@ const Spacing = ({
     htmlFor: "mrs-spacing-left"
   }, labelItem?.left)), linkButton && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mrs-spacing-all"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     className: attributes?.allChange ? 'active' : '',
     onClick: () => setAttributes({
       [attributesKey]: {
@@ -3720,6 +4184,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./editor.scss */ "./src/components/tabControl/editor.scss");
+/* harmony import */ var _controls_svgIcon__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../controls/svgIcon */ "./src/controls/svgIcon.js");
+
 
 
 
@@ -3736,7 +4202,7 @@ const TabControl = ({
       name: 'general',
       title: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
         className: "mrs-products-tab-panel-title"
-      }, "General"),
+      }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_controls_svgIcon__WEBPACK_IMPORTED_MODULE_3__.GeneralTabIcon, null), " General"),
       className: 'mrs-products-general-tab'
     });
   }
@@ -3839,6 +4305,7 @@ const cssDataCheck = (value, unit = '') => {
       data += ` ${value}${unit}`;
     }
   }
+  // console.log(data);
   return data;
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (cssString);
@@ -3858,6 +4325,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   DecorationOverLine: () => (/* binding */ DecorationOverLine),
 /* harmony export */   DecorationUnderline: () => (/* binding */ DecorationUnderline),
 /* harmony export */   DesktopIcon: () => (/* binding */ DesktopIcon),
+/* harmony export */   GeneralTabIcon: () => (/* binding */ GeneralTabIcon),
 /* harmony export */   MobileIcon: () => (/* binding */ MobileIcon),
 /* harmony export */   ResetIcon: () => (/* binding */ ResetIcon),
 /* harmony export */   SpacingControlActiveIcon: () => (/* binding */ SpacingControlActiveIcon),
@@ -3982,6 +4450,16 @@ const TypographyIcon = () => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement
 }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
   d: "M7.577 11.256H2.409v-.608c.458 0 .8-.032 1.024-.096a.635.635 0 0 0 .432-.464c.074-.235.112-.592.112-1.072v-7.44h-.832c-.587 0-1.03.064-1.328.192-.288.128-.496.357-.624.688-.128.32-.25.768-.368 1.344H.137L.313.744H9.72L9.865 3.8h-.688c-.118-.576-.246-1.024-.384-1.344-.128-.33-.336-.56-.624-.688-.288-.128-.731-.192-1.328-.192h-.816v7.44c0 .48.037.837.112 1.072.074.235.218.39.432.464.224.064.56.096 1.008.096v.608Z"
 }));
+const GeneralTabIcon = () => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: 15,
+  height: 15,
+  fill: "none"
+}, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  d: "M10 10.15a2.613 2.613 0 0 0 2.505-1.87h1.832V6.785h-1.832a2.613 2.613 0 0 0-5.01 0H.803V8.28h6.692A2.613 2.613 0 0 0 10 10.15Zm0-3.74c.617 0 1.122.506 1.122 1.123 0 .616-.505 1.121-1.122 1.121a1.125 1.125 0 0 1-1.122-1.121c0-.617.505-1.122 1.122-1.122Z"
+}), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
+  d: "M5.14 14.45a2.613 2.613 0 0 0 2.505-1.87h6.692v-1.496H7.645a2.613 2.613 0 0 0-5.01 0H.803v1.496h1.832a2.613 2.613 0 0 0 2.505 1.87Zm0-3.74c.617 0 1.121.505 1.121 1.122 0 .617-.504 1.122-1.121 1.122a1.125 1.125 0 0 1-1.122-1.122c0-.617.505-1.122 1.122-1.122Zm0-4.673a2.613 2.613 0 0 0 2.505-1.87h6.692V2.673H7.645a2.613 2.613 0 0 0-5.01 0H.803v1.496h1.832A2.613 2.613 0 0 0 5.14 6.037Zm0-3.739c.617 0 1.121.505 1.121 1.122 0 .617-.504 1.121-1.121 1.121A1.125 1.125 0 0 1 4.018 3.42c0-.617.505-1.122 1.122-1.122Z"
+}));
 
 /***/ }),
 
@@ -3997,16 +4475,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _controls_controls__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./controls/controls */ "./src/controls/controls.js");
 
+// import {  } from './controls/controls';
 
 const dynamicCss = (attributes, deviceType = 'Desktop') => {
   const {
     uniqueID,
-    productTitleSize,
+    titleFontSize,
     productContentAlign,
     productsBGColor,
     productsContentPadding,
     productTitleColor,
-    productPriceSize,
+    priceTypography,
+    priceFontSize,
+    priceFontSpacing,
+    priceLineHeight,
     productPriceColor,
     productRatingStarSize,
     productRatingStarColor,
@@ -4014,9 +4496,10 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
     addToCartBGColor,
     addToCartTextColor,
     mrsProductImageBorderRadius,
-    addToCartWidth,
+    callToActionPadding,
     saleBadgeAlign,
     productSpacing,
+    productRowGap,
     saleBadgeBorderWidth,
     saleBadgeBorderStyle,
     saleBadgeBorderColor,
@@ -4034,7 +4517,16 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
     productsBorderColorHover,
     productsBorderStyleHover,
     productsBorderTransition,
-    productsColumn
+    productsColumn,
+    titleTypography,
+    titleFontSpacing,
+    titleLineHeight,
+    callToActionBorderRadius,
+    categoryTypography,
+    mrsCategoryColor,
+    categoryLetterSpacing,
+    categoryLineHeight,
+    categoryFontSize
   } = attributes;
   const unit = (attributes, deviceType) => {
     if ('object' !== typeof attributes.unit) {
@@ -4079,32 +4571,9 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
     [`.mrs-product-${uniqueID} .mrs-products-grid-content .mrs-product-col`]: {
       'box-sizing': 'border-box'
     },
-    // [`.mrs-product-${uniqueID} .mrs-product-col.has-1-col`] : {
-    //     'width': '100%',
-    // },
-    // [`.mrs-product-${uniqueID} .mrs-product-col.has-2-col`] : {
-    //     'width': `calc(100% / 2 - ${productSpacing * 2 }px)`,
-    //     'margin': '5px ' + productSpacing + 'px',
-    // },
-    // [`.mrs-product-${uniqueID} .mrs-product-col.has-3-col`] : {
-    //     'width': `calc(100% / 3 - ${productSpacing * 2 }px)`,
-    //     'margin': '5px ' + productSpacing + 'px',
-    // },
-    // [`.mrs-product-${uniqueID} .mrs-product-col.has-4-col`] : {
-    //     'width': `calc(100% / 4 - ${productSpacing * 2 }px)`,
-    //     'margin': '5px ' + productSpacing + 'px',
-    // },
-    // [`.mrs-product-${uniqueID} .mrs-product-col.has-5-col`] : {
-    //     'width': `calc(100% / 5 - ${productSpacing * 2 }px)`,
-    //     'margin': '5px ' + productSpacing + 'px',
-    // },
-    // [`.mrs-product-${uniqueID} .mrs-product-col.has-6-col`] : {
-    //     'width': `calc(100% / 6 - ${productSpacing * 2 }px)`,
-    //     'margin': '5px ' + productSpacing + 'px',
-    // },
     [`.mrs-product-${uniqueID} .mrs-product-col.${[deviceType]}-has-${productsColumn.device[deviceType]}-col`]: {
       'width': `calc(100% / ${productsColumn.device[deviceType]} - ${productSpacing * 2}px)`,
-      'margin': '5px ' + productSpacing + 'px'
+      'margin': '0 ' + productSpacing + 'px ' + productRowGap + 'px'
     },
     [`.mrs-product-${uniqueID} .mrs-product .mrs-product-img-wrapper`]: {
       'position': 'relative',
@@ -4176,18 +4645,47 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
       'justify-content': 'center',
       'align-items': productContentAlign,
       'background': productsBGColor,
-      'padding': `${productsContentPadding.top} ${productsContentPadding.right} ${productsContentPadding.bottom} ${productsContentPadding.left}`
+      'padding': (0,_controls_controls__WEBPACK_IMPORTED_MODULE_0__.cssDataCheck)(productsContentPadding.device.Desktop, unit(productsContentPadding, 'Desktop'))
     },
     [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-title h4`]: {
-      'margin': '10px',
-      'font-size': productTitleSize + 'px',
-      'font-weight': '700',
-      'color': productTitleColor,
-      'text-align': flexTextAlign(productContentAlign)
+      'font-size': (0,_controls_controls__WEBPACK_IMPORTED_MODULE_0__.cssDataCheck)(titleFontSize.device.Desktop, unit(titleFontSize, 'Desktop')),
+      'font-weight': titleTypography?.typography?.fontWeight,
+      'color': productTitleColor.color,
+      'text-align': flexTextAlign(productContentAlign),
+      'text-decoration': titleTypography?.typography?.decoration,
+      'text-transform': titleTypography?.typography?.transform,
+      'letter-spacing': (0,_controls_controls__WEBPACK_IMPORTED_MODULE_0__.cssDataCheck)(titleFontSpacing.device.Desktop, unit(titleFontSpacing, 'Desktop')),
+      'line-height': (0,_controls_controls__WEBPACK_IMPORTED_MODULE_0__.cssDataCheck)(titleLineHeight.device.Desktop, unit(titleLineHeight, 'Desktop')),
+      'font-style': titleTypography?.typography?.style,
+      'font-family': titleTypography?.typography?.family
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-category`]: {
+      'font-size': (0,_controls_controls__WEBPACK_IMPORTED_MODULE_0__.cssDataCheck)(categoryFontSize.device.Desktop, unit(titleFontSize, 'Desktop')),
+      'font-weight': categoryTypography?.typography?.fontWeight,
+      'color': mrsCategoryColor,
+      'text-align': flexTextAlign(productContentAlign),
+      'text-decoration': categoryTypography?.typography?.decoration,
+      'text-transform': categoryTypography?.typography?.transform,
+      'letter-spacing': (0,_controls_controls__WEBPACK_IMPORTED_MODULE_0__.cssDataCheck)(categoryLetterSpacing.device.Desktop, unit(categoryLetterSpacing, 'Desktop')),
+      'line-height': (0,_controls_controls__WEBPACK_IMPORTED_MODULE_0__.cssDataCheck)(categoryLineHeight.device.Desktop, unit(categoryLineHeight, 'Desktop')),
+      'font-style': categoryTypography?.typography?.style,
+      'font-family': categoryTypography?.typography?.family,
+      'margin': '0',
+      'padding': '0'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-title h4:hover`]: {
+      'color': productTitleColor.hover
     },
     [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-price`]: {
-      'font-size': productPriceSize + 'px',
-      'color': productPriceColor
+      'color': productPriceColor,
+      'font-size': (0,_controls_controls__WEBPACK_IMPORTED_MODULE_0__.cssDataCheck)(priceFontSize.device.Desktop, unit(priceFontSize, 'Desktop')),
+      'font-weight': priceTypography?.typography?.fontWeight,
+      'text-decoration': priceTypography?.typography?.decoration,
+      'text-transform': priceTypography?.typography?.transform,
+      'letter-spacing': (0,_controls_controls__WEBPACK_IMPORTED_MODULE_0__.cssDataCheck)(priceFontSpacing.device.Desktop, unit(priceFontSpacing, 'Desktop')),
+      'line-height': (0,_controls_controls__WEBPACK_IMPORTED_MODULE_0__.cssDataCheck)(priceLineHeight.device.Desktop, unit(priceLineHeight, 'Desktop')),
+      'font-style': priceTypography?.typography.style,
+      'font-family': titleTypography.typography.family
     },
     [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper .mrs-products-grid-content`]: {
       'margin-left': '-' + productSpacing + 'px',
@@ -4201,8 +4699,16 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
     },
     [`.mrs-product-${uniqueID} .mrs-product-add-to-cart .mrs-product-buy-btn-cart .wp-element-button`]: {
       'font-size': addToCartFontSize + 'px',
-      'color': addToCartTextColor,
-      'background': addToCartBGColor
+      'color': addToCartTextColor.color,
+      'background': addToCartBGColor.color,
+      'padding': (0,_controls_controls__WEBPACK_IMPORTED_MODULE_0__.cssDataCheck)(callToActionPadding.device.Desktop, unit(callToActionPadding, 'Desktop')),
+      'border-radius': (0,_controls_controls__WEBPACK_IMPORTED_MODULE_0__.cssDataCheck)(callToActionBorderRadius.device.Desktop, unit(callToActionBorderRadius, 'Desktop')),
+      'text-align': 'center',
+      'transition': '0.3s'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product-add-to-cart .mrs-product-buy-btn-cart .wp-element-button:hover`]: {
+      'color': addToCartTextColor.hover,
+      'background': addToCartBGColor.hover
     },
     [`.mrs-product-${uniqueID} .mrs-product-img-wrapper .mrs-product-img`]: {
       'border-radius': `${mrsProductImageBorderRadius.top ? mrsProductImageBorderRadius.top : 0} ${mrsProductImageBorderRadius.right ? mrsProductImageBorderRadius.right : 0} ${mrsProductImageBorderRadius.bottom ? mrsProductImageBorderRadius.bottom : 0} ${mrsProductImageBorderRadius.left ? mrsProductImageBorderRadius.left : 0}`
@@ -4221,25 +4727,64 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
     [`.mrs-product-${uniqueID} .mrs-product-add-to-cart .mrs-product-buy-btn-cart`]: {
       'width': '100%',
       'display': 'flex',
-      'justify-content': 'center'
-    },
-    [`.mrs-product-${uniqueID} .mrs-product-buy-btn-cart .mrs-product-add-to-cart-button`]: {
-      'width': addToCartWidth
+      'justify-content': productContentAlign
     },
     [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-price ins`]: {
       'text-decoration': 'none'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product.style-2 .mrs-product-content-wrapper`]: {
+      'position': 'relative'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product.style-2 .mrs-product-content-wrapper .mrs-product-add-to-cart`]: {
+      'height': '10px'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product.style-2 .mrs-product-content-wrapper .mrs-product-add-to-cart .wp-element-button`]: {
+      'position': 'absolute',
+      'top': '-52px',
+      'width': '100%',
+      'border-radius': '0',
+      'background': addToCartBGColor.color + '9f',
+      'color': addToCartTextColor.color,
+      'opacity': '0',
+      'visibility': 'hidden',
+      'transition': '0.3s'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product.style-2 .mrs-product-content-wrapper .mrs-product-add-to-cart .wp-element-button:hover`]: {
+      'background': addToCartBGColor.hover + '9f',
+      'color': addToCartTextColor.hover
+    },
+    [`.mrs-product-${uniqueID} .mrs-product.style-2:hover .mrs-product-content-wrapper .mrs-product-add-to-cart .wp-element-button`]: {
+      'opacity': '1',
+      'visibility': 'visible'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product.style-3`]: {
+      'position': 'relative'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product.style-3 .mrs-product-content-wrapper`]: {
+      'position': 'absolute',
+      'top': '0',
+      'width': '100%',
+      'height': '100%',
+      'background': '#0000006f',
+      'opacity': '0',
+      'visibility': 'hidden',
+      'transition': '0.5s'
+    },
+    [`.mrs-product-${uniqueID} .mrs-product.style-3:hover .mrs-product-content-wrapper`]: {
+      'opacity': '1',
+      'visibility': 'visible'
     }
   };
   let tabletCss = {
     [`.mrs-product-${uniqueID} .mrs-product-col.Tablet-has-${productsColumn.device.Tablet}-col`]: {
       'width': `calc(100% / ${productsColumn.device.Tablet} - ${productSpacing * 2}px)`,
-      'margin': '5px ' + productSpacing + 'px'
+      'margin': '0 ' + productSpacing + 'px ' + productRowGap + 'px'
     }
   };
   let mobileCss = {
     [`.mrs-product-${uniqueID} .mrs-product-col.Mobile-has-${productsColumn.device.Mobile}-col`]: {
       'width': `calc(100% / ${productsColumn.device.Mobile} - ${productSpacing * 2}px)`,
-      'margin': '5px ' + productSpacing + 'px'
+      'margin': '0 ' + productSpacing + 'px ' + productRowGap + 'px'
     }
   };
   desktopCss = (0,_controls_controls__WEBPACK_IMPORTED_MODULE_0__["default"])(desktopCss);
@@ -4311,23 +4856,46 @@ function Edit({
     addToCartTextGroup,
     hideOutOfStock,
     hideProductEmptyRatingStar,
-    mrsProductSaleBadgeStyle
+    mrsProductSaleBadgeStyle,
+    searchByCategory,
+    showCategory,
+    productFilterBy,
+    mrsProductStyle
   } = attributes;
   const [firstTLoad, setFirstTLoad] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(true);
   const [loading, setLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
   const [mrsPro, setMrsPro] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)([]);
-
-  // console.log(mrsProductsGrid.products);
-
+  const [proCategory, setProCategory] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)([]);
   const selectProduct = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
-    return select('core').getEntityRecords('postType', 'product', {
-      per_page: postsPerPage,
-      _embed: true,
-      orderby: orderBy,
-      order
-    });
-  }, [postsPerPage, orderBy, order]);
+    if (searchByCategory !== 'all') {
+      return select('core').getEntityRecords('postType', 'product', {
+        per_page: postsPerPage,
+        _embed: true,
+        orderby: orderBy,
+        order,
+        product_cat: parseInt(searchByCategory)
+      });
+    } else {
+      return select('core').getEntityRecords('postType', 'product', {
+        per_page: postsPerPage,
+        _embed: true,
+        orderby: orderBy,
+        order
+      });
+    }
+  }, [postsPerPage, orderBy, order, searchByCategory]);
+  const productsCategory = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
+    return select('core').getEntityRecords('taxonomy', 'product_cat');
+  }, []);
+
+  // console.log(proCategory);
+
   const deviceType = (0,_controls_controls__WEBPACK_IMPORTED_MODULE_9__.useDeviceType)();
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
+    if (productsCategory && proCategory.length === 0) {
+      setProCategory(productsCategory);
+    }
+  }, [productsCategory]);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
     if (selectProduct) {
       const copyProduct = selectProduct;
@@ -4335,17 +4903,30 @@ function Edit({
         mrsProductsGrid?.products?.map(v => {
           if (parseInt(v.id) === parseInt(item.id)) {
             item.stock = v.price ? 'instock' : 'out of stock';
+            item.featured = v.featured ? true : false;
+            item.onSale = v.onSale ? true : false;
           }
         });
       });
-      if (hideOutOfStock) {
-        const filterPro = copyProduct?.filter(v => v.stock === 'instock');
-        setMrsPro(filterPro);
+      if (productFilterBy === 'all') {
+        if (hideOutOfStock) {
+          const filterPro = copyProduct?.filter(v => v.stock === 'instock');
+          setMrsPro(filterPro);
+        } else {
+          setMrsPro(copyProduct);
+        }
       } else {
-        setMrsPro(copyProduct);
+        if (hideOutOfStock) {
+          const filterProduct = copyProduct?.filter(v => v.stock === 'instock');
+          const filterType = filterProduct?.filter(v => v[productFilterBy] === true);
+          setMrsPro(filterType);
+        } else {
+          const filterType = copyProduct?.filter(v => v[productFilterBy] === true);
+          setMrsPro(filterType);
+        }
       }
     }
-  }, [selectProduct, hideOutOfStock]);
+  }, [selectProduct, hideOutOfStock, productFilterBy]);
   const starRating = ratingCount => {
     let rating = parseInt(ratingCount);
     let starRatings = [];
@@ -4392,16 +4973,16 @@ function Edit({
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)({
       className: `mrs-block-mrs-products-grid mrs-product-${uniqueID}`
     })
-  }, loading && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Loading Products..."), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, loading && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Loading Products...  ", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Spinner, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mrs-products-grid-wrapper"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mrs-products-grid-content"
-  }, mrsPro && mrsPro.length > 0 && mrsPro.map((item, i) => {
+  }, mrsPro && mrsPro.length > 0 ? mrsPro.map((item, i) => {
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: `mrs-product-col ${[deviceType]}-has-${productsColumn.device[deviceType]}-col`,
       key: i
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      className: "mrs-product"
+      className: `mrs-product ${mrsProductStyle}`
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "mrs-product-img-wrapper"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -4419,7 +5000,14 @@ function Edit({
       }
     })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "mrs-product-content-wrapper"
-    }, productTitleShow && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    }, showCategory && proCategory?.map((v, i) => {
+      if (parseInt(v.id) === item.product_cat[0]) {
+        return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+          className: "mrs-product-category",
+          key: i
+        }, "-", v.name);
+      }
+    }), productTitleShow && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "mrs-product-title"
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, item?.title?.rendered)), showProductRatingStar && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       className: "mrs-product-ratting"
@@ -4457,10 +5045,10 @@ function Edit({
           "aria-label": `Add to cart: “${item?.title?.raw}”`,
           "aria-describedby": true,
           rel: "nofollow"
-        }, customAddToCartText ? v.groupProduct ? addToCartTextGroup : addToCartText : v.groupProduct ? 'View Products' : 'Add To Cart'));
+        }, customAddToCartText ? v.groupProduct ? addToCartTextGroup : addToCartText : v.groupProduct ? 'View Products' : v.price ? 'Add To Cart' : 'View Product'));
       }
     })))));
-  })))));
+  }) : loading ? '' : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "No Product Found!!! Please Check product filter section.")))));
 }
 
 /***/ }),
@@ -9336,6 +9924,36 @@ var index =  react__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect ;
 
 /***/ }),
 
+/***/ "./assets/image/product-style-1.png":
+/*!******************************************!*\
+  !*** ./assets/image/product-style-1.png ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "images/product-style-1.9590eb17.png";
+
+/***/ }),
+
+/***/ "./assets/image/product-style-2.png":
+/*!******************************************!*\
+  !*** ./assets/image/product-style-2.png ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "images/product-style-2.654a64f5.png";
+
+/***/ }),
+
+/***/ "./assets/image/product-style-3.png":
+/*!******************************************!*\
+  !*** ./assets/image/product-style-3.png ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "images/product-style-3.7c393114.png";
+
+/***/ }),
+
 /***/ "react":
 /*!************************!*\
   !*** external "React" ***!
@@ -13253,7 +13871,7 @@ function combine (array, callback) {
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"mrs-block/mrs-products-grid","version":"0.1.0","title":"MRS Products Grid","category":"text","icon":"cart","description":"A simple Gutenberg form widget.","example":{},"supports":{"html":false,"align":["wide","full"]},"attributes":{"uniqueID":{"type":"string","default":""},"frontendCss":{"type":"string","default":""},"postsPerPage":{"type":"number","default":100},"orderBy":{"type":"string","default":"title"},"order":{"type":"string","default":"desc"},"productsColumn":{"type":"object","default":{"device":{"Desktop":4,"Tablet":2,"Mobile":1},"unit":false}},"mrsProductImageBorderRadiusSet":{"type":"boolean","default":false},"mrsProductImageBorderRadius":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"productTitleShow":{"type":"boolean","default":true},"productTitleColor":{"type":"string","default":"#111111"},"productTitleSize":{"type":"number","default":22},"showProductRatingStar":{"type":"boolean","default":true},"hideProductEmptyRatingStar":{"type":"boolean","default":true},"productRatingStarSize":{"type":"number","default":16},"productRatingStarColor":{"type":"string","default":"#111111"},"productPriceShow":{"type":"boolean","default":true},"productPriceSize":{"type":"number","default":18},"productPriceColor":{"type":"string","default":"#111111"},"showAddToCart":{"type":"boolean","default":true},"customAddToCartText":{"type":"boolean","default":false},"addToCartText":{"type":"string","default":"Add To Cart"},"addToCartTextGroup":{"type":"string","default":"View Products"},"addToCartTextVariable":{"type":"string","default":"Select Options"},"addToCartTextExternal":{"type":"string","default":"Buy Now"},"addToCartTextDefault":{"type":"string","default":"Read More"},"addToCartBGColor":{"type":"string","default":"#111111"},"addToCartTextColor":{"type":"string","default":"#fff"},"addToCartFontSize":{"type":"number","default":16},"addToCartWidth":{"type":"string","default":"75%"},"saleBadgeShow":{"type":"boolean","default":true},"saleBadgeAlign":{"type":"string","default":"Left"},"saleBadgeText":{"type":"string","default":"Sale"},"saleBadgeBGColor":{"type":"string","default":"#ffffff"},"saleBadgeTextColor":{"type":"string","default":"#111111"},"saleBadgeBorderStyle":{"type":"string","default":"solid"},"saleBadgeBorderColor":{"type":"string","default":"#111111"},"saleBadgeBorderWidth":{"type":"object","default":{"top":"1px","right":"1px","bottom":"1px","left":"1px"}},"saleBadgeBorderRadius":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"productContentAlign":{"type":"string","default":"Center"},"productsBGColor":{"type":"string","default":"#ffffff"},"productsContentPadding":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"productSpacing":{"type":"number","default":10},"productsGridMargin":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"","right":"","bottom":"","left":""},"Mobile":{"top":"","right":"","bottom":"","left":""}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":false}},"productsGridPadding":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"","right":"","bottom":"","left":""},"Mobile":{"top":"","right":"","bottom":"","left":""}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":false}},"hideOutOfStock":{"type":"boolean","default":false},"productsBorderStyle":{"type":"string","default":"none"},"productsBorderColor":{"type":"string","default":"#111111"},"productsBorderWidth":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderRadius":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderStyleHover":{"type":"string","default":"none"},"productsBorderColorHover":{"type":"string","default":"#111111"},"productsBorderWidthHover":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderRadiusHover":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderTransition":{"type":"number","default":0.3},"mrsProductSaleBadgeStyle":{"type":"string","default":"sTopLeft"},"productsTitleFontSize":{"type":"object","default":{"device":{"Desktop":16,"Tablet":14,"Mobile":10},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"productsTestColumn":{"type":"object","default":{"device":{"Desktop":6,"Tablet":3,"Mobile":1}}},"titleTypography":{"type":"object","default":{"googleFont":{"family":"Default","variants":["200","300","400","500","600","700","800","900"]},"typography":{"family":"","fontWeight":"400","style":"normal","transform":"capitalize","decoration":"none"}}},"titleFontSizeTest":{"type":"object","default":{"device":{"Desktop":18,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"titleFontSpacingTest":{"type":"object","default":{"device":{"Desktop":18,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"titleLineHeightTest":{"type":"object","default":{"device":{"Desktop":18,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}}},"textdomain":"mrs-products-grid","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"mrs-block/mrs-products-grid","version":"0.1.0","title":"MRS Products Grid","category":"text","icon":"cart","description":"A simple Gutenberg form widget.","example":{},"supports":{"html":false,"align":["wide","full"]},"attributes":{"uniqueID":{"type":"string","default":""},"frontendCss":{"type":"string","default":""},"postsPerPage":{"type":"number","default":100},"orderBy":{"type":"string","default":"title"},"order":{"type":"string","default":"desc"},"productsColumn":{"type":"object","default":{"device":{"Desktop":4,"Tablet":2,"Mobile":1},"unit":false}},"mrsProductImageBorderRadiusSet":{"type":"boolean","default":false},"mrsProductImageBorderRadius":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"productTitleShow":{"type":"boolean","default":true},"productTitleColor":{"type":"object","default":{"color":"#111111","hover":"#011111"}},"showProductRatingStar":{"type":"boolean","default":true},"hideProductEmptyRatingStar":{"type":"boolean","default":true},"productRatingStarSize":{"type":"number","default":16},"productRatingStarColor":{"type":"string","default":"#111111"},"productPriceShow":{"type":"boolean","default":true},"productPriceSize":{"type":"number","default":18},"productPriceColor":{"type":"string","default":"#111111"},"showAddToCart":{"type":"boolean","default":true},"customAddToCartText":{"type":"boolean","default":false},"addToCartText":{"type":"string","default":"Add To Cart"},"addToCartTextGroup":{"type":"string","default":"View Products"},"addToCartTextVariable":{"type":"string","default":"Select Options"},"addToCartTextExternal":{"type":"string","default":"Buy Now"},"addToCartTextDefault":{"type":"string","default":"Read More"},"addToCartBGColor":{"type":"object","default":{"color":"#111111","hover":"#ffffff"}},"addToCartTextColor":{"type":"object","default":{"color":"#ffffff","hover":"#ff0033"}},"addToCartFontSize":{"type":"number","default":16},"callToActionPadding":{"type":"object","default":{"device":{"Desktop":{"top":"8","right":"16","bottom":"8","left":"16"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":false}},"callToActionBorderRadius":{"type":"object","default":{"device":{"Desktop":{"top":"5","right":"5","bottom":"5","left":"5"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"saleBadgeShow":{"type":"boolean","default":true},"saleBadgeAlign":{"type":"string","default":"Left"},"saleBadgeText":{"type":"string","default":"Sale"},"saleBadgeBGColor":{"type":"string","default":"#ffffff"},"saleBadgeTextColor":{"type":"string","default":"#111111"},"saleBadgeBorderStyle":{"type":"string","default":"solid"},"saleBadgeBorderColor":{"type":"string","default":"#111111"},"saleBadgeBorderWidth":{"type":"object","default":{"top":"1px","right":"1px","bottom":"1px","left":"1px"}},"saleBadgeBorderRadius":{"type":"object","default":{"top":"0px","right":"0px","bottom":"0px","left":"0px"}},"productContentAlign":{"type":"string","default":"Center"},"productsBGColor":{"type":"string","default":"#ffffff"},"productsContentPadding":{"type":"object","default":{"device":{"Desktop":{"top":"0","left":"0","bottom":"0","right":"0"},"Tablet":{"top":"0","left":"0","bottom":"0","right":"0"},"Mobile":{"top":"0","left":"0","bottom":"0","right":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":"true"}},"productSpacing":{"type":"number","default":10},"productRowGap":{"type":"number","default":10},"productsGridMargin":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"","right":"","bottom":"","left":""},"Mobile":{"top":"","right":"","bottom":"","left":""}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":false}},"productsGridPadding":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"","right":"","bottom":"","left":""},"Mobile":{"top":"","right":"","bottom":"","left":""}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":false}},"hideOutOfStock":{"type":"boolean","default":false},"productsBorderStyle":{"type":"string","default":"none"},"productsBorderColor":{"type":"string","default":"#111111"},"productsBorderWidth":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderRadius":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderStyleHover":{"type":"string","default":"none"},"productsBorderColorHover":{"type":"string","default":"#111111"},"productsBorderWidthHover":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderRadiusHover":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderTransition":{"type":"number","default":0.3},"mrsProductSaleBadgeStyle":{"type":"string","default":"sTopLeft"},"productsTestColumn":{"type":"object","default":{"device":{"Desktop":6,"Tablet":3,"Mobile":1}}},"titleTypography":{"type":"object","default":{"googleFont":{"family":"Default","variants":["200","300","400","500","600","700","800","900"]},"typography":{"family":"","fontWeight":"400","style":"normal","transform":"capitalize","decoration":"none"}}},"titleFontSize":{"type":"object","default":{"device":{"Desktop":18,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"titleFontSpacing":{"type":"object","default":{"device":{"Desktop":0,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"titleLineHeight":{"type":"object","default":{"device":{"Desktop":0,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"priceTypography":{"type":"object","default":{"googleFont":{"family":"Default","variants":["200","300","400","500","600","700","800","900"]},"typography":{"family":"","fontWeight":"400","style":"normal","transform":"capitalize","decoration":"none"}}},"priceFontSize":{"type":"object","default":{"device":{"Desktop":18,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"priceFontSpacing":{"type":"object","default":{"device":{"Desktop":0,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"priceLineHeight":{"type":"object","default":{"device":{"Desktop":0,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"searchByCategory":{"type":"string","default":"all"},"showCategory":{"type":"boolean","default":true},"productFilterBy":{"type":"string","default":"all"},"mrsProductStyle":{"type":"string","default":"style-1"},"mrsCategoryColor":{"type":"string","default":"#000"},"categoryTypography":{"type":"object","default":{"googleFont":{"family":"Default","variants":["200","300","400","500","600","700","800","900"]},"typography":{"family":"","fontWeight":"400","style":"normal","transform":"capitalize","decoration":"none"}}},"categoryFontSize":{"type":"object","default":{"device":{"Desktop":12,"Tablet":10,"Mobile":10},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"categoryLineHeight":{"type":"object","default":{"device":{"Desktop":0,"Tablet":0,"Mobile":0},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"categoryLetterSpacing":{"type":"object","default":{"device":{"Desktop":0,"Tablet":0,"Mobile":0},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}}},"textdomain":"mrs-products-grid","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
 
 /***/ })
 
@@ -13369,6 +13987,29 @@ module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/tru
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src;
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) {
+/******/ 					var i = scripts.length - 1;
+/******/ 					while (i > -1 && (!scriptUrl || !/^http(s?):/.test(scriptUrl))) scriptUrl = scripts[i--].src;
+/******/ 				}
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */

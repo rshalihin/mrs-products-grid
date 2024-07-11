@@ -57,12 +57,11 @@
 			"default": true
 		},
 		"productTitleColor": {
-			"type": "string",
-			"default": "#111111"
-		},
-		"productTitleSize": {
-			"type": "number",
-			"default": 22
+			"type": "object",
+			"default": {
+				"color": "#111111",
+				"hover": "#011111"
+			}
 		},
 		"showProductRatingStar": {
 			"type": "boolean",
@@ -121,20 +120,78 @@
 			"default": "Read More"
 		},
 		"addToCartBGColor": {
-			"type": "string",
-			"default": "#111111"
+			"type": "object",
+			"default": { "color": "#111111", "hover": "#ffffff" }
 		},
 		"addToCartTextColor": {
-			"type": "string",
-			"default": "#fff"
+			"type": "object",
+			"default": { "color": "#ffffff", "hover": "#ff0033" }
 		},
 		"addToCartFontSize": {
 			"type": "number",
 			"default": 16
 		},
-		"addToCartWidth": {
-			"type": "string",
-			"default": "75%"
+		"callToActionPadding": {
+			"type": "object",
+			"default": {
+				"device": {
+					"Desktop": {
+						"top": "8",
+						"right": "16",
+						"bottom": "8",
+						"left": "16"
+					},
+					"Tablet": {
+						"top": "0",
+						"right": "0",
+						"bottom": "0",
+						"left": "0"
+					},
+					"Mobile": {
+						"top": "0",
+						"right": "0",
+						"bottom": "0",
+						"left": "0"
+					}
+				},
+				"unit": {
+					"Desktop": "px",
+					"Tablet": "px",
+					"Mobile": "px"
+				},
+				"allChange": false
+			}
+		},
+		"callToActionBorderRadius": {
+			"type": "object",
+			"default": {
+				"device": {
+					"Desktop": {
+						"top": "5",
+						"right": "5",
+						"bottom": "5",
+						"left": "5"
+					},
+					"Tablet": {
+						"top": "0",
+						"right": "0",
+						"bottom": "0",
+						"left": "0"
+					},
+					"Mobile": {
+						"top": "0",
+						"right": "0",
+						"bottom": "0",
+						"left": "0"
+					}
+				},
+				"unit": {
+					"Desktop": "px",
+					"Tablet": "px",
+					"Mobile": "px"
+				},
+				"allChange": true
+			}
 		},
 		"saleBadgeShow": {
 			"type": "boolean",
@@ -182,9 +239,40 @@
 		},
 		"productsContentPadding": {
 			"type": "object",
-			"default": { "top": "0px", "right": "0px", "bottom": "0px", "left": "0px" }
+			"default": {
+				"device": {
+					"Desktop": {
+						"top": "0",
+						"left": "0",
+						"bottom": "0",
+						"right": "0"
+					},
+					"Tablet": {
+						"top": "0",
+						"left": "0",
+						"bottom": "0",
+						"right": "0"
+					},
+					"Mobile": {
+						"top": "0",
+						"left": "0",
+						"bottom": "0",
+						"right": "0"
+					}
+				},
+				"unit": {
+					"Desktop": "px",
+					"Tablet": "px",
+					"Mobile": "px"
+				},
+				"allChange": "true"
+			}
 		},
 		"productSpacing": {
+			"type": "number",
+			"default": 10
+		},
+		"productRowGap": {
 			"type": "number",
 			"default": 10
 		},
@@ -402,21 +490,6 @@
 			"type": "string",
 			"default": "sTopLeft"
 		},
-		"productsTitleFontSize" : {
-			"type": "object",
-			"default": {
-				"device": {
-					"Desktop": 16,
-					"Tablet": 14,
-					"Mobile": 10
-				},
-				"unit": {
-					"Desktop": "px",
-					"Tablet": "px",
-					"Mobile": "px"
-				}
-			}
-		},
 		"productsTestColumn": {
 			"type": "object",
 			"default": {
@@ -443,7 +516,7 @@
 				}
 			}
 		},
-		"titleFontSizeTest": {
+		"titleFontSize": {
 			"type": "object",
 			"default": {
 				"device": {
@@ -458,7 +531,53 @@
 				}
 			}
 		},
-		"titleFontSpacingTest": {
+		"titleFontSpacing": {
+			"type": "object",
+			"default": {
+				"device": {
+					"Desktop": 0,
+					"Tablet": "",
+					"Mobile": ""
+				},
+				"unit": {
+					"Desktop": "px",
+					"Tablet": "px",
+					"Mobile": "px"
+				}
+			}
+		},
+		"titleLineHeight": {
+			"type": "object",
+			"default": {
+				"device": {
+					"Desktop": 0,
+					"Tablet": "",
+					"Mobile": ""
+				},
+				"unit": {
+					"Desktop": "px",
+					"Tablet": "px",
+					"Mobile": "px"
+				}
+			}
+		},
+		"priceTypography": {
+			"type": "object",
+			"default": {
+				"googleFont": {
+					"family": "Default",
+					"variants": [ "200", "300", "400", "500", "600", "700", "800", "900" ]
+				},
+				"typography": {
+					"family": "",
+					"fontWeight": "400",
+					"style": "normal",
+					"transform": "capitalize",
+					"decoration": "none"
+				}
+			}
+		},
+		"priceFontSize": {
 			"type": "object",
 			"default": {
 				"device": {
@@ -473,13 +592,109 @@
 				}
 			}
 		},
-		"titleLineHeightTest": {
+		"priceFontSpacing": {
 			"type": "object",
 			"default": {
 				"device": {
-					"Desktop": 18,
+					"Desktop": 0,
 					"Tablet": "",
 					"Mobile": ""
+				},
+				"unit": {
+					"Desktop": "px",
+					"Tablet": "px",
+					"Mobile": "px"
+				}
+			}
+		},
+		"priceLineHeight": {
+			"type": "object",
+			"default": {
+				"device": {
+					"Desktop": 0,
+					"Tablet": "",
+					"Mobile": ""
+				},
+				"unit": {
+					"Desktop": "px",
+					"Tablet": "px",
+					"Mobile": "px"
+				}
+			}
+		},
+		"searchByCategory": {
+			"type": "string",
+			"default": "all"
+		},
+		"showCategory": {
+			"type": "boolean",
+			"default": true
+		},
+		"productFilterBy": {
+			"type": "string",
+			"default": "all"
+		},
+		"mrsProductStyle": {
+			"type": "string",
+			"default": "style-1"
+		},
+		"mrsCategoryColor": {
+			"type": "string",
+			"default": "#000"
+		},
+		"categoryTypography": {
+			"type": "object",
+			"default": {
+				"googleFont": {
+					"family": "Default",
+					"variants": [ "200", "300", "400", "500", "600", "700", "800", "900" ]
+				},
+				"typography": {
+					"family": "",
+					"fontWeight": "400",
+					"style": "normal",
+					"transform": "capitalize",
+					"decoration": "none"
+				}
+			}
+		},
+		"categoryFontSize": {
+			"type": "object",
+			"default": {
+				"device": {
+					"Desktop": 12,
+					"Tablet": 10,
+					"Mobile": 10
+				},
+				"unit": {
+					"Desktop": "px",
+					"Tablet": "px",
+					"Mobile": "px"
+				}
+			}
+		},
+		"categoryLineHeight": {
+			"type": "object",
+			"default": {
+				"device": {
+					"Desktop": 0,
+					"Tablet": 0,
+					"Mobile": 0
+				},
+				"unit": {
+					"Desktop": "px",
+					"Tablet": "px",
+					"Mobile": "px"
+				}
+			}
+		},
+		"categoryLetterSpacing": {
+			"type": "object",
+			"default": {
+				"device": {
+					"Desktop": 0,
+					"Tablet": 0,
+					"Mobile": 0
 				},
 				"unit": {
 					"Desktop": "px",

@@ -1,9 +1,9 @@
 import { __ } from '@wordpress/i18n';
 import Select from 'react-select'; 
-import { SelectControl, Button } from '@wordpress/components';
+import { SelectControl, Button, __experimentalDivider as Divider, ButtonGroup } from '@wordpress/components';
 import { useState, useEffect, useRef } from '@wordpress/element';
-import { MRSRangeControl } from '../mrsRangControl/MRSRangeControl';
-import { TypographyIcon } from '../../controls/svgIcon';
+import MRSRangeControl from '../mrsRangControl/MRSRangeControl';
+import { TypographyIcon, DecorationNone, DecorationUnderline, DecorationLineThrough, DecorationOverLine } from '../../controls/svgIcon';
 import './editor.scss';
 
 const fontFetch = async () => {
@@ -47,12 +47,31 @@ const MRSTypography = ({attributes, setAttributes, fontSizeDefault={ unit: 'px',
             })
         }
     });
-    console.log(fontList);
 
+
+    const fontWCheck = [ '100italic', '200italic', '300italic', 'italic', '500italic', '600italic', '700italic', '800italic', '900italic'];
+    const fontW = family?.googleFont?.variants?.map( value => {
+        if ( fontWCheck.includes(value) || '100' === value ) {
+            return '';
+        }
+        if ( 'regular' === value ) {
+            value = '400';
+        }
+        return { label: value, value: value }
+    })
+    
+    let fontWeightList = [];
+    if ( fontW ) {
+        fontWeightList = fontW.filter((item, pos) => {
+            return '' !== item;
+        })
+    }
+
+    console.log(family);
   return (
         <>
-        <div className='mrs-typography mrs-components-mb' onClick={() => {typographyOpen && setTypographyOpen(false)}}>
-            <div className={`mrs-typography-btn ${typographyOpen ? 'active' : ''}`}>
+        <div className='mrs-typography mrs-components-mb'>
+            <div className={`mrs-typography-btn ${typographyOpen ? 'active' : ''}`} onClick={(e) => {typographyOpen  && setTypographyOpen(false)}}>
                 <p className='mrs-component-title'>Typography</p>
                 <Button onClick={()=> setTypographyOpen(!typographyOpen)}><TypographyIcon /></Button>
             </div>
@@ -65,6 +84,71 @@ const MRSTypography = ({attributes, setAttributes, fontSizeDefault={ unit: 'px',
                         onInputChange={(inputValue) => fontSearch(inputValue) }
                     />
                 </div>
+                <MRSRangeControl
+                    label={__('Font Size', 'mrs-products-grid')}
+                    attributes={fontSize}
+                    attributesKey={fontSizeKey}
+                    setAttributes={setAttributes}
+                    units={['px', 'em', 'rem']}
+                    defaultValue={fontSizeDefault}
+                />
+                <Divider />
+                <SelectControl
+                    label={__('Font Style', 'mrs-products-grid')}
+                    value={family.typography.style}
+                    options={[
+                        { label: 'Default', value: 'default', disabled: true},
+                        { label: 'Normal', value: 'normal' },
+                        { label: 'Italic', value: 'italic' },
+                        { label: 'Oblique', value: 'oblique' }
+                    ]}
+                    onChange={(newStyle) => setAttributes({ [familyKey]: {...family, 'typography': {...family.typography, 'style': newStyle } } })}
+                />
+                <SelectControl
+                    label={__('Font Weight', 'mrs-products-grid')}
+                    value={family.typography.fontWeight}
+                    options={fontWeightList}
+                    onChange={(newFontWeight) => setAttributes({ [familyKey]: {...family, 'typography': {...family.typography, 'fontWeight': newFontWeight }} })}
+                />
+                <Divider />
+                <MRSRangeControl
+                    label={__('Title Later Spacing', 'mrs-products-grid')}
+                    attributes= {fontSpacing}
+                    attributesKey={fontSpacingKey}
+                    setAttributes={setAttributes}
+                    defaultValue={spacingDefaultValue}
+                    units={['px', 'em', 'rem']}
+                />
+                <Divider />
+                <MRSRangeControl
+                    label={__('Line Height', 'mrs-products-grid')}
+                    attributes={lineHeight}
+                    attributesKey={lineHeightKey}
+                    setAttributes={setAttributes}
+                    units={['px', 'em', 'rem']}
+                    defaultValue={lineHeightDefault}
+                />
+                <Divider />
+                <div className='typography-btn-group-label'>Text Decoration</div>
+                <ButtonGroup className='mrs-products-btn-group'>
+                    <Button className={`mrs-products-btn ${family?.typography?.decoration === 'none' ? 'is-active' : ''}`}
+                    onClick={()=> setAttributes({[familyKey]: {...family, 'typography': {...family.typography, 'decoration': 'none'}}})}><DecorationNone /></Button>
+
+                    <Button className={`mrs-products-btn ${family?.typography?.decoration === 'underline' ? 'is-active' : ''}`}onClick={()=> setAttributes({[familyKey]: {...family, 'typography': {...family.typography, 'decoration': 'underline'}}})}><DecorationUnderline /></Button>
+
+                    <Button className={`mrs-products-btn ${family?.typography?.decoration === 'line-through' ? 'is-active' : ''}`}onClick={()=> setAttributes({[familyKey]: {...family, 'typography': {...family.typography, 'decoration': 'line-through'}}})}><DecorationLineThrough /></Button>
+
+                    <Button className={`mrs-products-btn ${family?.typography?.decoration === 'overline' ? 'is-active' : ''}`}onClick={()=> setAttributes({[familyKey]: {...family, 'typography': {...family.typography, 'decoration': 'overline'}}})}><DecorationOverLine /></Button>
+                </ButtonGroup>
+                <Divider />
+                <div className='typography-btn-group-label'>Latter Case</div>
+                <ButtonGroup className='mrs-products-btn-group'>
+                    <Button className={`mrs-products-btn ${family?.typography?.transform === 'none' ? 'is-active' : ''}`} onClick={()=> setAttributes({[familyKey]: {...family, 'typography': {...family.typography, 'transform': 'none'}}})}>None</Button>
+                    <Button className={`mrs-products-btn ${family?.typography?.transform === 'uppercase' ? 'is-active' : ''}`} onClick={()=> setAttributes({[familyKey]: {...family, 'typography': {...family.typography, 'transform': 'uppercase'}}})}>AB</Button>
+                    <Button className={`mrs-products-btn ${family?.typography?.transform === 'lowercase' ? 'is-active' : ''}`} onClick={()=> setAttributes({[familyKey]: {...family, 'typography': {...family.typography, 'transform': 'lowercase'}}})}>ab</Button>
+                    <Button className={`mrs-products-btn ${family?.typography?.transform === 'capitalize' ? 'is-active' : ''}`} onClick={()=> setAttributes({[familyKey]: {...family, 'typography': {...family.typography, 'transform': 'capitalize'}}})}>Ab</Button>
+                </ButtonGroup>
+                
                 
             </div>
         </div>

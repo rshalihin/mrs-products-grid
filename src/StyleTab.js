@@ -4,13 +4,16 @@ import { PanelColorSettings } from '@wordpress/block-editor';
 import MRSToggle from './components/mrsToggle/MRSToggle';
 import { SelectControl } from '@wordpress/components';
 import Responsive from './components/responsive/Responsive';
-import { useEffect } from '@wordpress/element';
+import MRSTypography from './components/mrsTypography/MRSTypography';
+import { useEffect, useState } from '@wordpress/element';
+import Spacing from './components/spacing/Spacing';
 
 const StyleTab = ({attributes, setAttributes}) => {
-    const { mrsProductImageBorderRadiusSet, mrsProductImageBorderRadius, productTitleShow, productTitleSize, productTitleColor, productPriceShow, productPriceSize, productPriceColor, showProductRatingStar, productRatingStarSize, productRatingStarColor, showAddToCart, addToCartFontSize, addToCartTextColor, addToCartBGColor, addToCartWidth, productContentAlign, productsBGColor, productsContentPadding, productSpacing, saleBadgeBorderStyle, saleBadgeShow, saleBadgeTextColor, saleBadgeBGColor, saleBadgeBorderColor, saleBadgeBorderWidth, saleBadgeBorderRadius, mrsProductSaleBadgeStyle, saleBadgeAlign } = attributes;
+    const { mrsProductImageBorderRadiusSet, mrsProductImageBorderRadius, productTitleShow, titleTypography, titleFontSize, titleFontSpacing, titleLineHeight, productTitleColor, productPriceShow, productPriceColor, showProductRatingStar, productRatingStarSize, productRatingStarColor, showAddToCart, addToCartFontSize, addToCartTextColor, addToCartBGColor, callToActionPadding, productContentAlign, productsBGColor, productsContentPadding, productSpacing, saleBadgeBorderStyle, saleBadgeShow, saleBadgeTextColor, saleBadgeBGColor, saleBadgeBorderColor, saleBadgeBorderWidth, saleBadgeBorderRadius, mrsProductSaleBadgeStyle, saleBadgeAlign, productRowGap, priceTypography, priceFontSize, priceFontSpacing, priceLineHeight, callToActionBorderRadius, mrsCategoryColor, showCategory, categoryTypography, categoryFontSize, categoryLineHeight, categoryLetterSpacing } = attributes;
 
-    const pxCheck = (newObj) => {   
-            
+    const [cartColorBtn, setCartColorBtn] = useState('normal');
+
+    const pxCheck = (newObj) => {            
         for ( let side in newObj ) {
             if ( newObj[side] === undefined ) {
                 newObj[side] = '0px';
@@ -56,8 +59,8 @@ const StyleTab = ({attributes, setAttributes}) => {
                 <Button className={`mrs-products-btn ${productContentAlign === 'center' ? 'is-active': ''}`} onClick={() => setAttributes({productContentAlign: 'center'})}>Center</Button>
                 <Button className={`mrs-products-btn ${productContentAlign === 'flex-end' ? 'is-active': ''}`} onClick={() => setAttributes({productContentAlign: 'flex-end'})}>Right</Button>
             </ButtonGroup>
-            <Divider />
             <PanelColorSettings
+                className='mrs-color-settings-panel'
                 colorSettings={[
                     {
                         label: __('Content Background Color', 'mrs-products-grid'),
@@ -66,17 +69,39 @@ const StyleTab = ({attributes, setAttributes}) => {
                     }
                 ]}
             />
-            <Divider />
-            <BoxControl
+            <Spacing
                 label={__('Padding', 'mrs-products-grid')}
-                values={productsContentPadding}
-                onChange={productsContentPaddingHandle}
+                attributes={productsContentPadding}
+                attributesKey={'productsContentPadding'}
+                setAttributes={setAttributes}
+                units={['px', '%', 'rem', 'em']}
+                labelItem={{
+                    'top': __('Top', 'mrs-products-grid'),
+                    'right': __('Right', 'mrs-products-grid'),
+                    'bottom': __('Bottom', 'mrs-products-grid'),
+                    'left': __('Left', 'mrs-products-grid'),
+                }}
+                defaultValue={{
+                    unit: 'px', value: {
+                        'top': '0',
+                        'right': '0',
+                        'bottom': '0',
+                        'left': '0'
+                    }
+                }}
             />
             <RangeControl
-                label={__('Spacing', 'mrs-products-grid')}
+                label={__('Column Gap', 'mrs-products-grid')}
                 value={productSpacing}
                 onChange={(newValue)=>setAttributes({productSpacing: newValue})}
             />
+            <div className='mrs-products-mb'>
+            <RangeControl
+                label={__('Row Gap', 'mrs-products-grid')}
+                value={productRowGap}
+                onChange={(newValue)=>setAttributes({productRowGap: newValue})}
+            />
+            </div>
         </PanelBody>
         <PanelBody title={__('Image Settings', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
             <MRSToggle
@@ -95,43 +120,68 @@ const StyleTab = ({attributes, setAttributes}) => {
             }
         </PanelBody>
         { productTitleShow && 
-        <PanelBody title={__('Product Name Settings', 'mrs-products-grid' )} initialOpen={false} className={'mrs-product-grid-panel-body'}>
-            <RangeControl
-                label={__('Product Name Font Size', 'mrs-products-grid' )}
-                value={productTitleSize}
-                onChange={newValue => setAttributes({productTitleSize: newValue})}
-                min={10}
-                max={100}
-            />
+        <PanelBody title={__('Product Title Settings', 'mrs-products-grid' )} initialOpen={false} className={'mrs-product-grid-panel-body'}>
             <PanelColorSettings
+                className='mrs-color-settings-panel'
                 colorSettings={[
                     {
-                        label: __( 'Product Name Color', 'mrs-product-grid' ),
-                        value: productTitleColor,
-                        onChange: newValue => setAttributes({productTitleColor: newValue})
-                    }
+                        label: __( 'Title Color', 'mrs-product-grid' ),
+                        value: productTitleColor.color,
+                        onChange: newValue => setAttributes({productTitleColor: {...productTitleColor, 'color': newValue}})
+                    },
+                    {
+                        label: __( 'Title Hover Color', 'mrs-product-grid' ),
+                        value: productTitleColor.hover,
+                        onChange: newValue => setAttributes({productTitleColor: {...productTitleColor, 'hover': newValue}})
+                    },
                 ]}
+            />
+            <MRSTypography
+                attributes={{
+                    family: titleTypography,
+                    familyKey: 'titleTypography',
+                    fontSize: titleFontSize,
+                    fontSizeKey: 'titleFontSize',
+                    fontSpacing: titleFontSpacing,
+                    fontSpacingKey: 'titleFontSpacing',
+                    lineHeight: titleLineHeight,
+                    lineHeightKey: 'titleLineHeight'
+                }}
+                setAttributes={setAttributes}
+                fontSizeDefault={{unit: 'px', value: 16 }}
+                spacingDefaultValue={{ unit: 'px', value: 0 }}
+                lineHeightDefault={{ unit: 'px', value: 0 }}
             />
         </PanelBody>
         }
 
         { productPriceShow && 
         <PanelBody title={__('Product Price', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
-        <RangeControl
-                label={__('Product Price Font Size', 'mrs-products-grid' )}
-                value={productPriceSize}
-                onChange={newValue => setAttributes({productPriceSize: newValue})}
-                min={10}
-                max={100}
-            />
             <PanelColorSettings
+                className='mrs-color-settings-panel'
                 colorSettings={[
                     {
                         label: __( 'Product Price Color', 'mrs-product-grid' ),
                         value: productPriceColor,
-                        onChange: newValue => setAttributes({productPriceColor: newValue})
+                        onChange: newValue => setAttributes({productPriceColor: newValue}),
                     }
                 ]}
+            />
+            <MRSTypography
+                attributes={{
+                    family: priceTypography,
+                    familyKey: 'priceTypography',
+                    fontSize: priceFontSize,
+                    fontSizeKey: 'priceFontSize',
+                    fontSpacing: priceFontSpacing,
+                    fontSpacingKey: 'priceFontSpacing',
+                    lineHeight: priceLineHeight,
+                    lineHeightKey: 'priceLineHeight'
+                }}
+                setAttributes={setAttributes}
+                fontSizeDefault={{ unit: 'px', value: 16 }}
+                spacingDefaultValue={{ unit: 'px', value: 0 }}
+                lineHeightDefault={{ unit: 'px', value: 0 }}
             />
         </PanelBody>
         }
@@ -146,6 +196,7 @@ const StyleTab = ({attributes, setAttributes}) => {
                 max={100}
             />
             <PanelColorSettings
+                className='mrs-color-settings-panel'
                 colorSettings={[
                     {
                         label: __( 'Fill Rating Star Color', 'mrs-product-grid' ),
@@ -158,36 +209,83 @@ const StyleTab = ({attributes, setAttributes}) => {
         }
 
         { showAddToCart && 
-        <PanelBody title={__('Add To Cart', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
+        <PanelBody title={__('Call to Action', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
             <RangeControl
-                label={__('Add To Cart Font Size', 'mrs-products-grid' )}
+                label={__('Call To Action Font Size', 'mrs-products-grid' )}
                 value={addToCartFontSize}
                 onChange={newValue => setAttributes({addToCartFontSize: newValue})}
                 min={10}
-                max={100}
+                max={50}
             />
-            <PanelColorSettings
+            <ButtonGroup className={'mrs-products-btn-group'}>
+                <Button className={`mrs-products-btn ${cartColorBtn === 'normal'? 'is-active':''}`} onClick={()=> setCartColorBtn('normal')}>Normal</Button>
+                <Button className={`mrs-products-btn ${cartColorBtn === 'hover'? 'is-active':''}`} onClick={()=> setCartColorBtn('hover')}>Hover</Button>
+            </ButtonGroup>
+          <div>
+          { 'normal' === cartColorBtn &&  <PanelColorSettings
+                className='mrs-color-settings-panel'
                 colorSettings={[
                     {
                         label: __('Text Color', 'mrs-products-grid'),
-                        value: addToCartTextColor,
-                        onChange: newValue => setAttributes({ addToCartTextColor : newValue})
+                        value: addToCartTextColor.color,
+                        onChange: newValue => setAttributes({ addToCartTextColor : {...addToCartTextColor, "color": newValue}})
                     },
                     {
                         label: __('Background Color', 'mrs-products-grid'),
-                        value: addToCartBGColor,
-                        onChange: newValue => setAttributes({ addToCartBGColor : newValue})
+                        value: addToCartBGColor.color,
+                        onChange: newValue => setAttributes({ addToCartBGColor : {...addToCartBGColor, "color": newValue}})
                     }
                 ]}
+            />}
+            { 'hover' === cartColorBtn && <PanelColorSettings
+                className='mrs-color-settings-panel'
+                colorSettings={[
+                    {
+                        label: __('Text Hover Color', 'mrs-products-grid'),
+                        value: addToCartTextColor.hover,
+                        onChange: newValue => setAttributes({ addToCartTextColor : {...addToCartTextColor, "hover": newValue} })
+                    },
+                    {
+                        label: __('Background Hover Color', 'mrs-products-grid'),
+                        value: addToCartBGColor.hover,
+                        onChange: newValue => setAttributes({ addToCartBGColor : {...addToCartBGColor, "hover": newValue} })
+                    }
+                ]}
+            />}
+          </div>
+
+            <Divider />
+            <Spacing
+                label={__('Padding', 'mrs-products-grid')}
+                attributes={callToActionPadding}
+                attributesKey={'callToActionPadding'}
+                setAttributes={setAttributes}
+                units={['px', 'em', 'rem', '%']}
+                labelItem={{
+                    'top': __('Top', 'mrs-products-grid'),
+                    'right': __('Right', 'mrs-products-grid'),
+                    'bottom': __('Bottom', 'mrs-products-grid'),
+                    'left': __('Left', 'mrs-products-grid')
+                }}
+                defaultValue={{
+                    unit: 'px',
+                    value: { 'top': '5px', 'right': '20px', 'bottom': '5px', 'left': '20px' }
+                }}
             />
-            <Divider />            
-            <h4>{__('Add To Cart Button Width', 'mrs-products-grid')}</h4>
-            <ButtonGroup className={'mrs-products-btn-group'}>
-                <Button className={`mrs-products-btn ${addToCartWidth === '25%' ? 'is-active': ''}`} onClick={() => setAttributes({addToCartWidth: '25%'})}>25%</Button>
-                <Button className={`mrs-products-btn ${addToCartWidth === '50%' ? 'is-active': ''}`} onClick={() => setAttributes({addToCartWidth: '50%'})}>50%</Button>
-                <Button className={`mrs-products-btn ${addToCartWidth === '75%' ? 'is-active': ''}`} onClick={() => setAttributes({addToCartWidth: '75%'})}>75%</Button>
-                <Button className={`mrs-products-btn ${addToCartWidth === '100%' ? 'is-active': ''}`} onClick={() => setAttributes({addToCartWidth: '100%'})}>100%</Button>
-            </ButtonGroup>
+            <Spacing
+                label={__('Border Radius', 'mrs-products-grid')}
+                attributes={callToActionBorderRadius}
+                attributesKey={'callToActionBorderRadius'}
+                setAttributes={setAttributes}
+                units={['px', 'em', 'rem', '%']}
+                labelItem={{
+                    'top': __('T-Left', 'mrs-products-grid'),
+                    'right': __('T-Right', 'mrs-products-grid'),
+                    'bottom': __('B-Right', 'mrs-products-grid'),
+                    'left': __('B-Left', 'mrs-products-grid')
+                }}
+                defaultValue={{ unit: 'px', value: { 'top': '5', 'right': '5', 'bottom': '5', 'left': '5' } }}
+            />
         </PanelBody>
         }
 
@@ -214,6 +312,7 @@ const StyleTab = ({attributes, setAttributes}) => {
                 </>
             )}
             <PanelColorSettings
+                className='mrs-color-settings-panel'
                 colorSettings={[
                     {
                         label: __('Sale Text Color', 'mrs-products-grid'),
@@ -278,6 +377,36 @@ const StyleTab = ({attributes, setAttributes}) => {
             
         </PanelBody>
         }
+        { showCategory && 
+        <PanelBody title={__('Category', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
+            <PanelColorSettings
+                className='mrs-color-settings-panel'
+                colorSettings={[
+                    {
+                        label: __('Category Color', 'mrs-products-grid'),
+                        value: mrsCategoryColor,
+                        onChange: (newValue) => setAttributes({ mrsCategoryColor: newValue })
+                    }
+                ]}
+            />
+            <MRSTypography
+               attributes={{
+                    family: categoryTypography,
+                    familyKey: 'categoryTypography',
+                    fontSize: categoryFontSize,
+                    fontSizeKey: 'categoryFontSize',
+                    fontSpacing: categoryLetterSpacing,
+                    fontSpacingKey: 'categoryLetterSpacing',
+                    lineHeight: categoryLineHeight,
+                    lineHeightKey: 'categoryLineHeight'
+                    
+               }}
+               setAttributes={setAttributes}
+               fontSizeDefault={{ unit: 'px', value: 12 }}
+               lineHeightDefault={{ unit: 'px', value: 0 }}
+               spacingDefaultValue={{ unit: 'px', value: 0 }}
+            />
+        </PanelBody>}
         </>
     );
 }

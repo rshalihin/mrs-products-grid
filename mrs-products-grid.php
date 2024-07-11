@@ -52,8 +52,8 @@ function mrs_block_products_grid_rendering( $attributes ) {
 	$sample_cart_text = array( $addToCartText, $addToCartTextGroup, $addToCartTextVariable, $addToCartTextExternal, $addToCartTextDefault );
 
 	$args = array(
-		'post_type'   => 'product',
-		'post_status' => 'publish',
+		'post_type'    => 'product',
+		'post_status'  => 'publish',
 	);
 
 	if ( isset( $attributes['postsPerPage'] ) ) {
@@ -86,8 +86,31 @@ function mrs_block_products_grid_rendering( $attributes ) {
 	if ( isset( $attributes['order'] ) ) {
 		$args['order'] = strtoupper( $attributes['order'] );
 	}
+	if ( isset( $attributes['searchByCategory'] ) && $attributes['searchByCategory'] !== 'all' ) {
+		$args['tax_query'] = array(
+			array(
+				'taxonomy' => 'product_cat',
+				'field'    => 'term_id',
+				'terms'    => $attributes['searchByCategory'],
+			),
+		);
+	}
+
+	if ( isset( $attributes['productFilterBy']) && $attributes['productFilterBy'] !== 'all' ) {
+		if ( 'featured' === $attributes['productFilterBy'] ) {
+			$args['post__in'] = wc_get_featured_product_ids();
+		}
+		if ( 'onSale' === $attributes['productFilterBy'] ) {
+			$args['meta_query'] = WC()->query->get_meta_query();
+			$args['post__in']   = array_merge( array(0), wc_get_product_ids_on_sale() );
+		}
+	}
+	// var_dump( $attributes['searchByCategory'] );
+	// wp_die();
 
 	$mrs_products_grid_query = new \WP_Query( $args );
+	// var_dump( $mrs_products_grid_query );
+	// wp_die();
 
 	ob_start();
 
@@ -108,10 +131,11 @@ function mrs_block_products_grid_rendering( $attributes ) {
 			if ( $post_thumbnail_id ) {
 				$mrs_product_image_url = wp_get_attachment_url( intval( $post_thumbnail_id ) );
 			}
-			$mrs_product_price  = $product->get_price_html() ? $product->get_price_html() : 'Out of stock';
-			$is_on_sale_product = $product->is_on_sale() ? true : false;
-			$mrs_ratings        = $product->get_average_rating();
-			$mrs_avg_rating     = '';
+			$mrs_product_price   = $product->get_price_html() ? $product->get_price_html() : 'Out of stock';
+			$is_on_sale_product  = $product->is_on_sale() ? true : false;
+			$mrs_ratings         = $product->get_average_rating();
+			$mrs_avg_rating      = '';
+			$mrs_categories_name = wp_get_post_terms( $product->id, 'product_cat' )[0]->name;
 
 			for ( $i = 0; $i < intval( $mrs_ratings ); $i++ ) {
 				$mrs_avg_rating .= '<span class="dashicons dashicons-star-filled"></span>';
@@ -120,16 +144,16 @@ function mrs_block_products_grid_rendering( $attributes ) {
 				$mrs_avg_rating .= '<span class="dashicons dashicons-star-empty"></span>';
 			}
 			$desktop_column_class = isset( $attributes['productsColumn']['device']['Desktop'] ) ? $attributes['productsColumn']['device']['Desktop'] : 4;
-			$tablet_column_class = isset( $attributes['productsColumn']['device']['Tablet'] ) ? $attributes['productsColumn']['device']['Tablet'] : 3;
-			$mobile_column_class = isset( $attributes['productsColumn']['device']['Mobile'] ) ? $attributes['productsColumn']['device']['Mobile'] : 1;
+			$tablet_column_class  = isset( $attributes['productsColumn']['device']['Tablet'] ) ? $attributes['productsColumn']['device']['Tablet'] : 3;
+			$mobile_column_class  = isset( $attributes['productsColumn']['device']['Mobile'] ) ? $attributes['productsColumn']['device']['Mobile'] : 1;
 
 			// $css = isset( $attributes['frontendCss'] ) ? json_decode( $attributes['frontendCss'] ) : '';
 			// var_dump($css);
 			// wp_die();
-			
+
 			?>
 			<div class="mrs-product-col Desktop-has-<?php echo esc_attr( $desktop_column_class ); ?>-col Tablet-has-<?php echo esc_attr( $tablet_column_class ); ?>-col Mobile-has-<?php echo esc_attr( $mobile_column_class ); ?>-col">
-				<div class="mrs-product">
+				<div class="mrs-product <?php echo esc_attr( $attributes['mrsProductStyle'] ); ?>">
 					<div class="mrs-product-img-wrapper">
 						<div class="mrs-product-img">
 							<a href="<?php echo esc_url( get_the_permalink() ); ?>">
@@ -148,6 +172,7 @@ function mrs_block_products_grid_rendering( $attributes ) {
 					</div>
 					<div class="mrs-product-content-wrapper">
 						<?php if ( $attributes['productTitleShow'] ) : ?>
+							<span><?php echo esc_html( '-' . $mrs_categories_name ); ?></span>
 							<div class="mrs-product-title">
 								<h4><?php echo wp_kses_post( get_the_title() ); ?></h4>
 							</div>
@@ -174,7 +199,6 @@ function mrs_block_products_grid_rendering( $attributes ) {
 							<div class="mrs-product-add-to-cart">
 								<?php
 								$add_to_cart = do_shortcode( '[add_to_cart id="' . get_the_ID() . '" show_price="false" style="" class="mrs-product-buy-btn-cart"]' );
-
 								echo wp_kses_post( $add_to_cart );
 								?>
 							</div>
@@ -294,6 +318,7 @@ function mrs_products_grid_product_data() {
 			'price'        => $product_obj->get_price_html(),
 			'rating'       => $product_obj->get_average_rating(),
 			'onSale'       => $product_obj->is_on_sale() ? true : false,
+			'featured'     => $product_obj->is_featured() ? true : false,
 			'groupProduct' => $group_product,
 		);
 	}
@@ -317,7 +342,7 @@ function mrs_products_grid_script_enqueue_localize() {
 		)
 	);
 }
-add_action( 'enqueue_block_editor_assets', 'mrs_products_grid_script_enqueue_localize' );
+add_action( 'enqueue_block_assets', 'mrs_products_grid_script_enqueue_localize' );
 
 /**
  * Get Blocks Attributes

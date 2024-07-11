@@ -1,8 +1,8 @@
-import cssString, { useDeviceType } from './controls/controls';
-import { cssDataCheck } from './controls/controls';
+import cssString, { useDeviceType, cssDataCheck } from './controls/controls';
+// import {  } from './controls/controls';
 
 const dynamicCss = (attributes, deviceType = 'Desktop') => {
-    const { uniqueID, productTitleSize, productContentAlign, productsBGColor, productsContentPadding, productTitleColor, productPriceSize, productPriceColor, productRatingStarSize, productRatingStarColor, addToCartFontSize, addToCartBGColor, addToCartTextColor, mrsProductImageBorderRadius, addToCartWidth, saleBadgeAlign, productSpacing, saleBadgeBorderWidth, saleBadgeBorderStyle, saleBadgeBorderColor, saleBadgeBorderRadius, saleBadgeTextColor, saleBadgeBGColor, productsGridMargin, productsGridPadding, productsBorderWidth, productsBorderStyle, productsBorderColor, productsBorderRadius, productsBorderRadiusHover, productsBorderWidthHover, productsBorderColorHover, productsBorderStyleHover, productsBorderTransition, productsColumn } = attributes;
+    const { uniqueID, titleFontSize, productContentAlign, productsBGColor, productsContentPadding, productTitleColor, priceTypography, priceFontSize, priceFontSpacing, priceLineHeight, productPriceColor, productRatingStarSize, productRatingStarColor, addToCartFontSize, addToCartBGColor, addToCartTextColor, mrsProductImageBorderRadius, callToActionPadding, saleBadgeAlign, productSpacing, productRowGap, saleBadgeBorderWidth, saleBadgeBorderStyle, saleBadgeBorderColor, saleBadgeBorderRadius, saleBadgeTextColor, saleBadgeBGColor, productsGridMargin, productsGridPadding, productsBorderWidth, productsBorderStyle, productsBorderColor, productsBorderRadius, productsBorderRadiusHover, productsBorderWidthHover, productsBorderColorHover, productsBorderStyleHover, productsBorderTransition, productsColumn, titleTypography, titleFontSpacing, titleLineHeight, callToActionBorderRadius, categoryTypography, mrsCategoryColor, categoryLetterSpacing, categoryLineHeight, categoryFontSize } = attributes;
 
     const unit = (attributes, deviceType) => {
         if( 'object' !== typeof attributes.unit ) {
@@ -50,32 +50,9 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
         [`.mrs-product-${uniqueID} .mrs-products-grid-content .mrs-product-col`] : {
             'box-sizing' : 'border-box',
         },
-        // [`.mrs-product-${uniqueID} .mrs-product-col.has-1-col`] : {
-        //     'width': '100%',
-        // },
-        // [`.mrs-product-${uniqueID} .mrs-product-col.has-2-col`] : {
-        //     'width': `calc(100% / 2 - ${productSpacing * 2 }px)`,
-        //     'margin': '5px ' + productSpacing + 'px',
-        // },
-        // [`.mrs-product-${uniqueID} .mrs-product-col.has-3-col`] : {
-        //     'width': `calc(100% / 3 - ${productSpacing * 2 }px)`,
-        //     'margin': '5px ' + productSpacing + 'px',
-        // },
-        // [`.mrs-product-${uniqueID} .mrs-product-col.has-4-col`] : {
-        //     'width': `calc(100% / 4 - ${productSpacing * 2 }px)`,
-        //     'margin': '5px ' + productSpacing + 'px',
-        // },
-        // [`.mrs-product-${uniqueID} .mrs-product-col.has-5-col`] : {
-        //     'width': `calc(100% / 5 - ${productSpacing * 2 }px)`,
-        //     'margin': '5px ' + productSpacing + 'px',
-        // },
-        // [`.mrs-product-${uniqueID} .mrs-product-col.has-6-col`] : {
-        //     'width': `calc(100% / 6 - ${productSpacing * 2 }px)`,
-        //     'margin': '5px ' + productSpacing + 'px',
-        // },
         [`.mrs-product-${uniqueID} .mrs-product-col.${[deviceType]}-has-${productsColumn.device[deviceType]}-col`] : {
             'width': `calc(100% / ${productsColumn.device[deviceType]} - ${productSpacing * 2 }px)`,
-            'margin': '5px ' + productSpacing + 'px',
+            'margin': '0 ' + productSpacing + 'px ' + productRowGap + 'px',
         },
         [`.mrs-product-${uniqueID} .mrs-product .mrs-product-img-wrapper`] : {
             'position': 'relative',
@@ -147,18 +124,47 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
             'justify-content': 'center',
             'align-items': productContentAlign,
             'background': productsBGColor,
-            'padding': `${productsContentPadding.top} ${productsContentPadding.right} ${productsContentPadding.bottom} ${productsContentPadding.left}`,
+            'padding': cssDataCheck(productsContentPadding.device.Desktop, unit(productsContentPadding, 'Desktop')),
         },
         [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-title h4`] : {
-            'margin': '10px',
-            'font-size': productTitleSize + 'px',
-            'font-weight': '700',
-            'color': productTitleColor,
+            'font-size': cssDataCheck( titleFontSize.device.Desktop, unit( titleFontSize , 'Desktop') ),
+            'font-weight': titleTypography?.typography?.fontWeight,
+            'color': productTitleColor.color,
             'text-align': flexTextAlign(productContentAlign),
+            'text-decoration': titleTypography?.typography?.decoration,
+            'text-transform': titleTypography?.typography?.transform,
+            'letter-spacing': cssDataCheck( titleFontSpacing.device.Desktop, unit( titleFontSpacing, 'Desktop' ) ),
+            'line-height': cssDataCheck( titleLineHeight.device.Desktop, unit( titleLineHeight, 'Desktop' ) ),
+            'font-style': titleTypography?.typography?.style,
+            'font-family': titleTypography?.typography?.family,
+        },
+        [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-category`] : {
+            'font-size': cssDataCheck( categoryFontSize.device.Desktop, unit( titleFontSize , 'Desktop') ),
+            'font-weight': categoryTypography?.typography?.fontWeight,
+            'color': mrsCategoryColor,
+            'text-align': flexTextAlign(productContentAlign),
+            'text-decoration': categoryTypography?.typography?.decoration,
+            'text-transform': categoryTypography?.typography?.transform,
+            'letter-spacing': cssDataCheck( categoryLetterSpacing.device.Desktop, unit( categoryLetterSpacing, 'Desktop' ) ),
+            'line-height': cssDataCheck( categoryLineHeight.device.Desktop, unit( categoryLineHeight, 'Desktop' ) ),
+            'font-style': categoryTypography?.typography?.style,
+            'font-family': categoryTypography?.typography?.family,
+            'margin': '0',
+            'padding': '0'
+        },
+        [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-title h4:hover`] : {
+            'color': productTitleColor.hover,
         },
         [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-price`] : {
-            'font-size': productPriceSize + 'px',
-            'color': productPriceColor
+            'color': productPriceColor,
+            'font-size': cssDataCheck( priceFontSize.device.Desktop, unit( priceFontSize, 'Desktop' ) ),
+            'font-weight': priceTypography?.typography?.fontWeight,
+            'text-decoration': priceTypography?.typography?.decoration,
+            'text-transform': priceTypography?.typography?.transform,
+            'letter-spacing': cssDataCheck( priceFontSpacing.device.Desktop, unit( priceFontSpacing, 'Desktop' ) ),
+            'line-height': cssDataCheck( priceLineHeight.device.Desktop, unit( priceLineHeight, 'Desktop') ),
+            'font-style': priceTypography?.typography.style,
+            'font-family': titleTypography.typography.family,
         },
         [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper .mrs-products-grid-content`] : {
             'margin-left': '-' + productSpacing + 'px',
@@ -172,8 +178,16 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
         },
         [`.mrs-product-${uniqueID} .mrs-product-add-to-cart .mrs-product-buy-btn-cart .wp-element-button`] : {
             'font-size': addToCartFontSize + 'px',
-            'color' : addToCartTextColor,
-            'background' : addToCartBGColor
+            'color' : addToCartTextColor.color,
+            'background' : addToCartBGColor.color,
+            'padding': cssDataCheck( callToActionPadding.device.Desktop, unit(callToActionPadding, 'Desktop') ),
+            'border-radius': cssDataCheck( callToActionBorderRadius.device.Desktop, unit(callToActionBorderRadius, 'Desktop')),
+            'text-align': 'center',
+            'transition': '0.3s'
+        },
+        [`.mrs-product-${uniqueID} .mrs-product-add-to-cart .mrs-product-buy-btn-cart .wp-element-button:hover`] : {
+            'color' : addToCartTextColor.hover,
+            'background' : addToCartBGColor.hover,
         },
         [`.mrs-product-${uniqueID} .mrs-product-img-wrapper .mrs-product-img`] : {
             'border-radius' : `${mrsProductImageBorderRadius.top ? mrsProductImageBorderRadius.top : 0} ${mrsProductImageBorderRadius.right ? mrsProductImageBorderRadius.right : 0} ${mrsProductImageBorderRadius.bottom ? mrsProductImageBorderRadius.bottom : 0} ${mrsProductImageBorderRadius.left ? mrsProductImageBorderRadius.left : 0}`,
@@ -192,26 +206,65 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
         [`.mrs-product-${uniqueID} .mrs-product-add-to-cart .mrs-product-buy-btn-cart`] : {
             'width': '100%',
             'display': 'flex',
-            'justify-content': 'center',
-        },
-        [`.mrs-product-${uniqueID} .mrs-product-buy-btn-cart .mrs-product-add-to-cart-button`] : {
-            'width': addToCartWidth,
+            'justify-content': productContentAlign,
         },
         [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-price ins`] : {
             'text-decoration': 'none',
+        },
+        [`.mrs-product-${uniqueID} .mrs-product.style-2 .mrs-product-content-wrapper`] : {
+            'position': 'relative',
+        },
+        [`.mrs-product-${uniqueID} .mrs-product.style-2 .mrs-product-content-wrapper .mrs-product-add-to-cart`] : {
+            'height': '10px',
+        },
+        [`.mrs-product-${uniqueID} .mrs-product.style-2 .mrs-product-content-wrapper .mrs-product-add-to-cart .wp-element-button`] : {
+            'position': 'absolute',
+            'top': '-52px',
+            'width': '100%',
+            'border-radius': '0',
+            'background': addToCartBGColor.color + '9f',
+            'color': addToCartTextColor.color,
+            'opacity': '0',
+            'visibility': 'hidden',
+            'transition': '0.3s'
+        },
+        [`.mrs-product-${uniqueID} .mrs-product.style-2 .mrs-product-content-wrapper .mrs-product-add-to-cart .wp-element-button:hover`] : {
+            'background': addToCartBGColor.hover + '9f',
+            'color': addToCartTextColor.hover,
+        },
+        [`.mrs-product-${uniqueID} .mrs-product.style-2:hover .mrs-product-content-wrapper .mrs-product-add-to-cart .wp-element-button`] : {
+            'opacity': '1',
+            'visibility' : 'visible',
+        },
+        [`.mrs-product-${uniqueID} .mrs-product.style-3`] : {
+            'position': 'relative',
+        },
+        [`.mrs-product-${uniqueID} .mrs-product.style-3 .mrs-product-content-wrapper`] : {
+            'position': 'absolute',
+            'top': '0',
+            'width': '100%',
+            'height': '100%',
+            'background': '#0000006f',
+            'opacity': '0',
+            'visibility' : 'hidden',
+            'transition': '0.5s',
+        },
+        [`.mrs-product-${uniqueID} .mrs-product.style-3:hover .mrs-product-content-wrapper`] : {
+            'opacity': '1',
+            'visibility' : 'visible',
         },
     };
 
     let tabletCss = {
         [`.mrs-product-${uniqueID} .mrs-product-col.Tablet-has-${productsColumn.device.Tablet}-col`] : {
             'width': `calc(100% / ${productsColumn.device.Tablet} - ${productSpacing * 2 }px)`,
-            'margin': '5px ' + productSpacing + 'px',
+            'margin': '0 ' + productSpacing + 'px ' + productRowGap + 'px',
         },
     }
     let mobileCss = {
         [`.mrs-product-${uniqueID} .mrs-product-col.Mobile-has-${productsColumn.device.Mobile}-col`] : {
             'width': `calc(100% / ${productsColumn.device.Mobile} - ${productSpacing * 2 }px)`,
-            'margin': '5px ' + productSpacing + 'px',
+            'margin': '0 ' + productSpacing + 'px ' + productRowGap + 'px',
         },
     }
 

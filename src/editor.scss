@@ -28,10 +28,11 @@
 .components-tab-panel__tab-content {
 	.mrs-product-grid-panel-body {
 		.components-panel__body-title {
-			background-color: #9b438b17;
+			background-color: #9b438b0f;
 		}
 		&.is-opened {
 			.components-panel__body-title {
+				background-color: #9b438b77;
 				margin-bottom: 24px;
 			}
 		}
@@ -44,6 +45,7 @@
 		}
 		.mrs-products-btn-group {
 			display: flex;
+			margin: 20px auto;
 			.mrs-products-btn {
 				flex-grow: 1;
 				justify-content: center;
@@ -66,19 +68,95 @@
 				}
 			}
 		}
+		.mrs-color-settings-panel {
+			margin-bottom: 24px;
+			.block-editor-tools-panel-color-gradient-settings__item {
+				border: none;
+				margin-bottom: 24px;
+				button {
+					padding: 0;
+					.block-editor-panel-color-gradient-settings__color-name {
+						text-transform: uppercase;
+						font-size: 11px;
+						font-weight: 700;
+						color: #777;
+					}
+				}
+			}
+		}
+		.mrs-products-style-select {
+			display: flex;
+			flex-direction: column;
+			margin: 15px auto;
+			.mrs-products-style-title {
+				font-size: 12px;
+				color: #555;
+				font-weight: 700;
+				text-transform: uppercase;
+				display: block;
+				margin-bottom: 10px;
+			}
+			.mrs-products-style-image-group {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				column-gap: 20px;
+				.mrs-products-style-image-single {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-self: center;
+					position: relative;
+					figure {
+						margin-bottom: 10px;
+						img {
+							width: 60px;
+							height: 65px;
+						}
+						input {
+							display: none;
+						}
+					}
+					&.mrs-is-active {
+						figure {
+							&::before {
+								position: absolute;
+								top: 7px;
+								right: 7px;
+								display: flex;
+								align-items: center;
+								justify-content: center;
+								content: "\f15e";
+								font-family: dashicons;
+								background: #1A74E4;
+								border-radius: 50%;
+								width: 12px;
+								height: 12px;
+								line-height: 14px;
+								color: #fff;
+							}
+						}
+					}
+					
+				}
+			}
+		}
+		.mrs-products-mb {
+			margin-bottom: 24px;
+		}
+	}
+	.components-base-control .components-base-control__label {
+		margin-bottom: 0;
+	}
+	.mrs-products-btn-group {
+		button {
+			transition: 0.3s ease;
+		}
+		button:focus {
+			box-shadow: none;
+		}
 	}
 }
 
-// ribon
-// 	transform: rotate(39deg);
-//     padding: 0 50px;
-//     background: #ffa;
-//     right: -36px;
-//     top: 16px;
-//     border: none;
 
-// 	   inset: 0 auto auto 0;
-//     transform-origin: 100% 0;
-//     transform: translate(-29.3%) rotate(-45deg);
-//     box-shadow: 0 0 0 999px #d8613c;
-//     clip-path: inset(0 -100%);

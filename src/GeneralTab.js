@@ -2,12 +2,60 @@ import { __ } from '@wordpress/i18n';
 import { PanelBody, RangeControl, SelectControl, __experimentalDivider as Divider, ButtonGroup, Button, TextControl } from '@wordpress/components';
 import MRSToggle from "./components/mrsToggle/MRSToggle";
 import MRSRangeControl from './components/mrsRangControl/MRSRangeControl';
+import { useEffect, useState } from '@wordpress/element';
+import { select, useSelect } from "@wordpress/data";
+import productStyle1 from '../assets/image/product-style-1.png';
+import productStyle2 from '../assets/image/product-style-2.png';
+import productStyle3 from '../assets/image/product-style-3.png';
+
 
 const GeneralTab = ({attributes, setAttributes}) => {
-    const { postsPerPage, orderBy, order, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup,hideOutOfStock, addToCartTextExternal, addToCartTextDefault, addToCartTextVariable, hideProductEmptyRatingStar } = attributes;
+    const { postsPerPage, orderBy, order, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup, hideOutOfStock, addToCartTextExternal, addToCartTextDefault, addToCartTextVariable, hideProductEmptyRatingStar, searchByCategory, showCategory, productFilterBy, mrsProductStyle } = attributes;
+    
+        const [ cateOptions, setCateOptions ] = useState([]);
+
+    const productsCategory = useSelect((select) => {
+		return select('core').getEntityRecords('taxonomy', 'product_cat');
+	},[])
+
+    useEffect(() => {
+            let options = productsCategory?.map(v => ({ label: v.name, value: v.id }));
+            if ( options ) {
+                let allOpt = [ {label: "All", value: "all"}, ...options ];
+                setCateOptions(allOpt);
+            }
+    }, [])
+
+
     return(
         <>
         <PanelBody title={__('Layout Settings', 'mrs-products-grid')} initialOpen={true} className={'mrs-product-grid-panel-body'}>
+            <div className='mrs-products-style-select'>
+                <div className='mrs-products-style-title'>Select a Product Style</div>
+                <div className='mrs-products-style-image-group'>
+                    <div className={`mrs-products-style-image-single ${mrsProductStyle === 'style-1' && 'mrs-is-active'}`}>
+                        <figure  onClick={() => setAttributes({ mrsProductStyle: 'style-1'})}>
+                            <img src={productStyle1} alt='style-1' />
+                            <input type='radio' />
+                        </figure>
+                        <div className='mrs-products-single-style-title'>Straight</div>
+                    </div>
+                    <div  className={`mrs-products-style-image-single ${mrsProductStyle === 'style-2' && 'mrs-is-active'}`}>
+                        <figure  onClick={() => setAttributes({ mrsProductStyle: 'style-2'})}>
+                            <img src={productStyle2} alt='style-2' />
+                            <input type='radio' />
+                        </figure>
+                        <div className='mrs-products-single-style-title'>Hover Btn</div>
+                    </div>
+                    <div  className={`mrs-products-style-image-single ${mrsProductStyle === 'style-3' && 'mrs-is-active'}`}>
+                        <figure  onClick={() => setAttributes({ mrsProductStyle: 'style-3'})} >
+                            <img src={productStyle3} alt='style-3' />
+                            <input type='radio' />
+                        </figure>
+                        <div className='mrs-products-single-style-title'>Hover Text</div>
+                    </div>
+                </div>
+            </div>
             <MRSRangeControl
                 label={__('Column(s)', 'mrs-products-grid')}
                 help={__('Set the number of column(s) you want to show.', 'mrs-products-grid')}
@@ -18,18 +66,14 @@ const GeneralTab = ({attributes, setAttributes}) => {
                 max={6}
                 step={1}
             />
+            <div className='mrs-products-mb'>
             <RangeControl
                 label={__('Limit', 'mrs-products-grid')}
                 help={__('Set number of total products to show.', 'mrs-products-grid')}
                 value={postsPerPage}
                 onChange={(newValue) => setAttributes({postsPerPage: newValue})}
             />
-            <MRSToggle
-                label={__('Hide Out Of Stock Product', 'mrs-products-grid')}
-                attributes={hideOutOfStock}
-                attributesKey={'hideOutOfStock'}
-                setAttributes={setAttributes}
-            />
+            </div>
         </PanelBody>
         <PanelBody title={__('Filter Settings', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
             <SelectControl
@@ -55,8 +99,32 @@ const GeneralTab = ({attributes, setAttributes}) => {
                 value={order}
                 onChange={(newValue)=> setAttributes({order: newValue})}
             />
+            <SelectControl
+                label={__('Show Products By Specific Category', 'mrs-products-grid')}
+                options={cateOptions}
+                value={searchByCategory}
+                onChange={(v)=> setAttributes({ searchByCategory: v })}
+            />
+            <div className='mrs-products-mb'>
+                <SelectControl
+                    label={__('Filter Products', 'mrs-products-grid')}
+                    options={[
+                        { label: 'All', value: 'all' },
+                        { label: 'Featured', value: 'featured' },
+                        { label: 'On Sale', value: 'onSale' }
+                    ]}
+                    value={productFilterBy}
+                    onChange={(v)=> setAttributes({ productFilterBy: v })}
+                />
+            </div>
         </PanelBody>
         <PanelBody title={__('Template Settings', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
+            <MRSToggle
+                label={__('Hide Out Of Stock Product', 'mrs-products-grid')}
+                attributes={hideOutOfStock}
+                attributesKey={'hideOutOfStock'}
+                setAttributes={setAttributes}
+            />
             <MRSToggle
                 label={__('Show Products Name', 'mrs-products-grid')}
                 attributes={productTitleShow}
@@ -95,14 +163,22 @@ const GeneralTab = ({attributes, setAttributes}) => {
                 attributesKey={'showAddToCart'}
                 setAttributes={setAttributes}
             />
+            <MRSToggle
+                label={__('Show Category', 'mrs-products-grid')}
+                attributes={showCategory}
+                attributesKey={'showCategory'}
+                setAttributes={setAttributes}
+            />
         </PanelBody>
         { saleBadgeShow && 
         <PanelBody title={__('Sale Badge', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
+            <div className='mrs-products-mb'>
             <TextControl
                 label={__('Sale Text', 'mrs-products-grid')}
                 value={saleBadgeText}
                 onChange={(newValue)=>setAttributes({saleBadgeText: newValue})}
             />
+            </div>
         </PanelBody>
         }
         { showAddToCart && 
