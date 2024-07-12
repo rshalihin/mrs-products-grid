@@ -11,7 +11,7 @@ export const useDeviceType = () => {
                 }
             } else {
                 return {
-                    deviceType: select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType() || 'Desktop',
+                    deviceType: select( 'core/editor' )?.getDeviceType() || 'Desktop',
                 }
             }
         }, [])

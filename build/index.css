@@ -216,6 +216,9 @@
 .mrs-product-grid-panel-body .mrs-typography .mrs-typography-fonts.open {
   display: block;
 }
+.mrs-product-grid-panel-body .mrs-typography .mrs-typography-fonts .mrs-typography-family input[type=text]:focus {
+  box-shadow: none;
+}
 .mrs-product-grid-panel-body .mrs-typography .typography-btn-group-label {
   display: block;
   font-size: 12px;
@@ -447,11 +450,14 @@
 }
 
 .components-tab-panel__tab-content .mrs-product-grid-panel-body .components-panel__body-title {
-  background-color: rgba(155, 67, 139, 0.0588235294);
+  background-color: rgba(155, 67, 139, 0.1960784314);
 }
 .components-tab-panel__tab-content .mrs-product-grid-panel-body.is-opened .components-panel__body-title {
-  background-color: rgba(155, 67, 139, 0.4666666667);
+  background-color: rgba(155, 67, 139, 0.062745098);
   margin-bottom: 24px;
+}
+.components-tab-panel__tab-content .mrs-product-grid-panel-body.is-opened .components-panel__body-title .components-panel__body-toggle {
+  color: #9b438b;
 }
 .components-tab-panel__tab-content .mrs-product-grid-panel-body .components-grid .components-tools-panel {
   margin-bottom: 24px;
@@ -555,6 +561,12 @@
 }
 .components-tab-panel__tab-content .mrs-product-grid-panel-body .mrs-products-mb {
   margin-bottom: 24px;
+}
+.components-tab-panel__tab-content .mrs-product-grid-panel-body .mrs-cta-color-layout {
+  min-height: 70px;
+}
+.components-tab-panel__tab-content .mrs-product-grid-panel-body .mrs-products-cta-border-color {
+  min-height: 50px;
 }
 .components-tab-panel__tab-content .components-base-control .components-base-control__label {
   margin-bottom: 0;

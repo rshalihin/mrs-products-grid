@@ -40,7 +40,7 @@
       "type": "object",
       "default": {
         "device": {
-          "Desktop": 4,
+          "Desktop": 3,
           "Tablet": 2,
           "Mobile": 1
         },
@@ -51,13 +51,35 @@
       "type": "boolean",
       "default": false
     },
-    "mrsProductImageBorderRadius": {
+    "productImageBorderRadius": {
       "type": "object",
       "default": {
-        "top": "0px",
-        "right": "0px",
-        "bottom": "0px",
-        "left": "0px"
+        "device": {
+          "Desktop": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          },
+          "Tablet": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          },
+          "Mobile": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          }
+        },
+        "unit": {
+          "Desktop": "px",
+          "Tablet": "px",
+          "Mobile": "px"
+        },
+        "allChange": true
       }
     },
     "productTitleShow": {
@@ -141,9 +163,105 @@
         "hover": "#ff0033"
       }
     },
-    "addToCartFontSize": {
-      "type": "number",
-      "default": 16
+    "callToActionTypography": {
+      "type": "object",
+      "default": {
+        "googleFont": {
+          "family": "Default",
+          "variants": [
+            "200",
+            "300",
+            "400",
+            "500",
+            "700",
+            "800",
+            "900"
+          ]
+        },
+        "typography": {
+          "family": "",
+          "fontWeight": "400",
+          "style": "normal",
+          "transform": "capitalize",
+          "decoration": "none"
+        }
+      }
+    },
+    "callToActionFontSize": {
+      "type": "object",
+      "default": {
+        "device": {
+          "Desktop": 16,
+          "Tablet": 12,
+          "Mobile": 10
+        },
+        "unit": {
+          "Desktop": "px",
+          "Tablet": "px",
+          "Mobile": "px"
+        }
+      }
+    },
+    "ctaLineHeight": {
+      "type": "object",
+      "default": {
+        "device": {
+          "Desktop": 0,
+          "Tablet": 0,
+          "Mobile": 0
+        },
+        "unit": {
+          "Desktop": "px",
+          "Tablet": "px",
+          "Mobile": "px"
+        }
+      }
+    },
+    "ctaLetterSpacing": {
+      "type": "object",
+      "default": {
+        "device": {
+          "Desktop": 0,
+          "Tablet": 0,
+          "Mobile": 0
+        },
+        "unit": {
+          "Desktop": "px",
+          "Tablet": "px",
+          "Mobile": "px"
+        }
+      }
+    },
+    "callToActionMargin": {
+      "type": "object",
+      "default": {
+        "device": {
+          "Desktop": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          },
+          "Tablet": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          },
+          "Mobile": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          }
+        },
+        "unit": {
+          "Desktop": "px",
+          "Tablet": "px",
+          "Mobile": "px"
+        },
+        "allChange": false
+      }
     },
     "callToActionPadding": {
       "type": "object",
@@ -174,6 +292,48 @@
           "Mobile": "px"
         },
         "allChange": false
+      }
+    },
+    "callToActionBorderWeight": {
+      "type": "object",
+      "default": {
+        "device": {
+          "Desktop": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          },
+          "Tablet": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          },
+          "Mobile": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          }
+        },
+        "unit": {
+          "Desktop": "px",
+          "Tablet": "px",
+          "Mobile": "px"
+        },
+        "allChange": true
+      }
+    },
+    "callToActionBorderStyle": {
+      "type": "string",
+      "default": "solid"
+    },
+    "callToActionBorderColor": {
+      "type": "object",
+      "default": {
+        "color": "#000000",
+        "hover": "#9b438b"
       }
     },
     "callToActionBorderRadius": {
@@ -238,19 +398,63 @@
     "saleBadgeBorderWidth": {
       "type": "object",
       "default": {
-        "top": "1px",
-        "right": "1px",
-        "bottom": "1px",
-        "left": "1px"
+        "device": {
+          "Desktop": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          },
+          "Tablet": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          },
+          "Mobile": {
+            "top": "0",
+            "right": "0",
+            "bottom": "0",
+            "left": "0"
+          }
+        },
+        "unit": {
+          "Desktop": "px",
+          "Tablet": "px",
+          "Mobile": "px"
+        },
+        "allChange": false
       }
     },
     "saleBadgeBorderRadius": {
       "type": "object",
       "default": {
-        "top": "0px",
-        "right": "0px",
-        "bottom": "0px",
-        "left": "0px"
+        "device": {
+          "Desktop": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "Tablet": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "Mobile": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        },
+        "unit": {
+          "Desktop": "px",
+          "Tablet": "px",
+          "Mobile": "px"
+        },
+        "allChange": true
       }
     },
     "productContentAlign": {
@@ -512,7 +716,7 @@
     },
     "mrsProductSaleBadgeStyle": {
       "type": "string",
-      "default": "sTopLeft"
+      "default": "simple"
     },
     "productsTestColumn": {
       "type": "object",
@@ -670,7 +874,7 @@
     },
     "showCategory": {
       "type": "boolean",
-      "default": true
+      "default": false
     },
     "productFilterBy": {
       "type": "string",

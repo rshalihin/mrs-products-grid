@@ -20,6 +20,8 @@ const Spacing = ({ label, attributes, attributesKey, setAttributes, units, linkB
     const deviceType = useDeviceType();
     const SpacingAllChangeIcon = attributes?.allChange ? <SpacingControlActiveIcon /> : <SpacingControlIcon />;
     const value = attributes?.device ? attributes?.device[deviceType] : attributes;
+    
+    
 
     const setDefaultValue = () => {
         if ( attributes?.device ) {
@@ -100,7 +102,7 @@ const Spacing = ({ label, attributes, attributesKey, setAttributes, units, linkB
                         <span>{( 'object' !== typeof attributes.unit) ? attributes?.unit : attributes.unit[deviceType]}</span>
                             <div className='mrs-units-btn'>
                                 {units?.map(( item, i ) => (
-                                    <Button className={attributes.unit[deviceType] === item.toLowerCase() ? 'active' : ''} key={i} value={item} onClick={(e) => setUnit(e.target.value)}>{item}</Button>
+                                    <Button className={attributes?.unit[deviceType] === item.toLowerCase() ? 'active' : ''} key={i} value={item} onClick={(e) => setUnit(e.target.value)}>{item}</Button>
                                 ))}
                             </div>
                         </div>

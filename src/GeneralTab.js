@@ -182,7 +182,7 @@ const GeneralTab = ({attributes, setAttributes}) => {
         </PanelBody>
         }
         { showAddToCart && 
-        <PanelBody title={__('Cart Text', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
+        <PanelBody title={__('Call To Action Text', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
             <MRSToggle
                 label={__('Use custom cart button text', 'mrs-products-grid')}
                 attributes={customAddToCartText}

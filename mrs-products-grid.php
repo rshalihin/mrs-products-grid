@@ -52,8 +52,8 @@ function mrs_block_products_grid_rendering( $attributes ) {
 	$sample_cart_text = array( $addToCartText, $addToCartTextGroup, $addToCartTextVariable, $addToCartTextExternal, $addToCartTextDefault );
 
 	$args = array(
-		'post_type'    => 'product',
-		'post_status'  => 'publish',
+		'post_type'   => 'product',
+		'post_status' => 'publish',
 	);
 
 	if ( isset( $attributes['postsPerPage'] ) ) {
@@ -96,13 +96,34 @@ function mrs_block_products_grid_rendering( $attributes ) {
 		);
 	}
 
-	if ( isset( $attributes['productFilterBy']) && $attributes['productFilterBy'] !== 'all' ) {
+	if ( isset( $attributes['productFilterBy'] ) && $attributes['productFilterBy'] !== 'all' ) {
 		if ( 'featured' === $attributes['productFilterBy'] ) {
 			$args['post__in'] = wc_get_featured_product_ids();
 		}
 		if ( 'onSale' === $attributes['productFilterBy'] ) {
-			$args['meta_query'] = WC()->query->get_meta_query();
-			$args['post__in']   = array_merge( array(0), wc_get_product_ids_on_sale() );
+			$args['meta_query'] = array(
+				'relation' => 'OR',
+				array( // Simple products type.
+					'key'     => '_sale_price',
+					'value'   => 0,
+					'compare' => '>',
+					'type'    => 'NUMERIC',
+				),
+				array( // Variable products type.
+					'key'     => '_min_variation_sale_price',
+					'value'   => 0,
+					'compare' => '>',
+					'type'    => 'NUMERIC',
+				),
+			);
+			$args['tax_query']  = array(
+				array(
+					'taxonomy' => 'product_type',
+					'field'    => 'slug',
+					'terms'    => array( 'simple', 'variable', 'grouped' ),
+					'operator' => 'IN',
+				),
+			);
 		}
 	}
 	// var_dump( $attributes['searchByCategory'] );

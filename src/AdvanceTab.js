@@ -159,42 +159,6 @@ const AdvanceTab = ({attributes, setAttributes}) => {
                     'right': __('Right', 'mrs-products-grid')
                 }}
             />
-            <Divider />
-            <MRSRangeControl
-                label={__('Test Font Size Range', 'mrs-products-grid')}
-                min={1}
-                max={200}
-                units={['px', '%', 'em', 'rem']}
-                attributes={productsTitleFontSize}
-                attributesKey={'productsTitleFontSize'}
-                setAttributes={setAttributes}
-            />
-            <MRSRangeControl
-                label={__('Test Column', 'mrs-products-grid')}
-                min={1}
-                max={6}
-                step={1}
-                attributes={productsTestColumn}
-                attributesKey={'productsTestColumn'}
-                setAttributes={setAttributes}
-            />
-            {/* <Divider />
-            <MRSTypography
-                attributes={{
-                    family: titleTypography,
-                    familyKey: 'titleTypography',
-                    fontSize: titleFontSizeTest,
-                    fontSizeKey: 'titleFontSizeTest',
-                    fontSpacing: titleFontSpacingTest,
-                    fontSpacingKey: 'titleFontSpacingTest',
-                    lineHeight: titleLineHeightTest,
-                    lineHeightKey: 'titleLineHeightTest' 
-                }}
-                setAttributes={setAttributes}
-                spacingDefaultValue={{unit: 'px', value: 0}}
-                fontSizeDefault={{unit: 'px', value: 20}}
-                lineDefaultValue={{unit: 'px', value: 32}}
-            /> */}
         </PanelBody>
         </>
     );

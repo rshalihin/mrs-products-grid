@@ -66,8 +66,6 @@ const MRSTypography = ({attributes, setAttributes, fontSizeDefault={ unit: 'px',
             return '' !== item;
         })
     }
-
-    console.log(family);
   return (
         <>
         <div className='mrs-typography mrs-components-mb'>

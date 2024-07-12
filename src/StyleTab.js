@@ -9,38 +9,12 @@ import { useEffect, useState } from '@wordpress/element';
 import Spacing from './components/spacing/Spacing';
 
 const StyleTab = ({attributes, setAttributes}) => {
-    const { mrsProductImageBorderRadiusSet, mrsProductImageBorderRadius, productTitleShow, titleTypography, titleFontSize, titleFontSpacing, titleLineHeight, productTitleColor, productPriceShow, productPriceColor, showProductRatingStar, productRatingStarSize, productRatingStarColor, showAddToCart, addToCartFontSize, addToCartTextColor, addToCartBGColor, callToActionPadding, productContentAlign, productsBGColor, productsContentPadding, productSpacing, saleBadgeBorderStyle, saleBadgeShow, saleBadgeTextColor, saleBadgeBGColor, saleBadgeBorderColor, saleBadgeBorderWidth, saleBadgeBorderRadius, mrsProductSaleBadgeStyle, saleBadgeAlign, productRowGap, priceTypography, priceFontSize, priceFontSpacing, priceLineHeight, callToActionBorderRadius, mrsCategoryColor, showCategory, categoryTypography, categoryFontSize, categoryLineHeight, categoryLetterSpacing } = attributes;
+    const { mrsProductImageBorderRadiusSet, productImageBorderRadius, productTitleShow, titleTypography, titleFontSize, titleFontSpacing, titleLineHeight, productTitleColor, productPriceShow, productPriceColor, showProductRatingStar, productRatingStarSize, productRatingStarColor, showAddToCart, addToCartTextColor, addToCartBGColor, callToActionMargin, callToActionPadding, productContentAlign, productsBGColor, productsContentPadding, productSpacing, saleBadgeBorderStyle, saleBadgeShow, saleBadgeTextColor, saleBadgeBGColor, saleBadgeBorderColor, saleBadgeBorderWidth, saleBadgeBorderRadius, mrsProductSaleBadgeStyle, saleBadgeAlign, productRowGap, priceTypography, priceFontSize, priceFontSpacing, priceLineHeight, callToActionBorderWeight, callToActionBorderStyle, callToActionBorderColor, callToActionBorderRadius, mrsCategoryColor, showCategory, categoryTypography, categoryFontSize, categoryLineHeight, categoryLetterSpacing, callToActionTypography, callToActionFontSize, ctaLineHeight, ctaLetterSpacing } = attributes;
 
-    const [cartColorBtn, setCartColorBtn] = useState('normal');
+    const [cartColorBtn, setCartColorBtn] = useState(true);
+    const [ctaBorderColor, setCtaBorderColor] = useState(true);
 
-    const pxCheck = (newObj) => {            
-        for ( let side in newObj ) {
-            if ( newObj[side] === undefined ) {
-                newObj[side] = '0px';
-            }
-            let unitCheck = newObj[side].slice(newObj[side].length - 2 );
-            if ( 'px' !== unitCheck ) {
-                newObj[side] = newObj[side] + 'px';
-            }
-        }
-        return newObj;
-    }
-    const onChangeProductImage = ( newValue ) => {
-        let checkValue = pxCheck(newValue);
-        setAttributes({ mrsProductImageBorderRadius: checkValue });
-    }
-    const productsContentPaddingHandle = ( newValues ) => {
-        let checkValue = pxCheck(newValues);
-        setAttributes({ productsContentPadding: checkValue})
-    }
-    const saleBadgeBorderWidthOnChangeHandle = ( newValues ) => {
-        let checkValues = pxCheck(newValues);
-        setAttributes({saleBadgeBorderWidth: checkValues});
-    }
-    const saleBadgeBorderRadiusOnChangeHandle = ( newValues ) => {
-        let checkValues = pxCheck(newValues);
-        setAttributes({saleBadgeBorderRadius: checkValues})
-    }
+
 
     useEffect(() => {
         if ( mrsProductSaleBadgeStyle !== 'simple' ){
@@ -110,14 +84,21 @@ const StyleTab = ({attributes, setAttributes}) => {
                 attributesKey={'mrsProductImageBorderRadiusSet'}
                 setAttributes={setAttributes}
             />
-            { mrsProductImageBorderRadiusSet && 
-            <BoxControl
-                label={__('Image border Radius', 'mrs-products-grid')}
-                onChange={onChangeProductImage}
-                values={mrsProductImageBorderRadius}
-                units={[{ value: 'px', label: 'px'}]}
+            { mrsProductImageBorderRadiusSet && <>
+            <Spacing
+                label={__('Image Border Radius', 'mrs-products-grid')}
+                attributes={productImageBorderRadius}
+                attributesKey={'productImageBorderRadius'}
+                setAttributes={setAttributes}
+                units={['px', '%', 'em', 'rem', 'vw', 'vh']}
+                labelItem={{
+                    'top': __('T-Left', 'mrs-products-grid'),
+                    'right': __('T-Right', 'mrs-products-grid'),
+                    'bottom': __('B-Right', 'mrs-products-grid'),
+                    'left': __('B-Left', 'mrs-products-grid')
+                }}
             />
-            }
+            </>}
         </PanelBody>
         { productTitleShow && 
         <PanelBody title={__('Product Title Settings', 'mrs-products-grid' )} initialOpen={false} className={'mrs-product-grid-panel-body'}>
@@ -210,19 +191,30 @@ const StyleTab = ({attributes, setAttributes}) => {
 
         { showAddToCart && 
         <PanelBody title={__('Call to Action', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
-            <RangeControl
-                label={__('Call To Action Font Size', 'mrs-products-grid' )}
-                value={addToCartFontSize}
-                onChange={newValue => setAttributes({addToCartFontSize: newValue})}
-                min={10}
-                max={50}
+            <MRSTypography
+                attributes={{
+                    family: callToActionTypography,
+                    familyKey: 'callToActionTypography',
+                    fontSize: callToActionFontSize,
+                    fontSizeKey: 'callToActionFontSize',
+                    lineHeight: ctaLineHeight,
+                    lineHeightKey: 'ctaLineHeight',
+                    fontSpacing: ctaLetterSpacing,
+                    fontSpacingKey: 'ctaLetterSpacing'
+                }}
+                setAttributes={setAttributes}
+                fontSizeDefault={{ unit: 'px', value: 16 }}
+                lineHeightDefault={{ unit: 'px', value: 0 }}
+                spacingDefaultValue={{ unit: 'px', value: 0 }}
             />
-            <ButtonGroup className={'mrs-products-btn-group'}>
-                <Button className={`mrs-products-btn ${cartColorBtn === 'normal'? 'is-active':''}`} onClick={()=> setCartColorBtn('normal')}>Normal</Button>
-                <Button className={`mrs-products-btn ${cartColorBtn === 'hover'? 'is-active':''}`} onClick={()=> setCartColorBtn('hover')}>Hover</Button>
-            </ButtonGroup>
-          <div>
-          { 'normal' === cartColorBtn &&  <PanelColorSettings
+            <div>
+                <ButtonGroup className={'mrs-products-btn-group'}>
+                    <Button className={`mrs-products-btn ${cartColorBtn ? 'is-active':''}`} onClick={()=> setCartColorBtn(true)}>Normal</Button>
+                    <Button className={`mrs-products-btn ${ !cartColorBtn ? 'is-active':''}`} onClick={()=> setCartColorBtn(false)}>Hover</Button>
+                </ButtonGroup>
+            </div>
+          <div className='mrs-cta-color-layout'>
+          { cartColorBtn &&  <PanelColorSettings
                 className='mrs-color-settings-panel'
                 colorSettings={[
                     {
@@ -237,7 +229,7 @@ const StyleTab = ({attributes, setAttributes}) => {
                     }
                 ]}
             />}
-            { 'hover' === cartColorBtn && <PanelColorSettings
+            { !cartColorBtn && <PanelColorSettings
                 className='mrs-color-settings-panel'
                 colorSettings={[
                     {
@@ -253,8 +245,24 @@ const StyleTab = ({attributes, setAttributes}) => {
                 ]}
             />}
           </div>
-
             <Divider />
+            <Spacing
+                label={__('Margin', 'mrs-products-grid')}
+                attributes={callToActionMargin}
+                attributesKey={'callToActionMargin'}
+                setAttributes={setAttributes}
+                units={['px', 'em', 'rem', '%']}
+                labelItem={{
+                    'top': __('Top', 'mrs-products-grid'),
+                    'right': __('Right', 'mrs-products-grid'),
+                    'bottom': __('Bottom', 'mrs-products-grid'),
+                    'left': __('Left', 'mrs-products-grid')
+                }}
+                defaultValue={{
+                    unit: 'px',
+                    value: { 'top': '5px', 'right': '20px', 'bottom': '5px', 'left': '20px' }
+                }}
+            />
             <Spacing
                 label={__('Padding', 'mrs-products-grid')}
                 attributes={callToActionPadding}
@@ -272,6 +280,67 @@ const StyleTab = ({attributes, setAttributes}) => {
                     value: { 'top': '5px', 'right': '20px', 'bottom': '5px', 'left': '20px' }
                 }}
             />
+            <Divider />
+            <SelectControl
+                label={__('Border Style', 'mrs-products-grid')}
+                value={callToActionBorderStyle}
+                options={[
+                    { label: 'None', value: 'none' },
+                    { label: 'Solid', value: 'solid' },
+                    { label: 'Dashed', value: 'dashed' },
+                    { label: 'Dotted', value: 'dotted' },
+                    { label: 'Double', value: 'Double' },
+                    { label: 'Groove', value: 'Groove' },
+                    { label: 'Inset', value: 'inset' },
+                    { label: 'Outset', value: 'outset' },
+                    { label: 'Ridge', value: 'ridge' }
+                ]}
+                onChange={(newValue) => setAttributes({callToActionBorderStyle: newValue})}
+            />
+            {callToActionBorderStyle !== 'none' && <>
+                <Spacing
+                    label={__('Border Width', 'mrs-products-grid')}
+                    attributes={callToActionBorderWeight}
+                    attributesKey={'callToActionBorderWeight'}
+                    setAttributes={setAttributes}
+                    units={['px', 'em', 'rem', '%']}
+                    labelItem={{
+                        'top': __('T-Left', 'mrs-products-grid'),
+                        'right': __('T-Right', 'mrs-products-grid'),
+                        'bottom': __('B-Right', 'mrs-products-grid'),
+                        'left': __('B-Left', 'mrs-products-grid')
+                    }}
+                    defaultValue={{ unit: 'px', value: { 'top': '5', 'right': '5', 'bottom': '5', 'left': '5' } }}
+                />
+                <div>
+                    <ButtonGroup className={'mrs-products-btn-group'}>
+                        <Button className={`mrs-products-btn ${ctaBorderColor ? 'is-active':''}`} onClick={()=> setCtaBorderColor(true)}>Normal</Button>
+                        <Button className={`mrs-products-btn ${ !ctaBorderColor ? 'is-active':''}`} onClick={()=> setCtaBorderColor(false)}>Hover</Button>
+                    </ButtonGroup>
+                </div>
+                <div className='mrs-products-cta-border-color'>
+                {ctaBorderColor && <PanelColorSettings
+                    className='mrs-color-settings-panel'
+                    colorSettings={[
+                        {
+                            label: __('CTA Border Color', 'mrs-products-grid'),
+                            value: callToActionBorderColor.color,
+                            onChange: newValue => setAttributes({ callToActionBorderColor : {...callToActionBorderColor, "color": newValue} })
+                        }
+                    ]}
+                /> }
+                { !ctaBorderColor && <PanelColorSettings
+                    className='mrs-color-settings-panel'
+                    colorSettings={[
+                        {
+                            label: __('CTA Border Hover Color', 'mrs-products-grid'),
+                            value: callToActionBorderColor.hover,
+                            onChange: newValue => setAttributes({ callToActionBorderColor : {...callToActionBorderColor, "hover": newValue} })
+                        }
+                    ]}
+                />}
+                </div>
+            </>}
             <Spacing
                 label={__('Border Radius', 'mrs-products-grid')}
                 attributes={callToActionBorderRadius}
@@ -291,6 +360,21 @@ const StyleTab = ({attributes, setAttributes}) => {
 
         { saleBadgeShow && 
         <PanelBody title={__('Sale Badge Style', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
+            <PanelColorSettings
+                className='mrs-color-settings-panel'
+                colorSettings={[
+                    {
+                        label: __('Sale Text Color', 'mrs-products-grid'),
+                        value: saleBadgeTextColor,
+                        onChange: newValue => setAttributes({ saleBadgeTextColor : newValue})
+                    },
+                    {
+                        label: __('Sale Text Background Color', 'mrs-products-grid'),
+                        value: saleBadgeBGColor,
+                        onChange: newValue => setAttributes({ saleBadgeBGColor : newValue})
+                    }
+                ]}
+            />
             <SelectControl
                 label={__( 'Select a Sale Badge Style', 'mrs-products-grid' )}
                 value={mrsProductSaleBadgeStyle}
@@ -311,21 +395,6 @@ const StyleTab = ({attributes, setAttributes}) => {
                 <Divider />
                 </>
             )}
-            <PanelColorSettings
-                className='mrs-color-settings-panel'
-                colorSettings={[
-                    {
-                        label: __('Sale Text Color', 'mrs-products-grid'),
-                        value: saleBadgeTextColor,
-                        onChange: newValue => setAttributes({ saleBadgeTextColor : newValue})
-                    },
-                    {
-                        label: __('Sale Text Background Color', 'mrs-products-grid'),
-                        value: saleBadgeBGColor,
-                        onChange: newValue => setAttributes({ saleBadgeBGColor : newValue})
-                    }
-                ]}
-            />
             <Divider />
             { mrsProductSaleBadgeStyle === 'simple' && (
                 <>
@@ -347,8 +416,8 @@ const StyleTab = ({attributes, setAttributes}) => {
                 />
                 { (saleBadgeBorderStyle !== 'none') &&
                     <>
-                    <Divider />
                     <PanelColorSettings
+                        className='mrs-color-settings-panel'
                         colorSettings={[
                             {
                                 label: __('Border Color', 'mrs-products-grid'),
@@ -357,24 +426,35 @@ const StyleTab = ({attributes, setAttributes}) => {
                             }
                         ]}
                     />
-                    <Divider />
-                    <BoxControl
-                        label={__('Border Width', 'mrs-products-grid')}
-                        values={saleBadgeBorderWidth}
-                        onChange={saleBadgeBorderWidthOnChangeHandle}
-                        units={[{ label: 'px', value: 'px'}]}
+                    <Spacing
+                        label={__('Border Weight', 'mrs-products-grid')}
+                        attributes={saleBadgeBorderWidth}
+                        attributesKey={'saleBadgeBorderWidth'}
+                        setAttributes={setAttributes}
+                        units={['px']}
+                        labelItem={{
+                            'top': __('Top', 'mrs-products-grid'),
+                            'right': __('Right', 'mrs-products-grid'),
+                            'bottom': __('Bottom', 'mrs-products-grid'),
+                            'left': __('Left', 'mrs-products-grid')
+                        }}                        
                     />
-                    <Divider />
-                    <BoxControl
+                </>}
+                <Spacing
                         label={__('Border Radius', 'mrs-products-grid')}
-                        values={saleBadgeBorderRadius}
-                        onChange={saleBadgeBorderRadiusOnChangeHandle}                
-                        units={[{ label: 'px', value: 'px'}]}
+                        attributes={saleBadgeBorderRadius}
+                        attributesKey={'saleBadgeBorderRadius'}
+                        setAttributes={setAttributes}
+                        units={['px']}
+                        labelItem={{
+                            'top': __('T-Left', 'mrs-products-grid'),
+                            'right': __('T-Right', 'mrs-products-grid'),
+                            'bottom': __('B-Right', 'mrs-products-grid'),
+                            'left': __('B-Left', 'mrs-products-grid')
+                        }}                        
                     />
-                    </>}
                 </>
             )}
-            
         </PanelBody>
         }
         { showCategory && 

@@ -28,12 +28,15 @@
 .components-tab-panel__tab-content {
 	.mrs-product-grid-panel-body {
 		.components-panel__body-title {
-			background-color: #9b438b0f;
+			background-color: #9b438b32;
 		}
 		&.is-opened {
 			.components-panel__body-title {
-				background-color: #9b438b77;
+				background-color: #9b438b10;
 				margin-bottom: 24px;
+				.components-panel__body-toggle {
+					color: #9b438b;
+				}
 			}
 		}
 		.components-grid .components-tools-panel {
@@ -144,6 +147,12 @@
 		}
 		.mrs-products-mb {
 			margin-bottom: 24px;
+		}
+		.mrs-cta-color-layout {
+			min-height: 70px;
+		}
+		.mrs-products-cta-border-color {
+			min-height: 50px;
 		}
 	}
 	.components-base-control .components-base-control__label {
