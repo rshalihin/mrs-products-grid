@@ -13,7 +13,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	const { postsPerPage, orderBy, order, uniqueID, frontendCss, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup, hideOutOfStock, hideProductEmptyRatingStar, mrsProductSaleBadgeStyle, searchByCategory, showCategory, productFilterBy, mrsProductStyle } = attributes;
 
 	const [ firstTLoad, setFirstTLoad ] = useState(true);
-	const [ loading, setLoading ] = useState(false);
+	const [ loading, setLoading ] = useState(true);
 	const [mrsPro, setMrsPro] = useState([]);
 	const [ proCategory, setProCategory ] = useState([]);
 
@@ -105,10 +105,10 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	}, [attributes]);
 
 	useEffect( () => {
-		if ( selectProduct === null ) {
-			setLoading(true)
-		} else {
+		if ( selectProduct !== null ) {
 			setLoading(false)
+		} else {
+			setLoading(true)
 		}
 	}, [selectProduct])
 	
@@ -209,7 +209,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 								</div>
 							)
 						})
-					) :  loading ? '' : <div>No Product Found!!! Please Check product filter section.</div>
+					) :  (!loading && !mrsPro) ? <div>No Product Found!!! Please Check product filter section.</div> : ''
 					}
 				</div>
 			</div>

@@ -86,7 +86,7 @@ function mrs_block_products_grid_rendering( $attributes ) {
 	if ( isset( $attributes['order'] ) ) {
 		$args['order'] = strtoupper( $attributes['order'] );
 	}
-	if ( isset( $attributes['searchByCategory'] ) && $attributes['searchByCategory'] !== 'all' ) {
+	if ( isset( $attributes['searchByCategory'] ) && 'all' !== $attributes['searchByCategory'] ) {
 		$args['tax_query'] = array(
 			array(
 				'taxonomy' => 'product_cat',
@@ -96,7 +96,7 @@ function mrs_block_products_grid_rendering( $attributes ) {
 		);
 	}
 
-	if ( isset( $attributes['productFilterBy'] ) && $attributes['productFilterBy'] !== 'all' ) {
+	if ( isset( $attributes['productFilterBy'] ) && 'all' !== $attributes['productFilterBy'] ) {
 		if ( 'featured' === $attributes['productFilterBy'] ) {
 			$args['post__in'] = wc_get_featured_product_ids();
 		}
@@ -126,17 +126,12 @@ function mrs_block_products_grid_rendering( $attributes ) {
 			);
 		}
 	}
-	// var_dump( $attributes['searchByCategory'] );
-	// wp_die();
 
 	$mrs_products_grid_query = new \WP_Query( $args );
-	// var_dump( $mrs_products_grid_query );
-	// wp_die();
 
 	ob_start();
 
 	?>
-
 	<div <?php echo wp_kses_post( get_block_wrapper_attributes() ); ?>>
 	<div class="mrs-block-mrs-products-grid mrs-product-<?php echo esc_attr( $attributes['uniqueID'] ); ?>">
 		<div class="mrs-products-grid-wrapper">
@@ -149,6 +144,10 @@ function mrs_block_products_grid_rendering( $attributes ) {
 			global $product;
 
 			$post_thumbnail_id = $product->get_image_id();
+			// $product_gallery_img_id = $product->get_gallery_image_ids();
+			// if ( count( $product_gallery_img_id ) > 1 ) {
+			// var_dump( $product_gallery_img_id );
+			// }
 			if ( $post_thumbnail_id ) {
 				$mrs_product_image_url = wp_get_attachment_url( intval( $post_thumbnail_id ) );
 			}
@@ -286,6 +285,7 @@ function mrs_products_grid_custom_text( $text ) {
 		'external' => $addToCartTextExternal,
 		'variable' => $addToCartTextVariable,
 	);
+	// var_dump( $product_type );
 	return isset( $product_types[ $product_type ] ) ? esc_html( $product_types[ $product_type ] ) : esc_html( $addToCartTextDefault );
 
 }

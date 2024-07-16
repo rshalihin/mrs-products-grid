@@ -160,7 +160,7 @@
       "type": "object",
       "default": {
         "color": "#ffffff",
-        "hover": "#ff0033"
+        "hover": "#000000"
       }
     },
     "callToActionTypography": {
@@ -333,7 +333,7 @@
       "type": "object",
       "default": {
         "color": "#000000",
-        "hover": "#9b438b"
+        "hover": "#000000"
       }
     },
     "callToActionBorderRadius": {

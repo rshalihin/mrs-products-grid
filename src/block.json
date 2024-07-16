@@ -152,7 +152,7 @@
 		},
 		"addToCartTextColor": {
 			"type": "object",
-			"default": { "color": "#ffffff", "hover": "#ff0033" }
+			"default": { "color": "#ffffff", "hover": "#000000" }
 		},
 		"callToActionTypography": {
 			"type": "object",
@@ -314,7 +314,7 @@
 		},
 		"callToActionBorderColor": {
 			"type": "object",
-			"default": { "color": "#000000", "hover": "#9b438b" }
+			"default": { "color": "#000000", "hover": "#000000" }
 		},
 		"callToActionBorderRadius": {
 			"type": "object",
