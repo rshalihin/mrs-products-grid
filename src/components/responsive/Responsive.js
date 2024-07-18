@@ -10,7 +10,7 @@ const Responsive = () => {
         if ( canvas.length > 0 ) {
             dispatch( 'core/editor' ).setDeviceType(e.target.closest('button').value);
         } else {
-            dispatch( 'core/edit-post' ).__experimentalSetPreviewDeviceType(e.target.closest('button').value);
+            dispatch( 'core/editor' ).setDeviceType(e.target.closest('button').value);
         }
     }
 

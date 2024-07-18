@@ -10,7 +10,7 @@ import { useDeviceType } from './controls/controls';
 
 
 export default function Edit({ attributes, setAttributes, clientId }) {
-	const { postsPerPage, orderBy, order, uniqueID, frontendCss, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup, hideOutOfStock, hideProductEmptyRatingStar, mrsProductSaleBadgeStyle, searchByCategory, showCategory, productFilterBy, mrsProductStyle } = attributes;
+	const { postsPerPage, orderBy, order, uniqueID, frontendCss, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup, hideOutOfStock, hideProductEmptyRatingStar, mrsProductSaleBadgeStyle, searchByCategory, showCategory, productFilterBy, mrsProductStyle, cateIds } = attributes;
 
 	const [ firstTLoad, setFirstTLoad ] = useState(true);
 	const [ loading, setLoading ] = useState(true);
@@ -18,12 +18,15 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	const [ proCategory, setProCategory ] = useState([]);
 
 	const selectProduct = useSelect((select)=> {
-		if ( searchByCategory !== 'all' ){
-			return select('core').getEntityRecords('postType', 'product', {per_page: postsPerPage, _embed: true, orderby: orderBy, order, product_cat: parseInt(searchByCategory) });
-		} else {
-			return select('core').getEntityRecords('postType', 'product', {per_page: postsPerPage, _embed: true, orderby: orderBy, order });
-		}
-	}, [postsPerPage, orderBy, order, searchByCategory]);
+		// if ( searchByCategory !== 'all' ){
+		// 	return select('core').getEntityRecords('postType', 'product', {per_page: postsPerPage, _embed: true, orderby: orderBy, order, product_cat: parseInt(searchByCategory) });
+		// } else {
+		// 	return select('core').getEntityRecords('postType', 'product', {per_page: postsPerPage, _embed: true, orderby: orderBy, order });
+		// }
+		
+		return select('core').getEntityRecords('postType', 'product', {per_page: postsPerPage, _embed: true, orderby: orderBy, order, product_cat: cateIds });
+		
+	}, [postsPerPage, orderBy, order, cateIds]);
 
 	const productsCategory = useSelect((select) => {
 		return select('core').getEntityRecords('taxonomy', 'product_cat');
@@ -183,6 +186,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 														return (
 															<RawHTML key={i}>
 																{v.price ? v.price : 'Out of Stock'}
+																
 															</RawHTML>
 														);
 													}

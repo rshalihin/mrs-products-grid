@@ -2477,25 +2477,64 @@ const GeneralTab = ({
     searchByCategory,
     showCategory,
     productFilterBy,
-    mrsProductStyle
+    mrsProductStyle,
+    multiCategorySelect,
+    cateIds
   } = attributes;
   const [cateOptions, setCateOptions] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)([]);
+  const [categorySuggestions, setCategorySuggestions] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useState)({});
   const productsCategory = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_6__.useSelect)(select => {
     return select('core').getEntityRecords('taxonomy', 'product_cat');
   }, []);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useEffect)(() => {
-    let options = productsCategory?.map(v => ({
-      label: v.name,
-      value: v.id
-    }));
-    if (options) {
-      let allOpt = [{
-        label: "All",
-        value: "all"
-      }, ...options];
-      setCateOptions(allOpt);
+    const possibleCateIds = multiCategorySelect && multiCategorySelect.length > 0 ? multiCategorySelect.map(v => v.id) : [];
+    if (possibleCateIds) {
+      setAttributes({
+        cateIds: possibleCateIds
+      });
     }
-  }, []);
+  }, [multiCategorySelect]);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useEffect)(() => {
+    if (productsCategory) {
+      let options = productsCategory?.map(v => ({
+        label: v.name,
+        value: v.id
+      }));
+      let optionsSuggestion = {};
+      for (let value of productsCategory) {
+        optionsSuggestion[`${value.name}`] = {
+          id: value.id,
+          name: value.name
+        };
+      }
+      if (options) {
+        let allOpt = [{
+          label: "All",
+          value: "all"
+        }, ...options];
+        setCateOptions(allOpt);
+        setCategorySuggestions({
+          "All": {
+            id: 1,
+            name: "All"
+          },
+          ...optionsSuggestion
+        });
+      }
+    }
+  }, [productsCategory]);
+
+  // Query Controls Category Fn.
+  const onQueryControlChange = values => {
+    const hasNoSuggestions = values.some(value => typeof value === 'string' && !categorySuggestions[value]);
+    if (hasNoSuggestions) return;
+    const updateValue = values.map(token => {
+      return typeof token === 'string' ? categorySuggestions[token] : token;
+    });
+    setAttributes({
+      multiCategorySelect: updateValue
+    });
+  };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Layout Settings', 'mrs-products-grid'),
     initialOpen: true,
@@ -2604,13 +2643,6 @@ const GeneralTab = ({
     onChange: newValue => setAttributes({
       order: newValue
     })
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Show Products By Specific Category', 'mrs-products-grid'),
-    options: cateOptions,
-    value: searchByCategory,
-    onChange: v => setAttributes({
-      searchByCategory: v
-    })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mrs-products-mb"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
@@ -2629,7 +2661,11 @@ const GeneralTab = ({
     onChange: v => setAttributes({
       productFilterBy: v
     })
-  }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.QueryControls, {
+    categorySuggestions: categorySuggestions,
+    selectedCategories: multiCategorySelect,
+    onCategoryChange: onQueryControlChange
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Template Settings', 'mrs-products-grid'),
     initialOpen: false,
     className: 'mrs-product-grid-panel-body'
@@ -3793,7 +3829,7 @@ const MRSTypography = ({
     setAttributes: setAttributes,
     units: ['px', 'em', 'rem'],
     defaultValue: fontSizeDefault
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Font Style', 'mrs-products-grid'),
     value: family.typography.style,
     options: [{
@@ -3832,24 +3868,24 @@ const MRSTypography = ({
         }
       }
     })
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_mrsRangControl_MRSRangeControl__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_mrsRangControl_MRSRangeControl__WEBPACK_IMPORTED_MODULE_4__["default"], {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Title Later Spacing', 'mrs-products-grid'),
     attributes: fontSpacing,
     attributesKey: fontSpacingKey,
     setAttributes: setAttributes,
     defaultValue: spacingDefaultValue,
     units: ['px', 'em', 'rem']
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_mrsRangControl_MRSRangeControl__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_mrsRangControl_MRSRangeControl__WEBPACK_IMPORTED_MODULE_4__["default"], {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Line Height', 'mrs-products-grid'),
     attributes: lineHeight,
     attributesKey: lineHeightKey,
     setAttributes: setAttributes,
     units: ['px', 'em', 'rem'],
     defaultValue: lineHeightDefault
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "typography-btn-group-label"
   }, "Text Decoration"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ButtonGroup, {
-    className: "mrs-products-btn-group"
+    className: "mrs-products-btn-group mrs-component-mb"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     className: `mrs-products-btn ${family?.typography?.decoration === 'none' ? 'is-active' : ''}`,
     onClick: () => setAttributes({
@@ -3894,10 +3930,10 @@ const MRSTypography = ({
         }
       }
     })
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_controls_svgIcon__WEBPACK_IMPORTED_MODULE_5__.DecorationOverLine, null))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalDivider, null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_controls_svgIcon__WEBPACK_IMPORTED_MODULE_5__.DecorationOverLine, null))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "typography-btn-group-label"
   }, "Latter Case"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ButtonGroup, {
-    className: "mrs-products-btn-group"
+    className: "mrs-products-btn-group mrs-component-mb"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     className: `mrs-products-btn ${family?.typography?.transform === 'none' ? 'is-active' : ''}`,
     onClick: () => setAttributes({
@@ -3979,7 +4015,7 @@ const Responsive = () => {
     if (canvas.length > 0) {
       (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.dispatch)('core/editor').setDeviceType(e.target.closest('button').value);
     } else {
-      (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.dispatch)('core/edit-post').__experimentalSetPreviewDeviceType(e.target.closest('button').value);
+      (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.dispatch)('core/editor').setDeviceType(e.target.closest('button').value);
     }
   };
   const deviceType = (0,_controls_controls__WEBPACK_IMPORTED_MODULE_2__.useDeviceType)();
@@ -4959,30 +4995,28 @@ function Edit({
     searchByCategory,
     showCategory,
     productFilterBy,
-    mrsProductStyle
+    mrsProductStyle,
+    cateIds
   } = attributes;
   const [firstTLoad, setFirstTLoad] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(true);
   const [loading, setLoading] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(true);
   const [mrsPro, setMrsPro] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)([]);
   const [proCategory, setProCategory] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)([]);
   const selectProduct = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
-    if (searchByCategory !== 'all') {
-      return select('core').getEntityRecords('postType', 'product', {
-        per_page: postsPerPage,
-        _embed: true,
-        orderby: orderBy,
-        order,
-        product_cat: parseInt(searchByCategory)
-      });
-    } else {
-      return select('core').getEntityRecords('postType', 'product', {
-        per_page: postsPerPage,
-        _embed: true,
-        orderby: orderBy,
-        order
-      });
-    }
-  }, [postsPerPage, orderBy, order, searchByCategory]);
+    // if ( searchByCategory !== 'all' ){
+    // 	return select('core').getEntityRecords('postType', 'product', {per_page: postsPerPage, _embed: true, orderby: orderBy, order, product_cat: parseInt(searchByCategory) });
+    // } else {
+    // 	return select('core').getEntityRecords('postType', 'product', {per_page: postsPerPage, _embed: true, orderby: orderBy, order });
+    // }
+
+    return select('core').getEntityRecords('postType', 'product', {
+      per_page: postsPerPage,
+      _embed: true,
+      orderby: orderBy,
+      order,
+      product_cat: cateIds
+    });
+  }, [postsPerPage, orderBy, order, cateIds]);
   const productsCategory = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
     return select('core').getEntityRecords('taxonomy', 'product_cat');
   }, []);
@@ -13970,7 +14004,7 @@ function combine (array, callback) {
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"mrs-block/mrs-products-grid","version":"0.1.0","title":"MRS Products Grid","category":"text","icon":"cart","description":"A simple Gutenberg form widget.","example":{},"supports":{"html":false,"align":["wide","full"]},"attributes":{"uniqueID":{"type":"string","default":""},"frontendCss":{"type":"string","default":""},"postsPerPage":{"type":"number","default":100},"orderBy":{"type":"string","default":"title"},"order":{"type":"string","default":"desc"},"productsColumn":{"type":"object","default":{"device":{"Desktop":3,"Tablet":2,"Mobile":1},"unit":false}},"mrsProductImageBorderRadiusSet":{"type":"boolean","default":false},"productImageBorderRadius":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productTitleShow":{"type":"boolean","default":true},"productTitleColor":{"type":"object","default":{"color":"#111111","hover":"#011111"}},"showProductRatingStar":{"type":"boolean","default":true},"hideProductEmptyRatingStar":{"type":"boolean","default":true},"productRatingStarSize":{"type":"number","default":16},"productRatingStarColor":{"type":"string","default":"#111111"},"productPriceShow":{"type":"boolean","default":true},"productPriceSize":{"type":"number","default":18},"productPriceColor":{"type":"string","default":"#111111"},"showAddToCart":{"type":"boolean","default":true},"customAddToCartText":{"type":"boolean","default":false},"addToCartText":{"type":"string","default":"Add To Cart"},"addToCartTextGroup":{"type":"string","default":"View Products"},"addToCartTextVariable":{"type":"string","default":"Select Options"},"addToCartTextExternal":{"type":"string","default":"Buy Now"},"addToCartTextDefault":{"type":"string","default":"Read More"},"addToCartBGColor":{"type":"object","default":{"color":"#111111","hover":"#ffffff"}},"addToCartTextColor":{"type":"object","default":{"color":"#ffffff","hover":"#000000"}},"callToActionTypography":{"type":"object","default":{"googleFont":{"family":"Default","variants":["200","300","400","500","700","800","900"]},"typography":{"family":"","fontWeight":"400","style":"normal","transform":"capitalize","decoration":"none"}}},"callToActionFontSize":{"type":"object","default":{"device":{"Desktop":16,"Tablet":12,"Mobile":10},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"ctaLineHeight":{"type":"object","default":{"device":{"Desktop":0,"Tablet":0,"Mobile":0},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"ctaLetterSpacing":{"type":"object","default":{"device":{"Desktop":0,"Tablet":0,"Mobile":0},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"callToActionMargin":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":false}},"callToActionPadding":{"type":"object","default":{"device":{"Desktop":{"top":"8","right":"16","bottom":"8","left":"16"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":false}},"callToActionBorderWeight":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"callToActionBorderStyle":{"type":"string","default":"solid"},"callToActionBorderColor":{"type":"object","default":{"color":"#000000","hover":"#000000"}},"callToActionBorderRadius":{"type":"object","default":{"device":{"Desktop":{"top":"5","right":"5","bottom":"5","left":"5"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"saleBadgeShow":{"type":"boolean","default":true},"saleBadgeAlign":{"type":"string","default":"Left"},"saleBadgeText":{"type":"string","default":"Sale"},"saleBadgeBGColor":{"type":"string","default":"#ffffff"},"saleBadgeTextColor":{"type":"string","default":"#111111"},"saleBadgeBorderStyle":{"type":"string","default":"solid"},"saleBadgeBorderColor":{"type":"string","default":"#111111"},"saleBadgeBorderWidth":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":false}},"saleBadgeBorderRadius":{"type":"object","default":{"device":{"Desktop":{"top":0,"right":0,"bottom":0,"left":0},"Tablet":{"top":0,"right":0,"bottom":0,"left":0},"Mobile":{"top":0,"right":0,"bottom":0,"left":0}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productContentAlign":{"type":"string","default":"Center"},"productsBGColor":{"type":"string","default":"#ffffff"},"productsContentPadding":{"type":"object","default":{"device":{"Desktop":{"top":"0","left":"0","bottom":"0","right":"0"},"Tablet":{"top":"0","left":"0","bottom":"0","right":"0"},"Mobile":{"top":"0","left":"0","bottom":"0","right":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":"true"}},"productSpacing":{"type":"number","default":10},"productRowGap":{"type":"number","default":10},"productsGridMargin":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"","right":"","bottom":"","left":""},"Mobile":{"top":"","right":"","bottom":"","left":""}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":false}},"productsGridPadding":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"","right":"","bottom":"","left":""},"Mobile":{"top":"","right":"","bottom":"","left":""}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":false}},"hideOutOfStock":{"type":"boolean","default":false},"productsBorderStyle":{"type":"string","default":"none"},"productsBorderColor":{"type":"string","default":"#111111"},"productsBorderWidth":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderRadius":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderStyleHover":{"type":"string","default":"none"},"productsBorderColorHover":{"type":"string","default":"#111111"},"productsBorderWidthHover":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderRadiusHover":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderTransition":{"type":"number","default":0.3},"mrsProductSaleBadgeStyle":{"type":"string","default":"simple"},"productsTestColumn":{"type":"object","default":{"device":{"Desktop":6,"Tablet":3,"Mobile":1}}},"titleTypography":{"type":"object","default":{"googleFont":{"family":"Default","variants":["200","300","400","500","600","700","800","900"]},"typography":{"family":"","fontWeight":"400","style":"normal","transform":"capitalize","decoration":"none"}}},"titleFontSize":{"type":"object","default":{"device":{"Desktop":18,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"titleFontSpacing":{"type":"object","default":{"device":{"Desktop":0,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"titleLineHeight":{"type":"object","default":{"device":{"Desktop":0,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"priceTypography":{"type":"object","default":{"googleFont":{"family":"Default","variants":["200","300","400","500","600","700","800","900"]},"typography":{"family":"","fontWeight":"400","style":"normal","transform":"capitalize","decoration":"none"}}},"priceFontSize":{"type":"object","default":{"device":{"Desktop":18,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"priceFontSpacing":{"type":"object","default":{"device":{"Desktop":0,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"priceLineHeight":{"type":"object","default":{"device":{"Desktop":0,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"searchByCategory":{"type":"string","default":"all"},"showCategory":{"type":"boolean","default":false},"productFilterBy":{"type":"string","default":"all"},"mrsProductStyle":{"type":"string","default":"style-1"},"mrsCategoryColor":{"type":"string","default":"#000"},"categoryTypography":{"type":"object","default":{"googleFont":{"family":"Default","variants":["200","300","400","500","600","700","800","900"]},"typography":{"family":"","fontWeight":"400","style":"normal","transform":"capitalize","decoration":"none"}}},"categoryFontSize":{"type":"object","default":{"device":{"Desktop":12,"Tablet":10,"Mobile":10},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"categoryLineHeight":{"type":"object","default":{"device":{"Desktop":0,"Tablet":0,"Mobile":0},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"categoryLetterSpacing":{"type":"object","default":{"device":{"Desktop":0,"Tablet":0,"Mobile":0},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}}},"textdomain":"mrs-products-grid","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"mrs-block/mrs-products-grid","version":"0.1.0","title":"MRS Products Grid","category":"text","icon":"cart","description":"A simple Gutenberg form widget.","example":{},"supports":{"html":false,"align":["wide","full"]},"attributes":{"uniqueID":{"type":"string","default":""},"frontendCss":{"type":"string","default":""},"postsPerPage":{"type":"number","default":100},"orderBy":{"type":"string","default":"title"},"order":{"type":"string","default":"desc"},"productsColumn":{"type":"object","default":{"device":{"Desktop":3,"Tablet":2,"Mobile":1},"unit":false}},"mrsProductImageBorderRadiusSet":{"type":"boolean","default":false},"productImageBorderRadius":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productTitleShow":{"type":"boolean","default":true},"productTitleColor":{"type":"object","default":{"color":"#111111","hover":"#011111"}},"showProductRatingStar":{"type":"boolean","default":true},"hideProductEmptyRatingStar":{"type":"boolean","default":true},"productRatingStarSize":{"type":"number","default":16},"productRatingStarColor":{"type":"string","default":"#111111"},"productPriceShow":{"type":"boolean","default":true},"productPriceSize":{"type":"number","default":18},"productPriceColor":{"type":"string","default":"#111111"},"showAddToCart":{"type":"boolean","default":true},"customAddToCartText":{"type":"boolean","default":false},"addToCartText":{"type":"string","default":"Add To Cart"},"addToCartTextGroup":{"type":"string","default":"View Products"},"addToCartTextVariable":{"type":"string","default":"Select Options"},"addToCartTextExternal":{"type":"string","default":"Buy Now"},"addToCartTextDefault":{"type":"string","default":"Read More"},"addToCartBGColor":{"type":"object","default":{"color":"#111111","hover":"#ffffff"}},"addToCartTextColor":{"type":"object","default":{"color":"#ffffff","hover":"#000000"}},"callToActionTypography":{"type":"object","default":{"googleFont":{"family":"Default","variants":["200","300","400","500","700","800","900"]},"typography":{"family":"","fontWeight":"400","style":"normal","transform":"capitalize","decoration":"none"}}},"callToActionFontSize":{"type":"object","default":{"device":{"Desktop":16,"Tablet":12,"Mobile":10},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"ctaLineHeight":{"type":"object","default":{"device":{"Desktop":0,"Tablet":0,"Mobile":0},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"ctaLetterSpacing":{"type":"object","default":{"device":{"Desktop":0,"Tablet":0,"Mobile":0},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"callToActionMargin":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":false}},"callToActionPadding":{"type":"object","default":{"device":{"Desktop":{"top":"8","right":"16","bottom":"8","left":"16"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":false}},"callToActionBorderWeight":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"callToActionBorderStyle":{"type":"string","default":"solid"},"callToActionBorderColor":{"type":"object","default":{"color":"#000000","hover":"#000000"}},"callToActionBorderRadius":{"type":"object","default":{"device":{"Desktop":{"top":"5","right":"5","bottom":"5","left":"5"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"saleBadgeShow":{"type":"boolean","default":true},"saleBadgeAlign":{"type":"string","default":"Left"},"saleBadgeText":{"type":"string","default":"Sale"},"saleBadgeBGColor":{"type":"string","default":"#ffffff"},"saleBadgeTextColor":{"type":"string","default":"#111111"},"saleBadgeBorderStyle":{"type":"string","default":"solid"},"saleBadgeBorderColor":{"type":"string","default":"#111111"},"saleBadgeBorderWidth":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":false}},"saleBadgeBorderRadius":{"type":"object","default":{"device":{"Desktop":{"top":0,"right":0,"bottom":0,"left":0},"Tablet":{"top":0,"right":0,"bottom":0,"left":0},"Mobile":{"top":0,"right":0,"bottom":0,"left":0}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productContentAlign":{"type":"string","default":"center"},"productsBGColor":{"type":"string","default":"#ffffff"},"productsContentPadding":{"type":"object","default":{"device":{"Desktop":{"top":"0","left":"0","bottom":"0","right":"0"},"Tablet":{"top":"0","left":"0","bottom":"0","right":"0"},"Mobile":{"top":"0","left":"0","bottom":"0","right":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":"true"}},"productSpacing":{"type":"number","default":10},"productRowGap":{"type":"number","default":10},"productsGridMargin":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"","right":"","bottom":"","left":""},"Mobile":{"top":"","right":"","bottom":"","left":""}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":false}},"productsGridPadding":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"","right":"","bottom":"","left":""},"Mobile":{"top":"","right":"","bottom":"","left":""}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":false}},"hideOutOfStock":{"type":"boolean","default":false},"productsBorderStyle":{"type":"string","default":"none"},"productsBorderColor":{"type":"string","default":"#111111"},"productsBorderWidth":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderRadius":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderStyleHover":{"type":"string","default":"none"},"productsBorderColorHover":{"type":"string","default":"#111111"},"productsBorderWidthHover":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderRadiusHover":{"type":"object","default":{"device":{"Desktop":{"top":"0","right":"0","bottom":"0","left":"0"},"Tablet":{"top":"0","right":"0","bottom":"0","left":"0"},"Mobile":{"top":"0","right":"0","bottom":"0","left":"0"}},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"},"allChange":true}},"productsBorderTransition":{"type":"number","default":0.3},"mrsProductSaleBadgeStyle":{"type":"string","default":"simple"},"productsTestColumn":{"type":"object","default":{"device":{"Desktop":6,"Tablet":3,"Mobile":1}}},"titleTypography":{"type":"object","default":{"googleFont":{"family":"Default","variants":["200","300","400","500","600","700","800","900"]},"typography":{"family":"","fontWeight":"400","style":"normal","transform":"capitalize","decoration":"none"}}},"titleFontSize":{"type":"object","default":{"device":{"Desktop":18,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"titleFontSpacing":{"type":"object","default":{"device":{"Desktop":0,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"titleLineHeight":{"type":"object","default":{"device":{"Desktop":0,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"priceTypography":{"type":"object","default":{"googleFont":{"family":"Default","variants":["200","300","400","500","600","700","800","900"]},"typography":{"family":"","fontWeight":"400","style":"normal","transform":"capitalize","decoration":"none"}}},"priceFontSize":{"type":"object","default":{"device":{"Desktop":18,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"priceFontSpacing":{"type":"object","default":{"device":{"Desktop":0,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"priceLineHeight":{"type":"object","default":{"device":{"Desktop":0,"Tablet":"","Mobile":""},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"searchByCategory":{"type":"string","default":"all"},"multiCategorySelect":{"type":"array","items":{"type":"object"}},"cateIds":{"type":"array"},"showCategory":{"type":"boolean","default":false},"productFilterBy":{"type":"string","default":"all"},"mrsProductStyle":{"type":"string","default":"style-1"},"mrsCategoryColor":{"type":"string","default":"#000"},"categoryTypography":{"type":"object","default":{"googleFont":{"family":"Default","variants":["200","300","400","500","600","700","800","900"]},"typography":{"family":"","fontWeight":"400","style":"normal","transform":"capitalize","decoration":"none"}}},"categoryFontSize":{"type":"object","default":{"device":{"Desktop":12,"Tablet":10,"Mobile":10},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"categoryLineHeight":{"type":"object","default":{"device":{"Desktop":0,"Tablet":0,"Mobile":0},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}},"categoryLetterSpacing":{"type":"object","default":{"device":{"Desktop":0,"Tablet":0,"Mobile":0},"unit":{"Desktop":"px","Tablet":"px","Mobile":"px"}}}},"textdomain":"mrs-products-grid","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
 
 /***/ })
 

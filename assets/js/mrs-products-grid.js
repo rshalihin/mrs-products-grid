@@ -1,19 +1,23 @@
 // Select add to cart button by class
-let cartParentClass = document.getElementsByClassName("add_to_cart_button");
+let cartParentClass = document.getElementsByClassName("mrs-product-buy-btn-cart");
 
 for ( let i of cartParentClass ) {
-    i.addEventListener("click", function(e) {
-        let mrsInterval = setInterval(() => {
-            if(e.target.classList.contains("added")){ 
-                i.style.display = 'none';
-                i.nextElementSibling.classList.add('wp-element-button');
-                e.target.nextElementSibling.style.marginTop = "0px";
-            }
-        },);
-        setTimeout(() => {
-            clearInterval(mrsInterval);
-        }, 4000);
-    });
+    let cartChildClass = i.querySelector(".add_to_cart_button");
+    if ( cartChildClass ) {
+        cartChildClass.addEventListener("click", function(e) {
+            let mrsInterval = setInterval( () => {
+                if ( e.target.classList.contains("added")) {
+                    cartChildClass.style.display = 'none';
+                    cartChildClass.nextElementSibling.classList.add('wp-element-button');
+                }
+            })
+            setTimeout(() => {
+                clearInterval(mrsInterval);
+            }, 4500);
+        })
+    }
+        
+   
 }
 
 

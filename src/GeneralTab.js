@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { PanelBody, RangeControl, SelectControl, __experimentalDivider as Divider, ButtonGroup, Button, TextControl } from '@wordpress/components';
+import { PanelBody, RangeControl, SelectControl, __experimentalDivider as Divider, ButtonGroup, Button, TextControl, QueryControls } from '@wordpress/components';
 import MRSToggle from "./components/mrsToggle/MRSToggle";
 import MRSRangeControl from './components/mrsRangControl/MRSRangeControl';
 import { useEffect, useState } from '@wordpress/element';
@@ -10,22 +10,53 @@ import productStyle3 from '../assets/image/product-style-3.png';
 
 
 const GeneralTab = ({attributes, setAttributes}) => {
-    const { postsPerPage, orderBy, order, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup, hideOutOfStock, addToCartTextExternal, addToCartTextDefault, addToCartTextVariable, hideProductEmptyRatingStar, searchByCategory, showCategory, productFilterBy, mrsProductStyle } = attributes;
+    const { postsPerPage, orderBy, order, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup, hideOutOfStock, addToCartTextExternal, addToCartTextDefault, addToCartTextVariable, hideProductEmptyRatingStar, searchByCategory, showCategory, productFilterBy, mrsProductStyle, multiCategorySelect, cateIds } = attributes;
     
         const [ cateOptions, setCateOptions ] = useState([]);
+        const [ categorySuggestions, setCategorySuggestions ] = useState({});
+
+
 
     const productsCategory = useSelect((select) => {
 		return select('core').getEntityRecords('taxonomy', 'product_cat');
-	},[])
+	},[]);
+
+    
+    useEffect(() => {
+        const possibleCateIds = multiCategorySelect && multiCategorySelect.length > 0 ? multiCategorySelect.map( v => v.id ) : [];
+        if (possibleCateIds) {
+            setAttributes({ cateIds: possibleCateIds });
+        }
+    }, [multiCategorySelect]);
 
     useEffect(() => {
+        if(productsCategory) {
             let options = productsCategory?.map(v => ({ label: v.name, value: v.id }));
+            
+            let optionsSuggestion = {};
+            for( let value of productsCategory ) {
+                optionsSuggestion[`${value.name}`] = { id: value.id, name: value.name }
+            }
+
             if ( options ) {
                 let allOpt = [ {label: "All", value: "all"}, ...options ];
                 setCateOptions(allOpt);
+                setCategorySuggestions({ "All" : {id: 1, name: "All"}, ...optionsSuggestion} );
             }
-    }, [])
+        }            
+    }, [productsCategory]);
 
+    // Query Controls Category Fn.
+    const onQueryControlChange = (values) => {
+        const hasNoSuggestions = values.some(
+            value => typeof value === 'string' && !categorySuggestions[value]
+        );
+        if(hasNoSuggestions) return;
+        const updateValue = values.map( token => {
+            return typeof token === 'string' ? categorySuggestions[token] : token;
+        });
+        setAttributes({ multiCategorySelect: updateValue });
+    }
 
     return(
         <>
@@ -99,12 +130,12 @@ const GeneralTab = ({attributes, setAttributes}) => {
                 value={order}
                 onChange={(newValue)=> setAttributes({order: newValue})}
             />
-            <SelectControl
+            {/* <SelectControl
                 label={__('Show Products By Specific Category', 'mrs-products-grid')}
                 options={cateOptions}
                 value={searchByCategory}
                 onChange={(v)=> setAttributes({ searchByCategory: v })}
-            />
+            /> */}
             <div className='mrs-products-mb'>
                 <SelectControl
                     label={__('Filter Products', 'mrs-products-grid')}
@@ -117,6 +148,11 @@ const GeneralTab = ({attributes, setAttributes}) => {
                     onChange={(v)=> setAttributes({ productFilterBy: v })}
                 />
             </div>
+            <QueryControls
+                categorySuggestions={categorySuggestions}
+                selectedCategories={multiCategorySelect}
+                onCategoryChange={onQueryControlChange}
+            />
         </PanelBody>
         <PanelBody title={__('Template Settings', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>
             <MRSToggle

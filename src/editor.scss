@@ -48,7 +48,7 @@
 		}
 		.mrs-products-btn-group {
 			display: flex;
-			margin: 20px auto;
+			margin: 5px auto;
 			.mrs-products-btn {
 				flex-grow: 1;
 				justify-content: center;
@@ -153,6 +153,9 @@
 		}
 		.mrs-products-cta-border-color {
 			min-height: 50px;
+		}
+		.mrs-component-mb {
+			margin-bottom: 24px;
 		}
 	}
 	.components-base-control .components-base-control__label {

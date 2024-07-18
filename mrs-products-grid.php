@@ -41,12 +41,16 @@ function mrs_block_products_grid_rendering( $attributes ) {
 	if ( $is_custom_btn ) {
 		add_filter( 'woocommerce_product_add_to_cart_text', 'mrs_products_grid_custom_text', 10, 1 );
 	}
-
+	$frontend_css           = substr( json_decode( $attributes['frontendCss'] ), 0, -1 );
 	$addToCartText         = $attributes['addToCartText'];
 	$addToCartTextGroup    = $attributes['addToCartTextGroup'];
 	$addToCartTextVariable = $attributes['addToCartTextVariable'];
 	$addToCartTextExternal = $attributes['addToCartTextExternal'];
 	$addToCartTextDefault  = $attributes['addToCartTextDefault'];
+
+	// var_dump( substr( json_decode( $frontendCss ), 0, -1 ) );
+	// var_dump($attributes['cateIds']);
+	// wp_die();
 
 	global $sample_cart_text;
 	$sample_cart_text = array( $addToCartText, $addToCartTextGroup, $addToCartTextVariable, $addToCartTextExternal, $addToCartTextDefault );
@@ -86,12 +90,12 @@ function mrs_block_products_grid_rendering( $attributes ) {
 	if ( isset( $attributes['order'] ) ) {
 		$args['order'] = strtoupper( $attributes['order'] );
 	}
-	if ( isset( $attributes['searchByCategory'] ) && 'all' !== $attributes['searchByCategory'] ) {
+	if ( isset( $attributes['cateIds'] ) && count( $attributes['cateIds'] ) > 0 ) {
 		$args['tax_query'] = array(
 			array(
 				'taxonomy' => 'product_cat',
 				'field'    => 'term_id',
-				'terms'    => $attributes['searchByCategory'],
+				'terms'    => $attributes['cateIds'],
 			),
 		);
 	}
@@ -132,6 +136,7 @@ function mrs_block_products_grid_rendering( $attributes ) {
 	ob_start();
 
 	?>
+	<style><?php echo wp_kses_post( $frontend_css ); ?></style>
 	<div <?php echo wp_kses_post( get_block_wrapper_attributes() ); ?>>
 	<div class="mrs-block-mrs-products-grid mrs-product-<?php echo esc_attr( $attributes['uniqueID'] ); ?>">
 		<div class="mrs-products-grid-wrapper">
@@ -373,22 +378,23 @@ add_action( 'enqueue_block_assets', 'mrs_products_grid_script_enqueue_localize' 
  *
  * @return array
  */
-function mrs_products_grid_get_blocks_attributes( $post_id, $block_name ) {
-	$blocks     = parse_blocks( get_post_field( 'post_content', $post_id ) );
-	$attributes = array();
+// function mrs_products_grid_get_blocks_attributes( $post_id, $block_name ) {
+// 	$blocks     = parse_blocks( get_post_field( 'post_content', $post_id ) );
 
-	foreach ( $blocks as $block ) {
-		if ( $block['blockName'] === $block_name ) {
-			$attributes = $block['attrs'];
-			break;
-		}
-	}
-	return $attributes;
-}
+// 	$attributes = array();
 
-if ( ! is_admin() ) {
-	add_action( 'wp_enqueue_scripts', 'mrs_products_grid_single_page_dynamic_css' );
-}
+// 	foreach ( $blocks as $block ) {
+// 		if ( $block['blockName'] === $block_name ) {
+// 			$attributes = $block['attrs'];
+// 			break;
+// 		}
+// 	}
+// 	return $attributes;
+// }
+
+// if ( ! is_admin() ) {
+// 	add_action( 'wp_enqueue_scripts', 'mrs_products_grid_single_page_dynamic_css' );
+// }
 
 
 /**
@@ -396,13 +402,14 @@ if ( ! is_admin() ) {
  *
  * @return void
  */
-function mrs_products_grid_single_page_dynamic_css() {
-	$block_name = 'mrs-block/mrs-products-grid';
-	$attributes = mrs_products_grid_get_blocks_attributes( get_the_ID(), $block_name );
+// function mrs_products_grid_single_page_dynamic_css() {
+// 	$block_name = 'mrs-block/mrs-products-grid';
+// 	$attributes = mrs_products_grid_get_blocks_attributes( get_the_ID(), $block_name );
 
-	if ( isset( $attributes['frontendCss'] ) ) {
-		$mrs_attr = substr( $attributes['frontendCss'], 1, ( strlen( $attributes['frontendCss'] ) - 2 ) );
 
-		$mrs_bool = wp_add_inline_style( 'mrs-products-grid-style-enqueue', $mrs_attr );
-	}
-}
+// 	if ( isset( $attributes['frontendCss'] ) ) {
+// 		$mrs_attr = substr( $attributes['frontendCss'], 1, ( strlen( $attributes['frontendCss'] ) - 2 ) );
+
+// 		$mrs_bool = wp_add_inline_style( 'mrs-products-grid-style-enqueue', $mrs_attr );
+// 	}
+// }

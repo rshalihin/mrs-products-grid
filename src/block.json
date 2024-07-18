@@ -439,7 +439,7 @@
 		},
 		"productContentAlign": {
 			"type": "string",
-			"default": "Center"
+			"default": "center"
 		},
 		"productsBGColor": {
 			"type": "string",
@@ -833,6 +833,15 @@
 		"searchByCategory": {
 			"type": "string",
 			"default": "all"
+		},
+		"multiCategorySelect": {
+			"type": "array",
+			"items": {
+				"type": "object"
+			}
+		},
+		"cateIds": {
+			"type": "array"
 		},
 		"showCategory": {
 			"type": "boolean",

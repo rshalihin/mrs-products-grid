@@ -90,7 +90,6 @@ const MRSTypography = ({attributes, setAttributes, fontSizeDefault={ unit: 'px',
                     units={['px', 'em', 'rem']}
                     defaultValue={fontSizeDefault}
                 />
-                <Divider />
                 <SelectControl
                     label={__('Font Style', 'mrs-products-grid')}
                     value={family.typography.style}
@@ -108,7 +107,6 @@ const MRSTypography = ({attributes, setAttributes, fontSizeDefault={ unit: 'px',
                     options={fontWeightList}
                     onChange={(newFontWeight) => setAttributes({ [familyKey]: {...family, 'typography': {...family.typography, 'fontWeight': newFontWeight }} })}
                 />
-                <Divider />
                 <MRSRangeControl
                     label={__('Title Later Spacing', 'mrs-products-grid')}
                     attributes= {fontSpacing}
@@ -117,7 +115,6 @@ const MRSTypography = ({attributes, setAttributes, fontSizeDefault={ unit: 'px',
                     defaultValue={spacingDefaultValue}
                     units={['px', 'em', 'rem']}
                 />
-                <Divider />
                 <MRSRangeControl
                     label={__('Line Height', 'mrs-products-grid')}
                     attributes={lineHeight}
@@ -126,9 +123,8 @@ const MRSTypography = ({attributes, setAttributes, fontSizeDefault={ unit: 'px',
                     units={['px', 'em', 'rem']}
                     defaultValue={lineHeightDefault}
                 />
-                <Divider />
                 <div className='typography-btn-group-label'>Text Decoration</div>
-                <ButtonGroup className='mrs-products-btn-group'>
+                <ButtonGroup className='mrs-products-btn-group mrs-component-mb'>
                     <Button className={`mrs-products-btn ${family?.typography?.decoration === 'none' ? 'is-active' : ''}`}
                     onClick={()=> setAttributes({[familyKey]: {...family, 'typography': {...family.typography, 'decoration': 'none'}}})}><DecorationNone /></Button>
 
@@ -138,9 +134,8 @@ const MRSTypography = ({attributes, setAttributes, fontSizeDefault={ unit: 'px',
 
                     <Button className={`mrs-products-btn ${family?.typography?.decoration === 'overline' ? 'is-active' : ''}`}onClick={()=> setAttributes({[familyKey]: {...family, 'typography': {...family.typography, 'decoration': 'overline'}}})}><DecorationOverLine /></Button>
                 </ButtonGroup>
-                <Divider />
                 <div className='typography-btn-group-label'>Latter Case</div>
-                <ButtonGroup className='mrs-products-btn-group'>
+                <ButtonGroup className='mrs-products-btn-group mrs-component-mb'>
                     <Button className={`mrs-products-btn ${family?.typography?.transform === 'none' ? 'is-active' : ''}`} onClick={()=> setAttributes({[familyKey]: {...family, 'typography': {...family.typography, 'transform': 'none'}}})}>None</Button>
                     <Button className={`mrs-products-btn ${family?.typography?.transform === 'uppercase' ? 'is-active' : ''}`} onClick={()=> setAttributes({[familyKey]: {...family, 'typography': {...family.typography, 'transform': 'uppercase'}}})}>AB</Button>
                     <Button className={`mrs-products-btn ${family?.typography?.transform === 'lowercase' ? 'is-active' : ''}`} onClick={()=> setAttributes({[familyKey]: {...family, 'typography': {...family.typography, 'transform': 'lowercase'}}})}>ab</Button>
