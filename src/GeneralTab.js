@@ -103,6 +103,9 @@ const GeneralTab = ({attributes, setAttributes}) => {
                 help={__('Set number of total products to show.', 'mrs-products-grid')}
                 value={postsPerPage}
                 onChange={(newValue) => setAttributes({postsPerPage: newValue})}
+                min={1}
+                max={1000}
+                step={1}
             />
             </div>
         </PanelBody>

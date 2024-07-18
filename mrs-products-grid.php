@@ -370,6 +370,7 @@ function mrs_products_grid_script_enqueue_localize() {
 }
 add_action( 'enqueue_block_assets', 'mrs_products_grid_script_enqueue_localize' );
 
+
 /**
  * Get Blocks Attributes
  *
@@ -413,3 +414,4 @@ add_action( 'enqueue_block_assets', 'mrs_products_grid_script_enqueue_localize' 
 // 		$mrs_bool = wp_add_inline_style( 'mrs-products-grid-style-enqueue', $mrs_attr );
 // 	}
 // }
+

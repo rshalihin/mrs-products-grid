@@ -207,6 +207,9 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
         [`.mrs-product-${uniqueID} .mrs-product-content-wrapper .mrs-product-price ins`] : {
             'text-decoration': 'none',
         },
+        [`.mrs-product-${uniqueID} .mrs-product.style-2`] : {
+            'overflow': 'hidden',
+        },
         [`.mrs-product-${uniqueID} .mrs-product.style-2 .mrs-product-content-wrapper`] : {
             'position': 'relative',
         },

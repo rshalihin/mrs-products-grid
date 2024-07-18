@@ -18,12 +18,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 	const [ proCategory, setProCategory ] = useState([]);
 
 	const selectProduct = useSelect((select)=> {
-		// if ( searchByCategory !== 'all' ){
-		// 	return select('core').getEntityRecords('postType', 'product', {per_page: postsPerPage, _embed: true, orderby: orderBy, order, product_cat: parseInt(searchByCategory) });
-		// } else {
-		// 	return select('core').getEntityRecords('postType', 'product', {per_page: postsPerPage, _embed: true, orderby: orderBy, order });
-		// }
-		
+				
 		return select('core').getEntityRecords('postType', 'product', {per_page: postsPerPage, _embed: true, orderby: orderBy, order, product_cat: cateIds });
 		
 	}, [postsPerPage, orderBy, order, cateIds]);
