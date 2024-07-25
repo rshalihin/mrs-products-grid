@@ -121,6 +121,14 @@
 							display: none;
 						}
 					}
+					&.layout {
+						figure {
+							img {
+								width: 80px;
+								height: 50px;
+							}
+						}
+					}
 					&.mrs-is-active {
 						figure {
 							&::before {
@@ -171,4 +179,33 @@
 	}
 }
 
+.swiper-nav-btns {
+    position: absolute;
+    background-image: none;
+    z-index: 9;
+	top: 0;
+    text-align: center;
+    font-size: 18px;
+    line-height: 28px;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
 
+	button {
+		border: 1px solid;
+		outline: none;
+		cursor: pointer;
+		padding: 4px;
+	}
+}
+
+  .mrs-products-grid-wrapper {
+	&.mrs-slider {
+		.mrs-products-slider {
+			padding: 40px 0;
+		}
+	}
+  }
+  

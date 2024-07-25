@@ -7,10 +7,12 @@ import dynamicCss from "./dynamicCss";
 import Inspector from './Inspector';
 import './editor.scss';
 import { useDeviceType } from './controls/controls';
+import MRSTemplateGrid from './components/template/mrsTemplateGrid';
+import MRSTemplateSlider from './components/template/mrsTemplateSlider';
 
 
 export default function Edit({ attributes, setAttributes, clientId }) {
-	const { postsPerPage, orderBy, order, uniqueID, frontendCss, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup, hideOutOfStock, hideProductEmptyRatingStar, mrsProductSaleBadgeStyle, searchByCategory, showCategory, productFilterBy, mrsProductStyle, cateIds } = attributes;
+	const { postsPerPage, orderBy, order, uniqueID, frontendCss, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup, hideOutOfStock, hideProductEmptyRatingStar, mrsProductSaleBadgeStyle, searchByCategory, showCategory, productFilterBy, mrsProductStyle, cateIds, mrsProductsLayout } = attributes;
 
 	const [ firstTLoad, setFirstTLoad ] = useState(true);
 	const [ loading, setLoading ] = useState(true);
@@ -122,95 +124,22 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 			className: `mrs-block-mrs-products-grid mrs-product-${uniqueID}`
 		}) }>
 			{ loading && <p>Loading Products...  {<Spinner />}</p>}
-			<div className="mrs-products-grid-wrapper">
-				<div className="mrs-products-grid-content">
-					{mrsPro && mrsPro.length > 0 ? (							
-						mrsPro.map((item, i) => {
-							return(
-								<div className={`mrs-product-col ${[deviceType]}-has-${productsColumn.device[deviceType]}-col`} key={i}>
-									<div className={`mrs-product ${mrsProductStyle}`}>
-										<div className='mrs-product-img-wrapper'>
-											<div className='mrs-product-img'>
-												<a><img src={item._embedded['wp:featuredmedia'][0]?.source_url} alt='' /></a>
-											</div>
-											{mrsProductsGrid?.products?.map( (v, i) =>{
-											if( parseInt(v.id) === parseInt(item.id) && v.onSale === true ){
-												return (
-													<div key={i}>
-														{ saleBadgeShow && saleBadgeText && <div className={`mrs-product-img-overlay ${mrsProductSaleBadgeStyle}`}>
-															<span>{saleBadgeText}</span>
-														</div>}
-													</div>
-												);
-											}
-											})}
-										</div>
-										<div className='mrs-product-content-wrapper'>
-											{ showCategory && proCategory?.map( (v, i) => { 
-												if(parseInt(v.id) === item.product_cat[0]) {
-												return <span className='mrs-product-category' key={i}>-{v.name}</span>;
-											} } )}
-											{/* { categoryName(item.id) } */}
-											{productTitleShow &&
-											<div className='mrs-product-title'>
-												<h4>{item?.title?.rendered}</h4>
-											</div>
-											}
-											{ showProductRatingStar && 
-											<div className='mrs-product-ratting'>
-											{mrsProductsGrid?.products?.map( (v,i) =>{
-												if( parseInt(v.id) === parseInt(item.id)){
-													if ( hideProductEmptyRatingStar && v.rating == 0 ) { return '' }
-													return (
-														<div key={i}>
-															{ starRating(v.rating).map( (v, i) => {
-														return (
-														<span key={i}>{v}</span>
-													)})}
-													</div>
-													);
-												}
-												})}
-											</div>
-											}
-											
-											{ productPriceShow && 
-											<div className='mrs-product-price'>
-												{mrsProductsGrid?.products?.map( ( v, i) =>{
-													if( parseInt(v.id) === parseInt(item.id)){
-														return (
-															<RawHTML key={i}>
-																{v.price ? v.price : 'Out of Stock'}
-																
-															</RawHTML>
-														);
-													}
-												})}
-											</div>
-											}
-
-											{ showAddToCart && 
-											<div className='mrs-product-add-to-cart'>
-												{mrsProductsGrid?.products?.map( ( v, i) =>{
-													if( parseInt(v.id) === parseInt(item.id)){
-													return (
-														<p className='product woocommerce add_to_cart_inline mrs-product-buy-btn-cart' key={i}>
-															<a data-quantity="1" className='wp-block-button__link wp-element-button add_to_cart_button wc-block-components-product-button__button' aria-label={`Add to cart: “${item?.title?.raw}”`} aria-describedby rel='nofollow'>
-															{  customAddToCartText ?  v.groupProduct ? addToCartTextGroup : addToCartText : v.groupProduct ? 'View Products' : v.price ? 'Add To Cart' : 'View Product'}
-															</a>
-														</p>
-													);
-													}})}
-											</div>
-											}
-										</div>
-									</div>
-								</div>
-							)
-						})
-					) :  (!loading && !mrsPro) ? <div>No Product Found!!! Please Check product filter section.</div> : ''
-					}
-				</div>
+			<div className={`mrs-products-grid-wrapper mrs-${mrsProductsLayout}`}>
+				{mrsProductsLayout && mrsProductsLayout === 'grid' && 
+				<MRSTemplateGrid
+					attributes={attributes}
+					mrsPro={mrsPro}
+					starRating={starRating}
+					loading={loading}
+					/> }
+				{ mrsProductsLayout && mrsProductsLayout === 'slider' && 
+				<MRSTemplateSlider
+					attributes={attributes}
+					mrsPro={mrsPro}
+					starRating={starRating}
+					loading={loading}
+				/>
+				}
 			</div>
 		</div>
 	</>

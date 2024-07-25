@@ -41,7 +41,7 @@ function mrs_block_products_grid_rendering( $attributes ) {
 	if ( $is_custom_btn ) {
 		add_filter( 'woocommerce_product_add_to_cart_text', 'mrs_products_grid_custom_text', 10, 1 );
 	}
-	$frontend_css           = substr( json_decode( $attributes['frontendCss'] ), 0, -1 );
+	$frontend_css          = substr( json_decode( $attributes['frontendCss'] ), 0, -1 );
 	$addToCartText         = $attributes['addToCartText'];
 	$addToCartTextGroup    = $attributes['addToCartTextGroup'];
 	$addToCartTextVariable = $attributes['addToCartTextVariable'];
@@ -135,24 +135,26 @@ function mrs_block_products_grid_rendering( $attributes ) {
 
 	ob_start();
 
+	$desktop_column_class = isset( $attributes['productsColumn']['device']['Desktop'] ) ? $attributes['productsColumn']['device']['Desktop'] : 4;
+	$tablet_column_class  = isset( $attributes['productsColumn']['device']['Tablet'] ) ? $attributes['productsColumn']['device']['Tablet'] : 3;
+	$mobile_column_class  = isset( $attributes['productsColumn']['device']['Mobile'] ) ? $attributes['productsColumn']['device']['Mobile'] : 1;
+
 	?>
 	<style><?php echo wp_kses_post( $frontend_css ); ?></style>
 	<div <?php echo wp_kses_post( get_block_wrapper_attributes() ); ?>>
 	<div class="mrs-block-mrs-products-grid mrs-product-<?php echo esc_attr( $attributes['uniqueID'] ); ?>">
 		<div class="mrs-products-grid-wrapper">
-			<div class="mrs-products-grid-content">
+			<div class="mrs-products-grid-content mrs-product-col Desktop-has-<?php echo esc_attr( $desktop_column_class ); ?>-col Tablet-has-<?php echo esc_attr( $tablet_column_class ); ?>-col Mobile-has-<?php echo esc_attr( $mobile_column_class ); ?>-col mrs-product-layout-<?php echo esc_attr( $attributes['mrsProductsLayout']); ?>">
 
 	<?php
 	if ( $mrs_products_grid_query ) {
 		while ( $mrs_products_grid_query->have_posts() ) {
 			$mrs_products_grid_query->the_post();
+
 			global $product;
 
 			$post_thumbnail_id = $product->get_image_id();
-			// $product_gallery_img_id = $product->get_gallery_image_ids();
-			// if ( count( $product_gallery_img_id ) > 1 ) {
-			// var_dump( $product_gallery_img_id );
-			// }
+
 			if ( $post_thumbnail_id ) {
 				$mrs_product_image_url = wp_get_attachment_url( intval( $post_thumbnail_id ) );
 			}
@@ -168,24 +170,15 @@ function mrs_block_products_grid_rendering( $attributes ) {
 			for ( $i = intval( $mrs_ratings ); $i < 5; $i++ ) {
 				$mrs_avg_rating .= '<span class="dashicons dashicons-star-empty"></span>';
 			}
-			$desktop_column_class = isset( $attributes['productsColumn']['device']['Desktop'] ) ? $attributes['productsColumn']['device']['Desktop'] : 4;
-			$tablet_column_class  = isset( $attributes['productsColumn']['device']['Tablet'] ) ? $attributes['productsColumn']['device']['Tablet'] : 3;
-			$mobile_column_class  = isset( $attributes['productsColumn']['device']['Mobile'] ) ? $attributes['productsColumn']['device']['Mobile'] : 1;
-
-			// $css = isset( $attributes['frontendCss'] ) ? json_decode( $attributes['frontendCss'] ) : '';
-			// var_dump($css);
-			// wp_die();
 
 			?>
-			<div class="mrs-product-col Desktop-has-<?php echo esc_attr( $desktop_column_class ); ?>-col Tablet-has-<?php echo esc_attr( $tablet_column_class ); ?>-col Mobile-has-<?php echo esc_attr( $mobile_column_class ); ?>-col">
+			<div class="mrs-product-single-wrapper">
 				<div class="mrs-product <?php echo esc_attr( $attributes['mrsProductStyle'] ); ?>">
 					<div class="mrs-product-img-wrapper">
 						<div class="mrs-product-img">
 							<a href="<?php echo esc_url( get_the_permalink() ); ?>">
 								<img src="<?php echo esc_url( $mrs_product_image_url ); ?>" alt="" />
-							</a>
-						</div>
-						<?php if ( $attributes['saleBadgeShow'] ) : ?>
+								<?php if ( $attributes['saleBadgeShow'] ) : ?>
 							<?php if ( $is_on_sale_product ) { ?>
 						<div>
 							<div class="mrs-product-img-overlay <?php echo esc_attr( $attributes['mrsProductSaleBadgeStyle'] ); ?>">
@@ -194,6 +187,8 @@ function mrs_block_products_grid_rendering( $attributes ) {
 						</div>
 						<?php } ?>
 						<?php endif; ?>
+							</a>
+						</div>
 					</div>
 					<div class="mrs-product-content-wrapper">
 						<?php if ( $attributes['productTitleShow'] ) : ?>
@@ -359,6 +354,12 @@ function mrs_products_grid_product_data() {
  */
 function mrs_products_grid_script_enqueue_localize() {
 
+	// global $post;
+	// $blocks = parse_blocks( $post->post_content );
+	// $blocks = _flatten_blocks( $blocks );
+	// var_dump( $blocks );
+	// wp_die();
+
 	wp_enqueue_script( 'mrs-products-grid', plugin_dir_url( __FILE__ ) . 'assets/js/mrs-products-grid.js', array(), filemtime( plugin_dir_path( __FILE__ ) . 'build/index.js' ), true );
 	wp_localize_script(
 		'mrs-products-grid',
@@ -371,6 +372,10 @@ function mrs_products_grid_script_enqueue_localize() {
 add_action( 'enqueue_block_assets', 'mrs_products_grid_script_enqueue_localize' );
 
 
+
+
+
+
 /**
  * Get Blocks Attributes
  *
@@ -380,21 +385,21 @@ add_action( 'enqueue_block_assets', 'mrs_products_grid_script_enqueue_localize' 
  * @return array
  */
 // function mrs_products_grid_get_blocks_attributes( $post_id, $block_name ) {
-// 	$blocks     = parse_blocks( get_post_field( 'post_content', $post_id ) );
+// $blocks     = parse_blocks( get_post_field( 'post_content', $post_id ) );
 
-// 	$attributes = array();
+// $attributes = array();
 
-// 	foreach ( $blocks as $block ) {
-// 		if ( $block['blockName'] === $block_name ) {
-// 			$attributes = $block['attrs'];
-// 			break;
-// 		}
-// 	}
-// 	return $attributes;
+// foreach ( $blocks as $block ) {
+// if ( $block['blockName'] === $block_name ) {
+// $attributes = $block['attrs'];
+// break;
+// }
+// }
+// return $attributes;
 // }
 
 // if ( ! is_admin() ) {
-// 	add_action( 'wp_enqueue_scripts', 'mrs_products_grid_single_page_dynamic_css' );
+// add_action( 'wp_enqueue_scripts', 'mrs_products_grid_single_page_dynamic_css' );
 // }
 
 
@@ -404,14 +409,14 @@ add_action( 'enqueue_block_assets', 'mrs_products_grid_script_enqueue_localize' 
  * @return void
  */
 // function mrs_products_grid_single_page_dynamic_css() {
-// 	$block_name = 'mrs-block/mrs-products-grid';
-// 	$attributes = mrs_products_grid_get_blocks_attributes( get_the_ID(), $block_name );
+// $block_name = 'mrs-block/mrs-products-grid';
+// $attributes = mrs_products_grid_get_blocks_attributes( get_the_ID(), $block_name );
 
 
-// 	if ( isset( $attributes['frontendCss'] ) ) {
-// 		$mrs_attr = substr( $attributes['frontendCss'], 1, ( strlen( $attributes['frontendCss'] ) - 2 ) );
+// if ( isset( $attributes['frontendCss'] ) ) {
+// $mrs_attr = substr( $attributes['frontendCss'], 1, ( strlen( $attributes['frontendCss'] ) - 2 ) );
 
-// 		$mrs_bool = wp_add_inline_style( 'mrs-products-grid-style-enqueue', $mrs_attr );
-// 	}
+// $mrs_bool = wp_add_inline_style( 'mrs-products-grid-style-enqueue', $mrs_attr );
+// }
 // }
 

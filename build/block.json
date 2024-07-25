@@ -889,6 +889,10 @@
       "type": "string",
       "default": "all"
     },
+    "mrsProductsLayout": {
+      "type": "string",
+      "default": "grid"
+    },
     "mrsProductStyle": {
       "type": "string",
       "default": "style-1"

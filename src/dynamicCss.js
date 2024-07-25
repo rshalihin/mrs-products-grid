@@ -36,6 +36,29 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
             'border-radius' : cssDataCheck(productsBorderRadius.device.Desktop, unit(productsBorderRadius, 'Desktop')),
             'transition' : `all ${productsBorderTransition}s ease-out`,
         },
+        [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper .mrs-products-slider`] : {
+            'padding': '40px 0',
+        },
+        [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper .mrs-products-slider .swiper-nav-btns`] : {
+            'position': 'absolute',
+            'background-image': 'none',
+            'z-index': '9',
+            'top': '0',
+            'text-align': 'center',
+            'font-size': '18px',
+            'line-height': '28px',
+            '-webkit-transition': 'all .3s',
+            '-moz-transition': 'all .3s',
+            '-ms-transition': 'all .3s',
+            '-o-transition': 'all .3s',
+            'transition': 'all .3s',
+        },
+        [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper .mrs-products-slider .swiper-nav-btns button`] : {
+            'border': '1px solid',
+            'outline': 'none',
+            'cursor': 'pointer',
+            'padding': '4px',
+        },
         [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper:hover`] : {
             'border-style': productsBorderStyleHover,
             'border-color' : productsBorderColorHover,
@@ -50,7 +73,7 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
         [`.mrs-product-${uniqueID} .mrs-products-grid-content .mrs-product-col`] : {
             'box-sizing' : 'border-box',
         },
-        [`.mrs-product-${uniqueID} .mrs-product-col.${[deviceType]}-has-${productsColumn.device[deviceType]}-col`] : {
+        [`.mrs-product-${uniqueID} .mrs-product-col.${[deviceType]}-has-${productsColumn.device[deviceType]}-col .mrs-product-single-wrapper`] : {
             'width': `calc(100% / ${productsColumn.device[deviceType]} - ${productSpacing * 2 }px)`,
             'margin': '0 ' + productSpacing + 'px ' + productRowGap + 'px',
         },

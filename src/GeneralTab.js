@@ -7,10 +7,13 @@ import { select, useSelect } from "@wordpress/data";
 import productStyle1 from '../assets/image/product-style-1.png';
 import productStyle2 from '../assets/image/product-style-2.png';
 import productStyle3 from '../assets/image/product-style-3.png';
+import gridLayout from '../assets/image/grid.svg';
+import sliderLayout from '../assets/image/slider.svg';
+import masonryLayout from '../assets/image/masonry.svg';
 
 
 const GeneralTab = ({attributes, setAttributes}) => {
-    const { postsPerPage, orderBy, order, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup, hideOutOfStock, addToCartTextExternal, addToCartTextDefault, addToCartTextVariable, hideProductEmptyRatingStar, searchByCategory, showCategory, productFilterBy, mrsProductStyle, multiCategorySelect, cateIds } = attributes;
+    const { postsPerPage, orderBy, order, productsColumn, productTitleShow, productPriceShow, showProductRatingStar, showAddToCart, saleBadgeShow, saleBadgeText, customAddToCartText, addToCartText, addToCartTextGroup, hideOutOfStock, addToCartTextExternal, addToCartTextDefault, addToCartTextVariable, hideProductEmptyRatingStar, searchByCategory, showCategory, productFilterBy, mrsProductsLayout, mrsProductStyle, multiCategorySelect, cateIds } = attributes;
     
         const [ cateOptions, setCateOptions ] = useState([]);
         const [ categorySuggestions, setCategorySuggestions ] = useState({});
@@ -61,8 +64,34 @@ const GeneralTab = ({attributes, setAttributes}) => {
     return(
         <>
         <PanelBody title={__('Layout Settings', 'mrs-products-grid')} initialOpen={true} className={'mrs-product-grid-panel-body'}>
-            <div className='mrs-products-style-select'>
-                <div className='mrs-products-style-title'>Select a Product Style</div>
+            <div className='mrs-products-style-select mrs-component-mb'>
+                <div className='mrs-products-style-title'>Layout Preset</div>
+                <div className='mrs-products-style-image-group'>
+                    <div className={`mrs-products-style-image-single layout ${mrsProductsLayout === 'grid' && 'mrs-is-active'}`}>
+                        <figure  onClick={() => setAttributes({ mrsProductsLayout: 'grid'})}>
+                            <img src={gridLayout} alt='grid' />
+                            <input type='radio' />
+                        </figure>
+                        <div className='mrs-products-single-style-title'>Grid</div>
+                    </div>
+                    <div  className={`mrs-products-style-image-single layout ${mrsProductsLayout === 'slider' && 'mrs-is-active'}`}>
+                        <figure  onClick={() => setAttributes({ mrsProductsLayout: 'slider'})}>
+                            <img src={sliderLayout} alt='slider' />
+                            <input type='radio' />
+                        </figure>
+                        <div className='mrs-products-single-style-title'>Slider</div>
+                    </div>
+                    <div  className={`mrs-products-style-image-single layout ${mrsProductsLayout === 'masonry' && 'mrs-is-active'}`}>
+                        <figure  onClick={() => setAttributes({ mrsProductsLayout: 'masonry'})}>
+                            <img src={masonryLayout} alt='masonry' />
+                            <input type='radio' />
+                        </figure>
+                        <div className='mrs-products-single-style-title'>Masonry</div>
+                    </div>
+                </div>
+            </div>
+            <div className='mrs-products-style-select mrs-component-mb'>
+                <div className='mrs-products-style-title'>Select Template Style</div>
                 <div className='mrs-products-style-image-group'>
                     <div className={`mrs-products-style-image-single ${mrsProductStyle === 'style-1' && 'mrs-is-active'}`}>
                         <figure  onClick={() => setAttributes({ mrsProductStyle: 'style-1'})}>
