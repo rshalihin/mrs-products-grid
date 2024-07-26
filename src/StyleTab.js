@@ -9,7 +9,7 @@ import { useEffect, useState } from '@wordpress/element';
 import Spacing from './components/spacing/Spacing';
 
 const StyleTab = ({attributes, setAttributes}) => {
-    const { mrsProductImageBorderRadiusSet, productImageBorderRadius, productTitleShow, titleTypography, titleFontSize, titleFontSpacing, titleLineHeight, productTitleColor, productPriceShow, productPriceColor, showProductRatingStar, productRatingStarSize, productRatingStarColor, showAddToCart, addToCartTextColor, addToCartBGColor, callToActionMargin, callToActionPadding, productContentAlign, productsBGColor, productsContentPadding, productSpacing, saleBadgeBorderStyle, saleBadgeShow, saleBadgeTextColor, saleBadgeBGColor, saleBadgeBorderColor, saleBadgeBorderWidth, saleBadgeBorderRadius, mrsProductSaleBadgeStyle, saleBadgeAlign, productRowGap, priceTypography, priceFontSize, priceFontSpacing, priceLineHeight, callToActionBorderWeight, callToActionBorderStyle, callToActionBorderColor, callToActionBorderRadius, mrsCategoryColor, showCategory, categoryTypography, categoryFontSize, categoryLineHeight, categoryLetterSpacing, callToActionTypography, callToActionFontSize, ctaLineHeight, ctaLetterSpacing } = attributes;
+    const { mrsProductImageBorderRadiusSet, productImageBorderRadius, productTitleShow, titleTypography, titleFontSize, titleFontSpacing, titleLineHeight, productTitleColor, productPriceShow, productPriceColor, showProductRatingStar, productRatingStarSize, productRatingStarColor, showAddToCart, addToCartTextColor, addToCartBGColor, callToActionMargin, callToActionPadding, productContentAlign, productsBGColor, productsContentPadding, productSpacing, saleBadgeBorderStyle, saleBadgeShow, saleBadgeTextColor, saleBadgeBGColor, saleBadgeBorderColor, saleBadgeBorderWidth, saleBadgeBorderRadius, mrsProductSaleBadgeStyle, saleBadgeAlign, productRowGap, priceTypography, priceFontSize, priceFontSpacing, priceLineHeight, callToActionBorderWeight, callToActionBorderStyle, callToActionBorderColor, callToActionBorderRadius, mrsCategoryColor, showCategory, categoryTypography, categoryFontSize, categoryLineHeight, categoryLetterSpacing, callToActionTypography, callToActionFontSize, ctaLineHeight, ctaLetterSpacing, mrsProductsLayout } = attributes;
 
     const [cartColorBtn, setCartColorBtn] = useState(true);
     const [ctaBorderColor, setCtaBorderColor] = useState(true);
@@ -70,11 +70,12 @@ const StyleTab = ({attributes, setAttributes}) => {
                 onChange={(newValue)=>setAttributes({productSpacing: newValue})}
             />
             <div className='mrs-products-mb'>
+            { mrsProductsLayout && mrsProductsLayout === 'grid' &&
             <RangeControl
                 label={__('Row Gap', 'mrs-products-grid')}
                 value={productRowGap}
                 onChange={(newValue)=>setAttributes({productRowGap: newValue})}
-            />
+            />}
             </div>
         </PanelBody>
         <PanelBody title={__('Image Settings', 'mrs-products-grid')} initialOpen={false} className={'mrs-product-grid-panel-body'}>

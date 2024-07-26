@@ -3672,7 +3672,8 @@ const StyleTab = ({
     callToActionTypography,
     callToActionFontSize,
     ctaLineHeight,
-    ctaLetterSpacing
+    ctaLetterSpacing,
+    mrsProductsLayout
   } = attributes;
   const [cartColorBtn, setCartColorBtn] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.useState)(true);
   const [ctaBorderColor, setCtaBorderColor] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_7__.useState)(true);
@@ -3746,7 +3747,7 @@ const StyleTab = ({
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "mrs-products-mb"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
+  }, mrsProductsLayout && mrsProductsLayout === 'grid' && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Row Gap', 'mrs-products-grid'),
     value: productRowGap,
     onChange: newValue => setAttributes({
@@ -5314,13 +5315,13 @@ const SwiperNavButtons = () => {
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "swiper-nav-btns"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    onClick: () => console.log(swiper.slidePrev())
+    onClick: () => swiper.slidePrev()
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    class: "dashicons dashicons-arrow-left-alt2"
+    className: "dashicons dashicons-arrow-left-alt2"
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    onClick: () => console.log(swiper.slideNext())
+    onClick: () => swiper.slideNext()
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    class: "dashicons dashicons-arrow-right-alt2"
+    className: "dashicons dashicons-arrow-right-alt2"
   })));
 };
 const MRSTemplateSlider = ({
@@ -5345,13 +5346,15 @@ const MRSTemplateSlider = ({
     showAddToCart,
     customAddToCartText,
     addToCartTextGroup,
-    addToCartText
+    addToCartText,
+    productSpacing
   } = attributes;
   const deviceType = (0,_controls_controls__WEBPACK_IMPORTED_MODULE_2__.useDeviceType)();
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(swiper_react__WEBPACK_IMPORTED_MODULE_3__.Swiper, {
-    slidesPerView: 3,
-    spaceBetween: 30,
+    slidesPerView: productsColumn.device[deviceType],
+    spaceBetween: productSpacing,
     loop: true,
+    touchStartPreventDefault: false,
     pagination: {
       clickable: true
     },
@@ -5431,7 +5434,7 @@ const MRSTemplateSlider = ({
         }, customAddToCartText ? v.groupProduct ? addToCartTextGroup : addToCartText : v.groupProduct ? 'View Products' : v.price ? 'Add To Cart' : 'View Product'));
       }
     })))));
-  }) : !loading && !mrsPro ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "No Product Found!!! Please Check product filter section.") : '', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(SwiperNavButtons, null)));
+  }) : !loading && !mrsPro ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "No Product Found!!! Please Check product filter section.") : '', !loading && mrsPro && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(SwiperNavButtons, null)));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MRSTemplateSlider);
 
@@ -6168,7 +6171,7 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
       'transition': `all ${productsBorderTransition}s ease-out`
     },
     [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper .mrs-products-slider`]: {
-      'padding': '40px 0'
+      'padding': '40px 0 30px'
     },
     [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper .mrs-products-slider .swiper-nav-btns`]: {
       'position': 'absolute',
@@ -6182,13 +6185,21 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
       '-moz-transition': 'all .3s',
       '-ms-transition': 'all .3s',
       '-o-transition': 'all .3s',
-      'transition': 'all .3s'
+      'transition': 'all .3s',
+      'display': 'flex',
+      'gap': '3px'
     },
     [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper .mrs-products-slider .swiper-nav-btns button`]: {
       'border': '1px solid',
       'outline': 'none',
       'cursor': 'pointer',
-      'padding': '4px'
+      'padding': '4px',
+      'background': 'transparent'
+    },
+    [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper .mrs-products-slider .swiper-nav-btns button:hover`]: {
+      'background': '#000000',
+      'color': '#ffffff',
+      'border': '1px solid #0000000'
     },
     [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper:hover`]: {
       'border-style': productsBorderStyleHover,

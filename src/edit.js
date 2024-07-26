@@ -125,7 +125,7 @@ export default function Edit({ attributes, setAttributes, clientId }) {
 		}) }>
 			{ loading && <p>Loading Products...  {<Spinner />}</p>}
 			<div className={`mrs-products-grid-wrapper mrs-${mrsProductsLayout}`}>
-				{mrsProductsLayout && mrsProductsLayout === 'grid' && 
+				{mrsProductsLayout && mrsProductsLayout === 'grid' &&
 				<MRSTemplateGrid
 					attributes={attributes}
 					mrsPro={mrsPro}

@@ -37,7 +37,7 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
             'transition' : `all ${productsBorderTransition}s ease-out`,
         },
         [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper .mrs-products-slider`] : {
-            'padding': '40px 0',
+            'padding': '40px 0 30px',
         },
         [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper .mrs-products-slider .swiper-nav-btns`] : {
             'position': 'absolute',
@@ -52,12 +52,20 @@ const dynamicCss = (attributes, deviceType = 'Desktop') => {
             '-ms-transition': 'all .3s',
             '-o-transition': 'all .3s',
             'transition': 'all .3s',
+            'display': 'flex',
+            'gap': '3px',
         },
         [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper .mrs-products-slider .swiper-nav-btns button`] : {
             'border': '1px solid',
             'outline': 'none',
             'cursor': 'pointer',
             'padding': '4px',
+            'background': 'transparent',
+        },
+        [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper .mrs-products-slider .swiper-nav-btns button:hover`] : {
+            'background': '#000000',
+            'color': '#ffffff',
+            'border': '1px solid #0000000',
         },
         [`.mrs-product-${uniqueID} .mrs-products-grid-wrapper:hover`] : {
             'border-style': productsBorderStyleHover,

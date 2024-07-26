@@ -15,24 +15,25 @@ export const SwiperNavButtons = () => {
   
     return (
       <div className="swiper-nav-btns">
-        <button onClick={() => console.log( swiper.slidePrev() )}><span class="dashicons dashicons-arrow-left-alt2"></span></button>
-        <button onClick={() => console.log( swiper.slideNext() )}><span class="dashicons dashicons-arrow-right-alt2"></span></button>
+        <button onClick={() => swiper.slidePrev() }><span className="dashicons dashicons-arrow-left-alt2"></span></button>
+        <button onClick={() => swiper.slideNext() }><span className="dashicons dashicons-arrow-right-alt2"></span></button>
       </div>
     );
   };
 
 
 const MRSTemplateSlider = ({attributes, mrsPro, starRating, loading}) => {
-    const { productsColumn, mrsProductsLayout,  mrsProductStyle, saleBadgeShow, saleBadgeText, mrsProductSaleBadgeStyle, showCategory, proCategory, productTitleShow, showProductRatingStar, hideProductEmptyRatingStar, productPriceShow, showAddToCart, customAddToCartText, addToCartTextGroup, addToCartText } = attributes;
+    const { productsColumn, mrsProductsLayout,  mrsProductStyle, saleBadgeShow, saleBadgeText, mrsProductSaleBadgeStyle, showCategory, proCategory, productTitleShow, showProductRatingStar, hideProductEmptyRatingStar, productPriceShow, showAddToCart, customAddToCartText, addToCartTextGroup, addToCartText, productSpacing } = attributes;
 
     const deviceType = useDeviceType();
 
   return (
     <>
     <Swiper
-    slidesPerView={3}
-    spaceBetween={30}
+    slidesPerView={productsColumn.device[deviceType]}
+    spaceBetween={productSpacing}
     loop={true}
+    touchStartPreventDefault={false}
     pagination={{
       clickable: true,
     }}
@@ -130,8 +131,8 @@ const MRSTemplateSlider = ({attributes, mrsPro, starRating, loading}) => {
         })
     ) :  (!loading && !mrsPro) ? <div>No Product Found!!! Please Check product filter section.</div> : ''
     }
-    
-    <SwiperNavButtons />
+    { !loading && mrsPro && 
+    <SwiperNavButtons /> }
     </Swiper>
     </>
   )
